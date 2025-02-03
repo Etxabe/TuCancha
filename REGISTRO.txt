@@ -5,4 +5,4 @@ Día 3 de Febrero:
   No hay tiempo para gran cosa, se esperará a la clase siguiente. Se intentará encontrar el metodo para descargar el IDE.
 3 - ¿Que haremos la próxima clase?
   Necesitamos tener todos instalados el IDE / Framework ->{01}. 
-  Decidiremos en conjunto el interfaz que tendrá el usuario ->{04}
+  Decidiremos en conjunto el interfaz que tendrá el usuario ->{03}
