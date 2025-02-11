@@ -1,0 +1,11 @@
+1. Hacer una base de datos, con la tabla para guardar los usuarios y poder hacer login y registro.
+2. Login conjunto, para todos los usuarios.
+3. Hacer el registro de nuevos clientes( pedir usuario contraseña, y las cosas tipicas).
+4. Hacer registro de nuevos proveedores, lo mismo que clientes, pero pulsando una casilla(mitico de aceptar terminos y condiciones) 
+  de que eres proveedor(luego esto hay que mirarlo para implementarlo de una manera segura).
+5. Ampliar base de datos, para poder añadir canchas y poder reservarlas
+6. Que el proveedor pueda añadir canchas.
+  - Ubicacion
+  - Fechas
+  - Precios
+7. Que el cliente pueda reservar las canchas en los horarios disponibles.
