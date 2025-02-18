@@ -1,0 +1,41 @@
+Inicio de sesión:
+	Tal y como se ve
+	Escribes correo y contraseña y inicias sesión
+	Registrate aquí es un botón
+
+Primer interfaz:
+	Se llega desde el inicio de sesión
+	El buscador es para buscar instalacioens por nombre o localización.
+	La zona gris de arriba con los círculos de deportes es en plan historias de Instagram, donde cada circulo es un deporte para que salga la lista de esos deportes.
+	Tus ultimas reservas también es un scroll horizontal pero solo salen instalaciones de una en una.
+	Puedes pulsar en una de las instalaciones si te interesa reservarla.
+
+Cerca de mí:
+	Se llega pulsando en el símbolo de localización de la barra de abajo.
+	El buscador es para buscar instalacioens por nombre o localización.
+	Te coge la localización y te sale un mapa con las instalaciones disponibles cerca. Puedes moverte en el mapa para ver otras instalaciones en otras localizaciones.
+	Abajo tienes un scroll horizontal, como el del primer interfaz, que te enseña las localizaciones mas cercanas a ti.
+	Puedes pulsar en una de las instalaciones si te interesa reservarla.
+	
+Favoritos:
+	Se llega pulsando en el símbolo de estrella de la barra de abajo.
+	Se ofrece la lista de instalaciones guardadas.
+	Hay dos filtros:
+	Localidad ofrece filtros por las localidades de las instalaciones que tienes guardadas (si no has guardado nada en pamplona, no te sale pamplona)
+	Deporte lo mismo que localidad pero con los deportes.
+	Pinchando en cualquier instalación te manda a la reserva de sitio.
+	
+Perfil cliente:
+	Se llega pulsando en el símbolo de perfil de la barra de abajo.
+	Muestra la información que se vé.
+	El botón del lapiz sirve para editar el perfil.
+
+Reserva cancha:
+	Se llega pulsando en cualquier reerva de los anteriores interfaces nombrados.
+	Se ve el perfil del proveedor, el hexágono azul significa verificado.
+	La barra gris oscuro del medio es un scroll horizontal, en naranja se pone el día seleccionado.
+	La parte de abajo ofrece las horas disponibles. Se pone en naranja la hora seleccionada.
+	Finalizar reserva guarda la reserva y te regresa al inicio tras mostrar una pantalla de reserva finalizada.
+
+Lista de instalaciones:
+	Si se usa un buscador para encontrar instalaciones, se llega a una pantalla como la de favoritos, pero sin filtros, donde se muestran las instalaciones encontradas en un scroll vertical.
