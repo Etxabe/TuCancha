@@ -1,8 +1,0 @@
-Día 3 de Febrero:
-1 - ¿Que se ha hecho hoy?
-  Tras la teoria se ha empezado a trabajar. Se ha hecho un Kanban en github con los objetivos que se ven a priori.
-2 - ¿Que se hará antes de la siguiente clase?
-  No hay tiempo para gran cosa, se esperará a la clase siguiente. Se intentará encontrar el metodo para descargar el IDE.
-3 - ¿Que haremos la próxima clase?
-  Necesitamos tener todos instalados el IDE / Framework ->{01}. 
-  Decidiremos en conjunto el interfaz que tendrá el usuario ->{03}
