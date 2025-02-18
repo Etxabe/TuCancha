@@ -39,3 +39,4 @@ Reserva cancha:
 
 Lista de instalaciones:
 	Si se usa un buscador para encontrar instalaciones, se llega a una pantalla como la de favoritos, pero sin filtros, donde se muestran las instalaciones encontradas en un scroll vertical.
+	Tiene el buscador incorporado para volver a buscar.
