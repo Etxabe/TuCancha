@@ -11,7 +11,7 @@ export default function FrontViewPitch1() {
 
   return (
       <View style={styles.container}>
-        <Button title='hola2' ></Button>
+        <Button title='hola1' ></Button>
       </View>
   );
 }
