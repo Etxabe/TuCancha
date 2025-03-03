@@ -19,22 +19,22 @@ const Tabs = () => {
             <Ionicons name="home-outline" size={size} color={color} />
           )
         }}/>
-      <Tab.Screen name="Search" component={ScreenPerfil} options={{
-        title: "Search",
+      <Tab.Screen name="Search" component={ScreenCercaDeMi} options={{
+        title: "Cerca de mí",
         tabBarIcon: ({ color, size }) => (
-        <Ionicons name="search-outline" size={size} color={color} />
+        <Ionicons name="location-outline" size={size} color={color} />
         )
         }}/>
-        <Tab.Screen name="Favourite" component={ScreenCercaDeMi} options={{
-        title: "Favourite",
+      <Tab.Screen name="Favourite" component={ScreenFavoritos} options={{
+        title: "Favoritos",
         tabBarIcon: ({ color, size }) => (
         <Ionicons name="star-outline" size={size} color={color} />
         )
         }}/>
-        <Tab.Screen name="Profile" component={ScreenFavoritos} options={{
-        title: "Inicio",
+      <Tab.Screen name="Profile" component={ScreenPerfil} options={{
+        title: "Perfil",
         tabBarIcon: ({ color, size }) => (
-        <Ionicons name="search-outline" size={size} color={color} />
+        <Ionicons name="person-outline" size={size} color={color} />
         )
         }}/>
     </Tab.Navigator>
