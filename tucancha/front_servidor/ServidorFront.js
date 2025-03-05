@@ -5,7 +5,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import ScreenListadoInstalaciones from './screens_servidor/ScreenListadoInstalaciones';
 import ScreenPerfil from './screens_servidor/ScreenPerfil';
-import ScreenModificarInstalacion from './screens_servidor/ScreenModificarInstalacion';
+
+import ScreenAddInstalacion1 from './screens_servidor/ScreenAddInstalacion1';
 
 
 const Tab = createBottomTabNavigator();
@@ -18,16 +19,16 @@ const Tabs = () => {
             <Ionicons name="home-outline" size={size} color={color} />
           )
         }}/>
-      <Tab.Screen name="Search" component={ScreenPerfil} options={{
-        title: "Search",
+      <Tab.Screen name="Add" component={ScreenAddInstalacion1} options={{
+        title: "Añadir",
         tabBarIcon: ({ color, size }) => (
-        <Ionicons name="search-outline" size={size} color={color} />
+        <Ionicons name="add-circle-outline" size={size} color={color} />
         )
         }}/>
-      <Tab.Screen name="Favourite" component={ScreenModificarInstalacion} options={{
-        title: "Favourite",
+      <Tab.Screen name="Profile" component={ScreenPerfil} options={{
+        title: "Perfil",
         tabBarIcon: ({ color, size }) => (
-        <Ionicons name="star-outline" size={size} color={color} />
+        <Ionicons name="person-outline" size={size} color={color} />
         )
         }}/>
     </Tab.Navigator>

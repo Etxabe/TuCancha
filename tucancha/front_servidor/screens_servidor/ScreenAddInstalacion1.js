@@ -1,6 +1,6 @@
 import { createNativeStackNavigation} from '@react-navigation/stack'
 
-import { StyleSheet, View,Button,Input, Dimensions}from 'react-native';
+import { StyleSheet, View,Button,Input, Dimensions,Text}from 'react-native';
 import React, { useState } from "react";
 
 
@@ -11,7 +11,14 @@ export default function ScreenAddInstalacion1() {
 
   return (
       <View style={styles.container}>
-        <Button title='hola2' ></Button>
+        <Text>Informacion general:</Text>
+        <Text>Nombre de pista:</Text>
+        <Text>Localidad</Text>
+        <Text>Calle:</Text>
+        <Text>Descripción:</Text>
+        <Button title='Subir foto'></Button>
+        
+        <Button title='Siguiente'></Button>
       </View>
   );
 }
@@ -27,4 +34,5 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: height*0.07
     },
+
 });  
