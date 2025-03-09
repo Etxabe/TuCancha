@@ -1,85 +1,95 @@
-import { StyleSheet, View,Button,Input, Dimensions,Text,TextInput,KeyboardAvoidingView}from 'react-native';
-import React, { useState } from "react";
-import { Picker } from '@react-native-picker/picker'; // Importar el componente Picker
+import {
+  StyleSheet,
+  View,
+  Button,
+  Text,
+  TextInput,
+  Dimensions,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
+import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-const { width, height } = Dimensions.get("window");
 
+const { width, height } = Dimensions.get('window');
 
 export default function ScreenAddInstalacion1() {
   const navigation = useNavigation();
+
   return (
-    <KeyboardAvoidingView 
-      behavior="padding" 
+    <KeyboardAvoidingView
       style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // mejor soporte multiplataforma
     >
-      <View style={styles.container}>
-        <Text style={styles.title}>Informacion general:</Text>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Text style={styles.title}>Información general:</Text>
 
-        <Text style={styles.label} >Nombre de pista:</Text>
+          <Text style={styles.label}>Nombre de pista:</Text>
+          <TextInput style={styles.input} placeholder="Nombre de pista" />
 
-        <TextInput style={styles.input} placeholder="Nombre de pista" />
+          <Text style={styles.label}>Localidad:</Text>
+          <TextInput style={styles.input} placeholder="Pueblo, Ciudad..." />
 
-        <Text style={styles.label} >Localidad:</Text>
+          <Text style={styles.label}>Calle:</Text>
+          <TextInput style={styles.input} placeholder="Calle" />
 
-        <TextInput style={styles.input} placeholder="Pueblo, Ciudad..." />
+          <Text style={styles.label}>Descripción:</Text>
+          <TextInput
+            style={[styles.input, { height: 80 }]} 
+            placeholder="Información adicional"
+            multiline
+          />
 
-        <Text style={styles.label} >Calle:</Text>
+          {/* Aquí podrías poner el Picker si necesitas */}
 
-        <TextInput style={styles.input} placeholder="Calle" />
-
-        <Text style={styles.label} >Descripción:</Text>
-
-        <TextInput style={styles.input} placeholder="Información adicional" />
-
-        {/*el picker va aqui*/}
-        
-
-        {/*<Button title='Subir foto'></Button>*/}
-        
-        <Button title='Siguiente' onPress={() => navigation.navigate("ScreenAddInstalacion2")}></Button>
-      </View>
-      </KeyboardAvoidingView>
+          <View style={{ marginTop: 20 }}>
+            <Button
+              title="Siguiente"
+              onPress={() => navigation.navigate('ScreenAddInstalacion2')}
+            />
+          </View>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      width: width,
-      height: height,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      padding: height*0.07
-    },
-    input: {
-      
-      width: width * 0.6, // Todos los inputs tienen el mismo ancho
-      height: 40, // Misma altura para todos
-      color: '#555',
-      backgroundColor: '#fff',
-      borderColor: '#000',
-      borderWidth: 1,
-      borderRadius: 10,
-      paddingHorizontal: 10,
-      paddingVertical: 8,
-      marginBottom: height * 0.03, // Espaciado uniforme entre inputs
-    },
-    title: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      marginBottom: 15, 
-      alignSelf: 'flex-start', // Alineado a la izquierda sin absolute
-      marginLeft: width * 0, // Separado del borde izquierdo
-      marginTop: height * 0.005, // Más arriba
-    },
-    label: {
-      alignSelf: 'stretch',
-      marginLeft: width * 0.1, // Para alinear con los inputs
-      marginBottom: 10, // Espacio entre el texto y el input
-      fontSize: 16,
-      fontWeight: '500',
-    },
-
-});  
+  container: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: height * 0.05,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+  },
+  label: {
+    fontSize: 16,
+    marginBottom: 5,
+    marginTop: 15,
+    color: '#333',
+    alignSelf: 'flex-start',
+  },
+  input: {
+    width: width * 0.8,
+    height: 40,
+    backgroundColor: '#fff',
+    borderColor: '#000',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    marginBottom: 10,
+  },
+});
