@@ -1,14 +1,17 @@
 import {StyleSheet, Image, Dimensions,View, Text}from 'react-native';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState } from "react";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import ScreenListadoInstalaciones from './screens_servidor/ScreenListadoInstalaciones';
 import ScreenPerfil from './screens_servidor/ScreenPerfil';
+import ScreenAddInstalacion2 from './screens_servidor/ScreenAddInstalacion2';
 
 import ScreenAddInstalacion1 from './screens_servidor/ScreenAddInstalacion1';
 
-
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
   return (
@@ -38,7 +41,10 @@ const Tabs = () => {
 export default function App() {
   return (
     <NavigationContainer>
-      <Tabs />
+       <Stack.Navigator>
+        <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+        <Stack.Screen name="ScreenAddInstalacion2" component={ScreenAddInstalacion2} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

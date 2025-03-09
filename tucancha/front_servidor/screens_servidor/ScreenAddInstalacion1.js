@@ -1,7 +1,6 @@
 import { StyleSheet, View,Button,Input, Dimensions,Text,TextInput,KeyboardAvoidingView}from 'react-native';
 import React, { useState } from "react";
 import { Picker } from '@react-native-picker/picker'; // Importar el componente Picker
-import ServidorFront from '../ServidorStack';
 import { useNavigation } from '@react-navigation/native';
 const { width, height } = Dimensions.get("window");
 
@@ -37,7 +36,7 @@ export default function ScreenAddInstalacion1() {
 
         {/*<Button title='Subir foto'></Button>*/}
         
-        <Button title='Siguiente' onPress={() => alert('Viajo a la otra pantalla')}></Button>
+        <Button title='Siguiente' onPress={() => navigation.navigate("ScreenAddInstalacion2")}></Button>
       </View>
       </KeyboardAvoidingView>
   );
