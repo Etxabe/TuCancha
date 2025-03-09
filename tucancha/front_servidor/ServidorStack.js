@@ -5,6 +5,8 @@ import ScreenListadoInstalaciones from './screens_servidor/ScreenListadoInstalac
 import ScreenPerfil from './screens_servidor/ScreenPerfil';
 import ScreenModificarInstalacion from './screens_servidor/ScreenModificarInstalacion';
 
+import { NavigationContainer } from '@react-navigation/native';
+
 
 
 
