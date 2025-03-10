@@ -1,9 +1,9 @@
 import { createNativeStackNavigation} from '@react-navigation/stack'
 
-import { StyleSheet, View,Button,Input, Dimensions}from 'react-native';
+import { StyleSheet, View,Button,Input, Dimensions, TextInput, Text}from 'react-native';
 import React, { useState } from "react";
-import Instalacion from '../functions/Instalacion'
-import InstalacionStoris from '../functions/InstalacionStoris'
+import Instalacion from '../../functions/Instalacion'
+import InstalacionStoris from '../../functions/InstalacionStoris'
 
 
 const { width, height } = Dimensions.get("window");

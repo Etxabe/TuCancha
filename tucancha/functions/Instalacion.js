@@ -20,7 +20,7 @@ export default function App() {
         </View>
         <View style={styles.container}>
             <Text style={styles.text}>Precio: 12€/h</Text>
-            <Button title='Reservar' style={styles.boton}></Button>
+            <Button title='Reservar' style={styles.boton} onPress={() => alert('Reservar cancha')}></Button>
         </View>
     </View>
     
