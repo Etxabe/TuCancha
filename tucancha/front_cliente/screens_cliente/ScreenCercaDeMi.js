@@ -8,22 +8,43 @@ const { width, height } = Dimensions.get("window");
 
 
 export default function ScreenCercaDeMi() {
-  return (
-      <View style={styles.container}>
-        <Button title='hola2' ></Button>
-      </View>
-  );
-}
-
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      width: width,
-      height: height,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-      padding: height*0.07
-    },
-});  
+  
+    const [local, setName] = useState("");
+    return (
+        <View style={styles.container}>
+          <TextInput type='text' style={styles.input} value={local} placeholder="Localizacion" onChangeText={setName} />
+          <Mapa style={styles.mapa}/>
+          <Instalacion />
+        </View>
+    );
+  }
+  
+  const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        padding: height*0.07, //cambiar en caso de querer ensanchar las cosas
+        flexDirection: 'col',
+      },    
+      mapa: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: height*0.07
+      },
+      input: {
+        marginBottom: height*0.02,
+        borderBlockColor: '"#f0f0f0"',
+        color: '#555',
+        backgroundColor: '#fff',
+        borderColor: '#000',
+        borderWidth: 1,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+        borderRadius: 10,
+        paddingHorizontal: width*0.2,
+      },
+  });  
