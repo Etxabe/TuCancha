@@ -10,10 +10,11 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
-  image,
+  Image,
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
 
 const { width, height } = Dimensions.get('window');
@@ -21,6 +22,8 @@ const { width, height } = Dimensions.get('window');
 export default function ScreenAddInstalacion1() {
   const navigation = useNavigation();
 
+  const [image, setImage] = useState(null);
+  const [imageUri, setImageUri] = useState(null);  // Para mostrar la URI de la image
   const openGallery = async () => {
     // Pedir permisos
     const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -72,7 +75,6 @@ export default function ScreenAddInstalacion1() {
             multiline
           />
 
-          {/* Aquí podrías poner el Picker si necesitas */}
           <Button title='Subir foto'onPress={openGallery}/>
           {image && <Image source={{ uri: image }} style={{ width: 200, height: 200, marginTop: 20 }} />}
 
