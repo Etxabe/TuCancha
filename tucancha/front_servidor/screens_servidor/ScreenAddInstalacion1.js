@@ -10,14 +10,39 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  image,
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import * as ImagePicker from 'expo-image-picker';
 
 const { width, height } = Dimensions.get('window');
 
 export default function ScreenAddInstalacion1() {
   const navigation = useNavigation();
+
+  const openGallery = async () => {
+    // Pedir permisos
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      Alert.alert('Permiso denegado', 'Necesitamos acceso a tu galería para continuar');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Solo imágenes
+      allowsEditing: true, // Permite editar la imagen (recortarla)
+      quality: 1, // Calidad de la imagen
+    });
+  
+    if (!result.canceled) {
+      setImage(result.assets[0].uri); // Establecer la imagen seleccionada
+    }
+  };
+  
+
+
+    
 
   return (
     <KeyboardAvoidingView
@@ -48,6 +73,8 @@ export default function ScreenAddInstalacion1() {
           />
 
           {/* Aquí podrías poner el Picker si necesitas */}
+          <Button title='Subir foto'onPress={openGallery}/>
+          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200, marginTop: 20 }} />}
 
           <View style={{ marginTop: 20 }}>
             <Button
