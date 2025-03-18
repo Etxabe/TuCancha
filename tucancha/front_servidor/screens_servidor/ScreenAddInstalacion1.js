@@ -22,7 +22,7 @@ const { width, height } = Dimensions.get('window');
 export default function ScreenAddInstalacion1() {
   const navigation = useNavigation();
 
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
   const [imageUri, setImageUri] = useState(null);  // Para mostrar la URI de la image
   const openGallery = async () => {
     // Pedir permisos
@@ -34,12 +34,12 @@ export default function ScreenAddInstalacion1() {
 
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images, // Solo imágenes
-      allowsEditing: true, // Permite editar la imagen (recortarla)
       quality: 1, // Calidad de la imagen
+      allowsMultipleSelection: true,
     });
   
     if (!result.canceled) {
-      setImage(result.assets[0].uri); // Establecer la imagen seleccionada
+      setImages(result.assets.map(asset => asset.uri));
     }
   };
   
@@ -76,7 +76,15 @@ export default function ScreenAddInstalacion1() {
           />
 
           <Button title='Subir foto'onPress={openGallery}/>
-          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200, marginTop: 20 }} />}
+          <ScrollView horizontal style={{ marginTop: 20 }}>
+        {images.map((uri, index) => (
+          <Image
+            key={index}
+            source={{ uri }}
+            style={{ width: 120, height: 120, marginRight: 10, borderRadius: 10 }}
+          />
+        ))}
+      </ScrollView>
 
           <View style={{ marginTop: 20 }}>
             <Button
