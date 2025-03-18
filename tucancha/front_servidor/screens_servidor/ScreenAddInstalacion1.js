@@ -10,14 +10,42 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
+  Image,
 } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import * as ImagePicker from 'expo-image-picker';
 
 const { width, height } = Dimensions.get('window');
 
 export default function ScreenAddInstalacion1() {
   const navigation = useNavigation();
+
+  const [images, setImages] = useState([]);
+  const [imageUri, setImageUri] = useState(null);  // Para mostrar la URI de la image
+  const openGallery = async () => {
+    // Pedir permisos
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (permissionResult.granted === false) {
+      Alert.alert('Permiso denegado', 'Necesitamos acceso a tu galería para continuar');
+      return;
+    }
+
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Solo imágenes
+      quality: 1, // Calidad de la imagen
+      allowsMultipleSelection: true,
+    });
+  
+    if (!result.canceled) {
+      setImages(result.assets.map(asset => asset.uri));
+    }
+  };
+  
+
+
+    
 
   return (
     <KeyboardAvoidingView
@@ -47,7 +75,16 @@ export default function ScreenAddInstalacion1() {
             multiline
           />
 
-          {/* Aquí podrías poner el Picker si necesitas */}
+          <Button title='Subir foto'onPress={openGallery}/>
+          <ScrollView horizontal style={{ marginTop: 20 }}>
+        {images.map((uri, index) => (
+          <Image
+            key={index}
+            source={{ uri }}
+            style={{ width: 120, height: 120, marginRight: 10, borderRadius: 10 }}
+          />
+        ))}
+      </ScrollView>
 
           <View style={{ marginTop: 20 }}>
             <Button
