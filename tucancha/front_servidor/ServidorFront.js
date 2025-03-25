@@ -41,10 +41,7 @@ const Tabs = () => {
 export default function App() {
   return (
     <NavigationContainer>
-       <Stack.Navigator>
-        <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-        <Stack.Screen name="ScreenAddInstalacion2" component={ScreenAddInstalacion2} />
-      </Stack.Navigator>
+          <Tabs />
     </NavigationContainer>
   );
 }
