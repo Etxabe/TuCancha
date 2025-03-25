@@ -3,7 +3,7 @@ import { createNativeStackNavigation} from '@react-navigation/stack'
 import { StyleSheet, View,Button,Input, Dimensions, TextInput, Text}from 'react-native';
 import React, { useState } from "react";
 import Instalacion from '../../functions/Instalacion'
-import Mapa from '../../functions/Mapa';
+import Mapa from '../../backend/funciones_backend/ModeloMapa';
 
 
 const { width, height } = Dimensions.get("window");

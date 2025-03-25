@@ -6,8 +6,6 @@ const imagen = require('../assets/fronton-tafalla.png')
 const { width, height } = Dimensions.get("window"); // Obtiene el tamaño de la pantalla
 
 export default function App() {
-  const [nombre, setName] = useState("");
-  const [gmail, setMail] = useState("");
 
   return (
     <View style={styles.containerinstalacion}>
