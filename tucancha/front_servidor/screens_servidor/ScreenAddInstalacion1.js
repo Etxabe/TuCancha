@@ -10,21 +10,22 @@ import {
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
-  Image,
   TouchableOpacity,
   Modal,
   FlatList,
+  Image,
 } from 'react-native';
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
-import * as ImagePicker from 'expo-image-picker';
 import Checkbox from 'expo-checkbox';
 import {MostrarTextIniciales} from './funciones_servidor/funcionVistaAddInstalacion'
+import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
 
 const { width, height } = Dimensions.get('window');
 
 export default function ScreenAddInstalacion1() {
+
+  const [images, setImages] = useState([]);
 
   const [isSelected, setSelection] = useState(false);
   
@@ -47,30 +48,6 @@ export default function ScreenAddInstalacion1() {
       setHoraCierre(hora);
       setModalCierreVisible(false);
     };
-
-  const navigation = useNavigation();
-
-  const [images, setImages] = useState([]);
-  const [imageUri, setImageUri] = useState(null);  // Para mostrar la URI de la image
-  const openGallery = async () => {
-    // Pedir permisos
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (permissionResult.granted === false) {
-      Alert.alert('Permiso denegado', 'Necesitamos acceso a tu galería para continuar');
-      return;
-    }
-
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Solo imágenes
-      quality: 1, // Calidad de la imagen
-      allowsMultipleSelection: true,
-    });
-  
-    if (!result.canceled) {
-      setImages(result.assets.map(asset => asset.uri));
-    }
-  };
-  
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -85,17 +62,17 @@ export default function ScreenAddInstalacion1() {
           <MostrarTextIniciales/>
 
 
-        <Button title='Subir foto'onPress={openGallery}/>
-        <ScrollView horizontal style={{ marginTop: 20 }}>
-          {images.map((uri, index) => (
-            <Image
-              key={index}
-              source={{ uri }}
-              style={{ width: 120, height: 120, marginRight: 10, borderRadius: 10 }}
-            />
-          ))}
-
-        </ScrollView>
+          <Button title="Subir foto" onPress={() => AbrirGaleria(setImages)} />
+      
+      <ScrollView horizontal style={{ marginTop: 20 }}>
+        {images.map((uri, index) => (
+          <Image
+            key={index}
+            source={{ uri }}
+            style={{ width: 120, height: 120, marginRight: 10, borderRadius: 10 }}
+          />
+        ))}
+      </ScrollView>
         <View style={styles.container}>
           <Text style={styles.title}>Horarios disponibles:</Text>
                 {/* Hora Apertura */}
