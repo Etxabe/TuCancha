@@ -1,6 +1,10 @@
 import { StyleSheet, View,Button,Input, Dimensions}from 'react-native';
 import React, { useState } from "react";
+<<<<<<< HEAD
 import Modelo from '/Modelo'
+=======
+import Modelo from '../funciones_backend/Modelo'
+>>>>>>> 911a582699da4de47b455caade10a832e4c32f85
 
 
 const { width, height } = Dimensions.get("window");
