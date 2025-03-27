@@ -109,21 +109,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 10,
   },
-  selector: {
-    width: width * 0.8,
-    height: 40,
-    backgroundColor: '#f0f0f0',
-    borderColor: '#000',
-    borderWidth: 1,
-    borderRadius: 10,
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    marginBottom: 15,
-  },
-  selectorText: {
-    fontSize: 16,
-    color: '#000',
-  },
   checkboxContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -137,33 +122,5 @@ const styles = StyleSheet.create({
   checkbox: {
     width: 20,
     height: 20,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.3)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  modalContainer: {
-    width: width * 0.8,
-    height: height * 0.6,
-    backgroundColor: '#fff',
-    borderRadius: 12,
-    padding: 20,
-    elevation: 5,
-  },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 15,
-  },
-  modalItem: {
-    paddingVertical: 10,
-    borderBottomColor: '#ccc',
-    borderBottomWidth: 1,
-  },
-  modalItemText: {
-    fontSize: 16,
-    color: '#333',
   },
 });
