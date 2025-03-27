@@ -42,6 +42,12 @@ export const MostrarTextIniciales = () => {
 };
   
 const styles = StyleSheet.create({
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#333',
+  },
   label: {
     fontSize: 16,
     marginBottom: 5,

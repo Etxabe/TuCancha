@@ -119,18 +119,11 @@ export const MostrarHorarios = () => {
 }      
 
 const styles = StyleSheet.create({
-    container: {
-      flexGrow: 1,
-      alignItems: 'center',
-      justifyContent: 'flex-start',
-      padding: height * 0.05,
-      backgroundColor: '#fff',
-    },
     title: {
-      fontSize: 18,
-      fontWeight: 'bold',
-      marginBottom: 20,
-      color: '#333',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#333',
     },
     label: {
       fontSize: 16,
@@ -138,16 +131,6 @@ const styles = StyleSheet.create({
       marginTop: 15,
       color: '#333',
       alignSelf: 'flex-start',
-    },
-    input: {
-      width: width * 0.8,
-      height: 40,
-      backgroundColor: '#fff',
-      borderColor: '#000',
-      borderWidth: 1,
-      borderRadius: 10,
-      paddingHorizontal: 10,
-      marginBottom: 10,
     },
     selector: {
       width: width * 0.8,
@@ -168,15 +151,6 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       marginVertical: 15,
-    },
-    checkboxLabel: {
-      fontSize: 16,
-      marginRight: 10,
-      color: '#333',
-    },
-    checkbox: {
-      width: 20,
-      height: 20,
     },
     modalOverlay: {
       flex: 1,
