@@ -21,6 +21,7 @@ import Checkbox from 'expo-checkbox';
 import {MostrarTextIniciales} from './funciones_servidor/funcionVistaAddInstalacion4Atributos'
 import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
 import {MostrarDuracionYPrecio} from './funciones_servidor/funcionScreenAddInstalacionDuracionYPrecio'
+import {MostrarHorarios} from './funciones_servidor/funcionScreenAddInstalacionHorarios'
 
 const { width, height } = Dimensions.get('window');
 
@@ -30,25 +31,6 @@ export default function ScreenAddInstalacion1() {
 
   const [isSelected, setSelection] = useState(false);
   
-    const [horaApertura, setHoraApertura] = useState('09:00');
-    const [horaCierre, setHoraCierre] = useState('18:00');
-  
-    const [modalAperturaVisible, setModalAperturaVisible] = useState(false);
-    const [modalCierreVisible, setModalCierreVisible] = useState(false);
-  
-    const horas = Array.from({ length: 24 }, (_, index) =>
-      `${index.toString().padStart(2, '0')}:00`
-    );
-  
-    const handleSelectHoraApertura = (hora) => {
-      setHoraApertura(hora);
-      setModalAperturaVisible(false);
-    };
-  
-    const handleSelectHoraCierre = (hora) => {
-      setHoraCierre(hora);
-      setModalCierreVisible(false);
-    };
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -60,103 +42,36 @@ export default function ScreenAddInstalacion1() {
           keyboardShouldPersistTaps="handled"
         >
           
-          <MostrarTextIniciales/>
+        <MostrarTextIniciales/>
 
-
-          <Button title="Subir foto" onPress={() => AbrirGaleria(setImages)} />
+        <Button title="Subir foto" onPress={() => AbrirGaleria(setImages)} />
       
-      <ScrollView horizontal style={{ marginTop: 20 }}>
-        {images.map((uri, index) => (
-          <Image
-            key={index}
-            source={{ uri }}
-            style={{ width: 120, height: 120, marginRight: 10, borderRadius: 10 }}
-          />
-        ))}
-      </ScrollView>
+        <ScrollView horizontal style={{ marginTop: 20 }}>
+          {images.map((uri, index) => (
+            <Image
+              key={index}
+              source={{ uri }}
+              style={{ width: 120, height: 120, marginRight: 10, borderRadius: 10 }}
+            />
+          ))}
+        </ScrollView>
+        
         <View style={styles.container}>
-          <Text style={styles.title}>Horarios disponibles:</Text>
-                {/* Hora Apertura */}
-                <Text style={styles.label}>Hora apertura:</Text>
-                <TouchableOpacity
-                  onPress={() => setModalAperturaVisible(true)}
-                  style={styles.selector}
-                >
-                  <Text style={styles.selectorText}>{horaApertura}</Text>
-                </TouchableOpacity>
-      
-                <Modal
-                  visible={modalAperturaVisible}
-                  animationType="slide"
-                  transparent={true}
-                  onRequestClose={() => setModalAperturaVisible(false)}
-                >
-                  <View style={styles.modalOverlay}>
-                    <View style={styles.modalContainer}>
-                      <Text style={styles.modalTitle}>Seleccionar hora de apertura</Text>
-                      <FlatList
-                        data={horas}
-                        keyExtractor={(item) => item}
-                        renderItem={({ item }) => (
-                          <TouchableOpacity
-                            style={styles.modalItem}
-                            onPress={() => handleSelectHoraApertura(item)}
-                          >
-                            <Text style={styles.modalItemText}>{item}</Text>
-                          </TouchableOpacity>
-                        )}
-                      />
-                      <Button title="Cancelar" onPress={() => setModalAperturaVisible(false)} />
-                    </View>
-                  </View>
-                </Modal>
-      
-                {/* Hora Cierre */}
-                <Text style={styles.label}>Hora cierre:</Text>
-                <TouchableOpacity
-                  onPress={() => setModalCierreVisible(true)}
-                  style={styles.selector}
-                >
-                  <Text style={styles.selectorText}>{horaCierre}</Text>
-                </TouchableOpacity>
-      
-                <Modal
-                  visible={modalCierreVisible}
-                  animationType="slide"
-                  transparent={true}
-                  onRequestClose={() => setModalCierreVisible(false)}
-                >
-                  <View style={styles.modalOverlay}>
-                    <View style={styles.modalContainer}>
-                      <Text style={styles.modalTitle}>Seleccionar hora de cierre</Text>
-                      <FlatList
-                        data={horas}
-                        keyExtractor={(item) => item}
-                        renderItem={({ item }) => (
-                          <TouchableOpacity
-                            style={styles.modalItem}
-                            onPress={() => handleSelectHoraCierre(item)}
-                          >
-                            <Text style={styles.modalItemText}>{item}</Text>
-                          </TouchableOpacity>
-                        )}
-                      />
-                      <Button title="Cancelar" onPress={() => setModalCierreVisible(false)} />
-                    </View>
-                  </View>
-                </Modal>
-      
-                <View style={styles.checkboxContainer}>
-                  <Text style={styles.checkboxLabel}>Abrir en festivos(Domingos incluidos)</Text>
-                  <Checkbox
-                    value={isSelected}
-                    onValueChange={setSelection}
-                    style={styles.checkbox}
-                  />
-                </View>
-                <MostrarDuracionYPrecio/>
-                <Button title="Añadir" onPress={() => alert('Comprobar campos llenos. Pista añadida. Redirigir a inicio.')}/>
-              </View>
+          <MostrarHorarios/>
+
+          <View style={styles.checkboxContainer}>
+            <Text style={styles.checkboxLabel}>Abrir en festivos(Domingos incluidos)</Text>
+            <Checkbox
+              value={isSelected}
+              onValueChange={setSelection}
+              style={styles.checkbox}
+            />
+
+          </View>
+          
+          <MostrarDuracionYPrecio/>
+          <Button title="Añadir" onPress={() => alert('Comprobar campos llenos. Pista añadida. Redirigir a inicio.')}/>
+        </View>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
