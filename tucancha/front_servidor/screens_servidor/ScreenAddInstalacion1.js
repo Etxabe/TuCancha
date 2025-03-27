@@ -18,8 +18,9 @@ import {
 import React from 'react';
 import { useState } from 'react';
 import Checkbox from 'expo-checkbox';
-import {MostrarTextIniciales} from './funciones_servidor/funcionVistaAddInstalacion'
+import {MostrarTextIniciales} from './funciones_servidor/funcionVistaAddInstalacion4Atributos'
 import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
+import {MostrarDuracionYPrecio} from './funciones_servidor/funcionScreenAddInstalacionDuracionYPrecio'
 
 const { width, height } = Dimensions.get('window');
 
@@ -153,13 +154,7 @@ export default function ScreenAddInstalacion1() {
                     style={styles.checkbox}
                   />
                 </View>
-      
-                <Text style={styles.label}>Duración de reserva:</Text>
-                <TextInput style={styles.input} keyboardType='numeric' placeholder="Ej: 60 minutos" />
-      
-                <Text style={styles.label}>Precio:</Text>
-                <TextInput style={styles.input} keyboardType='numeric' placeholder="Ej: 24 €" />
-      
+                <MostrarDuracionYPrecio/>
                 <Button title="Añadir" onPress={() => alert('Comprobar campos llenos. Pista añadida. Redirigir a inicio.')}/>
               </View>
         </ScrollView>
