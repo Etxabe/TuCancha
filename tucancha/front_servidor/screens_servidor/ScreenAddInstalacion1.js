@@ -3,16 +3,12 @@ import {
   View,
   Button,
   Text,
-  TextInput,
   Dimensions,
   KeyboardAvoidingView,
   ScrollView,
   Platform,
   TouchableWithoutFeedback,
   Keyboard,
-  TouchableOpacity,
-  Modal,
-  FlatList,
   Image,
 } from 'react-native';
 import React from 'react';
@@ -22,10 +18,13 @@ import {MostrarTextIniciales} from './funciones_servidor/funcionVistaAddInstalac
 import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
 import {MostrarDuracionYPrecio} from './funciones_servidor/funcionScreenAddInstalacionDuracionYPrecio'
 import {MostrarHorarios} from './funciones_servidor/funcionScreenAddInstalacionHorarios'
+import {insertInstalacion} from '../../backend/funciones_backend/insert.js'
 
 const { width, height } = Dimensions.get('window');
 
 export default function ScreenAddInstalacion1() {
+
+  const [nombrePista, setNombrePista] = useState('');
 
   const [images, setImages] = useState([]);
 
@@ -42,7 +41,7 @@ export default function ScreenAddInstalacion1() {
           keyboardShouldPersistTaps="handled"
         >
           
-        <MostrarTextIniciales/>
+          <MostrarTextIniciales nombrePista={nombrePista} setNombrePista={setNombrePista} />
 
         <Button title="Subir foto" onPress={() => AbrirGaleria(setImages)} />
       
@@ -70,7 +69,7 @@ export default function ScreenAddInstalacion1() {
           </View>
           
           <MostrarDuracionYPrecio/>
-          <Button title="Añadir" onPress={() => alert('Comprobar campos llenos. Pista añadida. Redirigir a inicio.')}/>
+          <Button title="Añadir"  onPress={() => insertInstalacion(nombrePista)}/>
         </View>
         </ScrollView>
       </TouchableWithoutFeedback>

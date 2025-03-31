@@ -9,9 +9,9 @@ import { useState } from 'react';
 
 const { width, height } = Dimensions.get('window');
 
-export const MostrarTextIniciales = () => {
+export const MostrarTextIniciales = ({ nombrePista, setNombrePista }) => {
 
-  const [nombrePista, setNombrePista] = useState('');
+  
   const [ciudad, setCiudad] = useState('');
   const [calle, setCalle] = useState('');
   const [infoExtra, setInfoExtra] = useState('');
