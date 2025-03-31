@@ -1,29 +1,26 @@
 import { StyleSheet, Text, View,Button,Image,Input, Dimensions, PRe}from 'react-native';
 import React, { useState } from "react";
 
-
 const imagen = require('../assets/fronton-tafalla.png')
 const { width, height } = Dimensions.get("window"); // Obtiene el tamaño de la pantalla
 
-export default function App() {
-
+const Instalacion = ({ ubicacionSeleccionada }) => {
   return (
     <View style={styles.containerinstalacion}>
         <View style={styles.container}>
             <Image source={imagen} style={styles.imagen}></Image>
             <Text style={styles.text}>
-                Fronton de Tafalla
-                Descripción del fronton lamentable de un pueblo decadente.
+            {ubicacionSeleccionada?.nombre}
             </Text>
         </View>
         <View style={styles.container}>
             <Text style={styles.text}>Precio: 12€/h</Text>
             <Button title='Reservar' style={styles.boton} onPress={() => alert('Reservar cancha')}></Button>
         </View>
-    </View>
-    
+    </View> 
   );
-}
+};
+
 const styles = StyleSheet.create({
     containerinstalacion: {
         flexDirection: 'col', // Organiza los elementos en una fila
@@ -52,3 +49,5 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 });
+
+export default Instalacion;

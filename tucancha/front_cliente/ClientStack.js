@@ -5,7 +5,7 @@ import ScreenInicio from './screens_cliente/ScreenInicio';
 import ScreenPerfil from './screens_cliente/ScreenPerfil';
 import ScreenCercaDeMi from './screens_cliente/ScreenCercaDeMi';
 import ScreenFavoritos from './screens_cliente/ScreenFavoritos';
-
+import { LocationProvider } from './LocationContext';
 
 const { width, height } = Dimensions.get("window");
 
@@ -14,12 +14,13 @@ const Stack = createNativeStackNavigator();
 
 const ClienteFront = () => {
     return (
-            <Stack.Navigator>
-                <Stack.Screen name="1" component={ScreenInicio} />
-                <Stack.Screen name="2" component={ScreenCercaDeMi} />
-                <Stack.Screen name="3" component={ScreenFavoritos} />
-                <Stack.Screen name="4" component={ScreenPerfil} />
-            </Stack.Navigator>
+        <Stack.Navigator>
+            <Stack.Screen name="1" component={ScreenInicio} />
+            <Stack.Screen name="2" component={ScreenCercaDeMi} />
+            <Stack.Screen name="3" component={ScreenFavoritos} />
+            <Stack.Screen name="4" component={ScreenPerfil} />
+        </Stack.Navigator>
+
     );
 };
 

@@ -3,7 +3,7 @@ import {StyleSheet,Image,Button, View, Text, FlatList, ActivityIndicator } from 
 import 'react-native-get-random-values';
 import Parse from "./Conexion";
 
-const App = () => {
+const App = ($id) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
