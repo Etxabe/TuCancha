@@ -1,25 +1,22 @@
 import { createNativeStackNavigation} from '@react-navigation/stack'
 
 import { StyleSheet, View,Button,Input, Dimensions, TextInput, Text}from 'react-native';
-import React, { useState } from "react";
+import React, { createContext, useState, useContext } from "react";
 import Instalacion from '../../functions/Instalacion'
-import Mapa from '../../functions/Mapa';
-
-
+import Mapa from '../../backend/funciones_backend/ModeloMapa';
 const { width, height } = Dimensions.get("window");
 
 
 export default function ScreenCercaDeMi() {
-  
-    const [local, setName] = useState("");
-    return (
-        <View style={styles.container}>
-          <TextInput type='text' style={styles.input} value={local} placeholder="Localizacion" onChangeText={setName} />
-          <Mapa style={styles.mapa}/>
-          <Instalacion />
-        </View>
-    );
-  }
+  const [local, setName] = useState("");
+  return (
+    <View>
+        <TextInput type='text' style={styles.input} value={local} placeholder="Localizacion" onChangeText={setName} />
+        <Mapa style={styles.mapa} />
+        
+    </View>
+  );
+  };
   
   const styles = StyleSheet.create({
       container: {
