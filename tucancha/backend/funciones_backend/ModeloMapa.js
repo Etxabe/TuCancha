@@ -38,7 +38,6 @@ const Mapa = ({ onSelectUbicacion }) => {
         fetchData();
       }, []);
     
-  const { ubicacion } = useLocation();
 
   return (
       <MapView

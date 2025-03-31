@@ -9,14 +9,10 @@ const { width, height } = Dimensions.get("window");
 
 export default function ScreenCercaDeMi() {
   const [local, setName] = useState("");
-  const { ubicacion, seleccionarUbicacion } = useLocation();
   return (
     <View>
         <TextInput type='text' style={styles.input} value={local} placeholder="Localizacion" onChangeText={setName} />
-        <Mapa style={styles.mapa} onSelectUbicacion={seleccionarUbicacion} />
-        {ubicacion && (
-        <Text> {ubicacion}</Text>
-        )}
+        <Mapa style={styles.mapa} />
         
     </View>
   );
