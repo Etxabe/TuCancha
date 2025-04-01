@@ -8,9 +8,10 @@ export const insertInstalacion = async(nombrePista) => {
     try {
 
         let Instalacion = new Parse.Object('Instalacion');
+        Alert.alert(nombrePista+'soyañañin');
         Instalacion.set('nombre', nombrePista);
-        Instalacion.set('idDeporte1','1');
-        Instalacion.set('idPropietario','1');
+        Instalacion.set('idDeporte1',2);
+        Instalacion.set('idPropietario',3);
     
         await Instalacion.save();
         Alert.alert('¡Éxito!', 'Instalación creada correctamente.');

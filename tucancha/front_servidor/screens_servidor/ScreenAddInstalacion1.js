@@ -73,7 +73,7 @@ export default function ScreenAddInstalacion1() {
           </View>
           
           <MostrarDuracionYPrecio/>
-          <Button title="Añadir"  onPress={() => insertInstalacion()}/>
+          <Button title="Añadir"  onPress={() => insertInstalacion(nombrePista)}/>
         </View>
         </ScrollView>
       </TouchableWithoutFeedback>
