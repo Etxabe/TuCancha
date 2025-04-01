@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
+  Alert,
 } from 'react-native';
 import React from 'react';
 import { useState } from 'react';
@@ -19,6 +20,8 @@ import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
 import {MostrarDuracionYPrecio} from './funciones_servidor/funcionScreenAddInstalacionDuracionYPrecio'
 import {MostrarHorarios} from './funciones_servidor/funcionScreenAddInstalacionHorarios'
 import {insertInstalacion} from '../../backend/funciones_backend/insert.js'
+import Parse from 'parse/react-native.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { width, height } = Dimensions.get('window');
 
@@ -29,6 +32,7 @@ export default function ScreenAddInstalacion1() {
   const [images, setImages] = useState([]);
 
   const [isSelected, setSelection] = useState(false);
+
   
   return (
     <KeyboardAvoidingView
@@ -69,7 +73,7 @@ export default function ScreenAddInstalacion1() {
           </View>
           
           <MostrarDuracionYPrecio/>
-          <Button title="Añadir"  onPress={() => insertInstalacion(nombrePista)}/>
+          <Button title="Añadir"  onPress={() => insertInstalacion()}/>
         </View>
         </ScrollView>
       </TouchableWithoutFeedback>
