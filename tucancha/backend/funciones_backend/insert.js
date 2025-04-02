@@ -9,7 +9,7 @@ const insertInstalacion = async(instalacion) => {
             Instalacion.set('nombre', instalacion.nombrePista);
             Instalacion.set('descripcion', instalacion.infoExtra);
             Instalacion.set('idPropietario', 1);
-            
+            Instalacion.set('idDeporte1', 1);
             //Instalacion.set('imagen_instalacion', archivo);
 
             // Guardar la instalación

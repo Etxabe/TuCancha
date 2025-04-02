@@ -18,17 +18,28 @@ const MostrarTextIniciales = () => {
       <Text style={styles.title}>Información general:</Text>
 
       <Text style={styles.label}>Nombre de pista:</Text>
-      <TextInput style={styles.input} value={instalacion.nombrePista}  placeholder="Nombre de pista" 
-      onChangeText={(text) => setInstalacion({nombrePista: text })}
+      <TextInput style={styles.input} value={instalacion.nombrePista}  placeholder="Nombre de pista" id='text1' 
+      onChangeText={(text1) =>
+        setInstalacion((prevInstalacion) => ({
+          ...prevInstalacion,  // Mantén las propiedades anteriores
+          nombrePista: text1,  // Actualiza solo el campo 'nombrePista'
+        }))
+      }
       />
 
       <Text style={styles.label}>Descripción:</Text>
       <TextInput
         style={[styles.input, { height: 80 }]} 
         multiline
+        id='des'
         value={instalacion.infoExtra} 
         placeholder="breve descripcion"
-        onChangeText={(text) => setInstalacion({descripcion: text })}
+        onChangeText={(des) =>
+          setInstalacion((prevInstalacion) => ({
+            ...prevInstalacion,  // Mantén las propiedades anteriores
+            infoExtra: des,  // Actualiza solo el campo 'infoExtra'
+          }))
+        }
       />
   </View>
   );
