@@ -24,9 +24,6 @@ const ClienteStack = () => {
                 <Stack.Screen name="4" component={ScreenPerfil} />
             </Stack.Navigator>
         </ClientProvider>
-
-
-
     );
 };
 

@@ -14,12 +14,15 @@ export const ClientProvider = ({ children }) => {
     imagen_instalacion: ""
   });
   const [reserva,setReserva] = useState({
-    nombre: "",
-    precio: "",
-    descripcion: ""
+    dia: "",
+    mes: "",
+    anio: "",
+    hora_ini: "",
+    hora_fin: "",
+    fecha: new Date()
   });
   return (
-    <ClientContext.Provider value={{ ubicacion,setUbication}}>
+    <ClientContext.Provider value={{ ubicacion,setUbication,reserva,setReserva}}>
       {children}
     </ClientContext.Provider>
   );
