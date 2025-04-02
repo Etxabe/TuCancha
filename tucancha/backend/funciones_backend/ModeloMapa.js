@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import {StyleSheet,Image,Button, View, Text, FlatList, ActivityIndicator ,TouchableOpacity} from "react-native";
+import React, { useEffect, useState,useContext } from "react";
+import {StyleSheet} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Cancha from "./ModeloCancha";
 import Parse from "./Conexion";
+import { ClientContext } from "../../front_cliente/ClientContext";
 
 
 const Mapa = ({ onSelectUbicacion }) => {
     
       const [data, setData] = useState([]);
       const [loading, setLoading] = useState(true);
-        
+      const { ubicacion, setUbication } = useContext(ClientContext);
 
       useEffect(() => {
         const fetchData = async () => {
@@ -22,6 +22,7 @@ const Mapa = ({ onSelectUbicacion }) => {
             const formattedData = results.map(item => ({
               id: item.id,
               descripcion: item.get("descripcion"),
+              precio: item.get("precio"),
               nombre: item.get("nombre"),
               latitude: item.get("latitude"),
               longitude: item.get("longitude"),
@@ -56,17 +57,13 @@ const Mapa = ({ onSelectUbicacion }) => {
               coordinate={{ latitude: item.latitude, longitude: item.longitude }}
               title={item.nombre}
               description={item.descripcion}
+
+              onPress={() => setUbication({nombre: item.nombre,precio: item.precio,descripcion: item.descripcion})}
           >
-            <TouchableOpacity onPress={() => {
-              seleccionarUbicacion(item.id, item.nombre, item.latitude, item.longitude); 
-              onSelectUbicacion(item);
-            }}
-            >
-              <Ionicons
-                name={item.logo_instalacion} // Aquí seleccionas el nombre del ícono de FontAwesome
-                size={30} // Tamaño del ícono
-              />
-            </TouchableOpacity>
+          <Ionicons
+            name={item.logo_instalacion} // Aquí seleccionas el nombre del ícono de FontAwesome
+            size={30} // Tamaño del ícono
+          />
           </Marker>
           ))}
       </MapView>
@@ -79,7 +76,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: "100%",
-    height: "50%",
+    height: "60%",
   },
 });
 

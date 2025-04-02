@@ -1,20 +1,27 @@
 import { StyleSheet, Text, View,Button,Image,Input, Dimensions, PRe}from 'react-native';
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
+import { ClientContext } from '../front_cliente/ClientContext';
 
 const imagen = require('../assets/fronton-tafalla.png')
 const { width, height } = Dimensions.get("window"); // Obtiene el tamaño de la pantalla
 
-const Instalacion = ({ ubicacionSeleccionada }) => {
-  return (
+const Instalacion = () => {
+
+  const { ubicacion, setUbicacion } = useContext(ClientContext);
+
+  return ubicacion.nombre === "" ? null :(
     <View style={styles.containerinstalacion}>
         <View style={styles.container}>
             <Image source={imagen} style={styles.imagen}></Image>
             <Text style={styles.text}>
-            {ubicacionSeleccionada?.nombre}
+                {ubicacion.nombre}
+            </Text> 
+            <Text style={styles.text}>
+                {ubicacion.descripcion}
             </Text>
         </View>
         <View style={styles.container}>
-            <Text style={styles.text}>Precio: 12€/h</Text>
+            <Text style={styles.text}>Precio: {ubicacion.precio}€/h</Text>
             <Button title='Reservar' style={styles.boton} onPress={() => alert('Reservar cancha')}></Button>
         </View>
     </View> 
