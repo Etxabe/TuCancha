@@ -2,7 +2,7 @@ import { createNativeStackNavigation} from '@react-navigation/stack'
 
 import { StyleSheet, View,Button,Input, Dimensions}from 'react-native';
 import React, { useState } from "react";
-
+import ModeloCancha from '../../backend/funciones_backend/ModeloCancha'
 
 const { width, height } = Dimensions.get("window");
 
@@ -10,8 +10,8 @@ const { width, height } = Dimensions.get("window");
 export default function FrontViewPitch1() {
 
   return (
-      <View style={styles.container}>
-        <Button title='hola2' ></Button>
+      <View>
+        <ModeloCancha />
       </View>
   );
 }

@@ -1,17 +1,19 @@
-import { createNativeStackNavigation} from '@react-navigation/stack'
-
-import { StyleSheet, View,Button,Input, Dimensions}from 'react-native';
-import React, { useState } from "react";
+import { StyleSheet, View,Button,Text, Dimensions}from 'react-native';
+import React, { useState,useContext } from "react";
+import { ClientContext } from "../ClientContext";
 
 
 const { width, height } = Dimensions.get("window");
 
 
 export default function FrontViewPitch1() {
-
+  const { contador, setContador } = useContext(ClientContext);
   return (
       <View style={styles.container}>
-        <Button title='hola1' ></Button>
+        <View>
+          <Text>Contador: {contador}</Text>
+          <Button title="Incrementar" onPress={() => setContador(contador + 1)} />
+        </View>
       </View>
   );
 }

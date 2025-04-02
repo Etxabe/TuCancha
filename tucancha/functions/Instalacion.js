@@ -1,31 +1,32 @@
 import { StyleSheet, Text, View,Button,Image,Input, Dimensions, PRe}from 'react-native';
-import React, { useState } from "react";
-
+import React, { useState,useContext } from "react";
+import { ClientContext } from '../front_cliente/ClientContext';
 
 const imagen = require('../assets/fronton-tafalla.png')
 const { width, height } = Dimensions.get("window"); // Obtiene el tamaño de la pantalla
 
-export default function App() {
-  const [nombre, setName] = useState("");
-  const [gmail, setMail] = useState("");
+const Instalacion = () => {
+  const { ubicacion, setUbicacion } = useContext(ClientContext);
 
-  return (
+  return ubicacion.nombre === "" ? null :(
     <View style={styles.containerinstalacion}>
         <View style={styles.container}>
-            <Image source={imagen} style={styles.imagen}></Image>
+            <Image source={{uri: ubicacion.imagen_instalacion}} style={styles.imagen}></Image>
             <Text style={styles.text}>
-                Fronton de Tafalla
-                Descripción del fronton lamentable de un pueblo decadente.
+                {ubicacion.nombre}
+            </Text> 
+            <Text style={styles.text}>
+                {ubicacion.descripcion}
             </Text>
         </View>
         <View style={styles.container}>
-            <Text style={styles.text}>Precio: 12€/h</Text>
+            <Text style={styles.text}>Precio: {ubicacion.precio}€/h</Text>
             <Button title='Reservar' style={styles.boton} onPress={() => alert('Reservar cancha')}></Button>
         </View>
-    </View>
-    
+    </View> 
   );
-}
+};
+
 const styles = StyleSheet.create({
     containerinstalacion: {
         flexDirection: 'col', // Organiza los elementos en una fila
@@ -54,3 +55,5 @@ const styles = StyleSheet.create({
         padding: 10,
     },
 });
+
+export default Instalacion;
