@@ -9,6 +9,13 @@ export const ClientProvider = ({ children }) => {
   const [ubicacion,setUbication] = useState({
     nombre: "",
     precio: "",
+    descripcion: "",
+    imagen: "",
+    imagen_instalacion: ""
+  });
+  const [reserva,setReserva] = useState({
+    nombre: "",
+    precio: "",
     descripcion: ""
   });
   return (

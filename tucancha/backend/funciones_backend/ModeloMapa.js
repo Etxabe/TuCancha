@@ -27,8 +27,10 @@ const Mapa = ({ onSelectUbicacion }) => {
               latitude: item.get("latitude"),
               longitude: item.get("longitude"),
               logo_instalacion: item.get("logo_instalacion"),
+              imagen_instalacion: item.get("imagen_instalacion") ? item.get("imagen_instalacion").url() : null
             }));
             setData(formattedData);
+            
           } catch (error) {
             console.error("Error al obtener datos:", error);
           } finally {
@@ -39,7 +41,6 @@ const Mapa = ({ onSelectUbicacion }) => {
         fetchData();
       }, []);
     
-
   return (
       <MapView
           style={styles.map}
@@ -57,8 +58,7 @@ const Mapa = ({ onSelectUbicacion }) => {
               coordinate={{ latitude: item.latitude, longitude: item.longitude }}
               title={item.nombre}
               description={item.descripcion}
-
-              onPress={() => setUbication({nombre: item.nombre,precio: item.precio,descripcion: item.descripcion})}
+              onPress={() => setUbication({nombre: item.nombre,precio: item.precio,descripcion: item.descripcion,imagen_instalacion: item.imagen_instalacion})}
           >
           <Ionicons
             name={item.logo_instalacion} // Aquí seleccionas el nombre del ícono de FontAwesome
