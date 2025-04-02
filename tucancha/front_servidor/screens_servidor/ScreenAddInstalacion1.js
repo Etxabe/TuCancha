@@ -10,24 +10,24 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
-  Alert,
 } from 'react-native';
 import React from 'react';
 import { useState } from 'react';
+
 import Checkbox from 'expo-checkbox';
-import {MostrarTextIniciales} from './funciones_servidor/funcionVistaAddInstalacion4Atributos'
+import {MostrarTextIniciales} from './funciones_servidor/funcionVistaAddInstalacion2Atributos.js'
 import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
 import {MostrarDuracionYPrecio} from './funciones_servidor/funcionScreenAddInstalacionDuracionYPrecio'
 import {MostrarHorarios} from './funciones_servidor/funcionScreenAddInstalacionHorarios'
 import {insertInstalacion} from '../../backend/funciones_backend/insert.js'
-import Parse from 'parse/react-native.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Mapa from '../../functions/Mapa.js'
 
 const { width, height } = Dimensions.get('window');
 
 export default function ScreenAddInstalacion1() {
 
   const [nombrePista, setNombrePista] = useState('');
+  const [infoExtra, setInfoExtra] = useState('');
 
   const [images, setImages] = useState([]);
 
@@ -35,20 +35,24 @@ export default function ScreenAddInstalacion1() {
 
   
   return (
+    
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // mejor soporte multiplataforma
     >
+      
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={styles.container}
           keyboardShouldPersistTaps="handled"
         >
           
-          <MostrarTextIniciales nombrePista={nombrePista} setNombrePista={setNombrePista} />
+          <MostrarTextIniciales nombrePista={nombrePista} setNombrePista={setNombrePista} 
+                                infoExtra={infoExtra} setInfoExtra={setInfoExtra}/>
+          
 
         <Button title="Subir foto" onPress={() => AbrirGaleria(setImages)} />
-      
+        
         <ScrollView horizontal style={{ marginTop: 20 }}>
           {images.map((uri, index) => (
             <Image
@@ -73,7 +77,8 @@ export default function ScreenAddInstalacion1() {
           </View>
           
           <MostrarDuracionYPrecio/>
-          <Button title="Añadir"  onPress={() => insertInstalacion(nombrePista)}/>
+          
+          <Button title="Añadir"  onPress={() => {insertInstalacion(nombrePista,infoExtra,images[0]); console.log("",images[0])}}/>
         </View>
         </ScrollView>
       </TouchableWithoutFeedback>

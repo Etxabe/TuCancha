@@ -9,12 +9,7 @@ import { useState } from 'react';
 
 const { width, height } = Dimensions.get('window');
 
-export const MostrarTextIniciales = ({ nombrePista, setNombrePista }) => {
-
-  
-  const [ciudad, setCiudad] = useState('');
-  const [calle, setCalle] = useState('');
-  const [infoExtra, setInfoExtra] = useState('');
+export const MostrarTextIniciales = ({ nombrePista, setNombrePista, ciudad,setCiudad,calle,setCalle,infoExtra,setInfoExtra}) => {
 
   return (
     <View>
@@ -23,16 +18,9 @@ export const MostrarTextIniciales = ({ nombrePista, setNombrePista }) => {
       <Text style={styles.label}>Nombre de pista:</Text>
       <TextInput style={styles.input} value={nombrePista} onChangeText={setNombrePista} placeholder="Nombre de pista" />
 
-      <Text style={styles.label}>Localidad:</Text>
-      <TextInput style={styles.input} value={ciudad} onChangeText={setCiudad} placeholder="Pueblo, Ciudad..." />
-
-      <Text style={styles.label}>Calle:</Text>
-      <TextInput style={styles.input} value={calle} onChangeText={setCalle} placeholder="Calle" />
-
       <Text style={styles.label}>Descripción:</Text>
       <TextInput
         style={[styles.input, { height: 80 }]} 
-        placeholder="Información adicional"
         multiline
         value={infoExtra} 
         onChangeText={setInfoExtra}
