@@ -6,20 +6,16 @@ export const ServerContext = createContext();
 // 2. Creamos el Provider que envolverá nuestra app
 export const ServerProvider = ({ children }) => {
   const [contador, setContador] = useState(0); // Variable compartida
-  const [ubicacion,setUbication] = useState({
-    nombre: "",
+  const [instalacion,setInstalacion] = useState({
+    nombrePista: "",
     precio: "",
     descripcion: "",
-    imagen: "",
-    imagen_instalacion: ""
-  });
-  const [reserva,setReserva] = useState({
-    nombre: "",
-    precio: "",
-    descripcion: ""
+    imagen_instalacion: "",
+    hora_apertura: "",
+    hora_cierre:"",
   });
   return (
-    <ServerContext.Provider value={{ ubicacion,setUbication}}>
+    <ServerContext.Provider value={{ instalacion,setInstalacion}}>
       {children}
     </ServerContext.Provider>
   );
