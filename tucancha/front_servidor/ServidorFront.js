@@ -10,6 +10,8 @@ import ScreenPerfil from './screens_servidor/ScreenPerfil';
 
 import ScreenAddInstalacion1 from './screens_servidor/ScreenAddInstalacion1';
 
+import { ServerProvider } from './ServerContext';
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -39,9 +41,12 @@ const Tabs = () => {
 
 export default function App() {
   return (
-    <NavigationContainer>
-          <Tabs />
-    </NavigationContainer>
+    <ServerProvider>
+      <NavigationContainer>
+        <Tabs />
+      </NavigationContainer>
+    </ServerProvider>
+
   );
 }
 
