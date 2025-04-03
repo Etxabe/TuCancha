@@ -26,15 +26,18 @@ const Instalacion = () => {
         <View style={styles.container}>
             <Image source={{uri: ubicacion.imagen_instalacion}} style={styles.imagen}></Image>
             <Text style={styles.text}>
-                {ubicacion.nombre}
+                {ubicacion.nombre}  
+                
             </Text> 
             <Text style={styles.text}>
                 {ubicacion.descripcion}
+                {ubicacion.hora_inicio}-
+                {ubicacion.hora_fin}
             </Text>
         </View>
         <View style={styles.container}>
             <Text style={styles.text}>Precio: {ubicacion.precio}€/h</Text>
-            <Button title="Abrir Modal" onPress={openModal} />
+            <Button title="Reservar" onPress={openModal} />
 
             {/* Aquí pasamos las props al modal */}
             <MyModal visible={isModalVisible} onClose={closeModal} />

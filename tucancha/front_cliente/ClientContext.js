@@ -8,17 +8,21 @@ export const ClientProvider = ({ children }) => {
   const [contador, setContador] = useState(0); // Variable compartida
   const [ubicacion,setUbication] = useState({
     nombre: "",
+    id_instalacion: "",
     precio: "",
     descripcion: "",
     imagen: "",
-    imagen_instalacion: ""
-  });
-  const [reserva,setReserva] = useState({
-    dia: "",
-    mes: "",
-    anio: "",
+    imagen_instalacion: "",
     hora_ini: "",
     hora_fin: "",
+    duracion: "",
+  });
+  const [reserva,setReserva] = useState({
+    id_cliente: "",
+    id_instalacion: "",
+    tiempo_reserva: "",
+    fecha_ini: "",
+    hora_ini: "",
     fecha: new Date()
   });
   return (

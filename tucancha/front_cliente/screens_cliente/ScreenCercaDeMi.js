@@ -14,7 +14,7 @@ export default function ScreenCercaDeMi() {
     <View style={styles.container}>
         <TextInput type='text' style={styles.input} value={local} placeholder="Localizacion" onChangeText={setName} />
         <Mapa style={styles.mapa} />
-        <Instalacion ubicacion={ubicacion}/>
+        <Instalacion />
     </View>
   );
   };
