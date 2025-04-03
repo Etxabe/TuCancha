@@ -3,8 +3,8 @@ import Parse from './Conexion.js';
 import 'react-native-get-random-values';    
 
 const insertInstalacion = async(instalacion) => {
-    try {
-
+    /*try {
+        
         let Instalacion = new Parse.Object('Instalacion');
             Instalacion.set('nombre', instalacion.nombrePista);
             Instalacion.set('descripcion', instalacion.infoExtra);
@@ -27,7 +27,7 @@ const insertInstalacion = async(instalacion) => {
     } catch(error) {
         Alert.alert('Error!', error.message);
         console.error('Error al insertar la instalación:', error); 
-    }
+    }*/
 }
 
 export default insertInstalacion;

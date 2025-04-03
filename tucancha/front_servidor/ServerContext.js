@@ -11,8 +11,8 @@ export const ServerProvider = ({ children }) => {
     precio: "",
     descripcion: "",
     imagen_instalacion: "",
-    hora_apertura: "",
-    hora_cierre:"",
+    horaApertura: "09:00",
+    horaCierre:"18:00",
   });
   return (
     <ServerContext.Provider value={{ instalacion,setInstalacion}}>
