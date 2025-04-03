@@ -3,15 +3,17 @@ import Parse from './Conexion.js';
 import 'react-native-get-random-values';    
 
 const insertInstalacion = async(instalacion) => {
-    /*try {
+    try {
         
         let Instalacion = new Parse.Object('Instalacion');
-            Instalacion.set('nombre', instalacion.nombrePista);
+            Instalacion.set('nombre', 'ifas');
             Instalacion.set('descripcion', instalacion.infoExtra);
             Instalacion.set('hora_inicio', instalacion.horaApertura);
             Instalacion.set('hora_fin', instalacion.horaCierre);
             Instalacion.set('precio', parseInt(instalacion.precio));
             Instalacion.set('tiempo_reserva', parseInt(instalacion.duracion));
+            Instalacion.set('latitude', parseFloat(instalacion.latitud));
+            Instalacion.set('longitude', parseFloat(instalacion.longitud));
             Instalacion.set('idPropietario', 1);
             Instalacion.set('idDeporte1', 1);
             if (instalacion.imagen_instalacion) {
@@ -31,7 +33,7 @@ const insertInstalacion = async(instalacion) => {
     } catch(error) {
         Alert.alert('Error!', error.message);
         console.error('Error al insertar la instalación:', error); 
-    }*/
+    }
 }
 
 export default insertInstalacion;

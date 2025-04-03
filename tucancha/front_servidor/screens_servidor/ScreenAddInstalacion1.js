@@ -28,8 +28,6 @@ const { width, height } = Dimensions.get('window');
 export default function ScreenAddInstalacion1() {
 
   const { instalacion, setInstalacion } = useContext(ServerContext);
-  const [images, setImages] = useState([]);
-
   const [isSelected, setSelection] = useState(false);
 
   
@@ -46,9 +44,11 @@ export default function ScreenAddInstalacion1() {
           keyboardShouldPersistTaps="handled"
         >
           
-          <MostrarTextIniciales/>
-          
-
+        <MostrarTextIniciales/>
+        <Text style={styles.title}>Holas</Text>
+        <View style={{ width: width * 0.8, height: height * 0.8 }}>
+          <Mapa/>
+        </View>
         <Button title="Subir foto" onPress={ () => AbrirGaleria(setInstalacion)} />
         
         {instalacion.imagen_instalacion ? (
