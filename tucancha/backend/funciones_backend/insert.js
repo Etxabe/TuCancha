@@ -8,6 +8,8 @@ const insertInstalacion = async(instalacion) => {
         let Instalacion = new Parse.Object('Instalacion');
             Instalacion.set('nombre', instalacion.nombrePista);
             Instalacion.set('descripcion', instalacion.infoExtra);
+            Instalacion.set('hora_inicio', instalacion.horaApertura);
+            Instalacion.set('hora_fin', instalacion.horaCierre);
             Instalacion.set('idPropietario', 1);
             Instalacion.set('idDeporte1', 1);
             if (instalacion.imagen_instalacion) {

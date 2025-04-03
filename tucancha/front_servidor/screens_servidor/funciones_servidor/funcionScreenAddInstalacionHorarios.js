@@ -16,7 +16,8 @@ const { width, height } = Dimensions.get('window');
 
 export const MostrarHorarios = () => {
 
-  const [instalacion,setInstalacion] = useContext(ServerContext);
+  const { instalacion, setInstalacion } = useContext(ServerContext);
+  
   const [modalAperturaVisible, setModalAperturaVisible] = useState(false);
   const [modalCierreVisible, setModalCierreVisible] = useState(false);
 
