@@ -8,7 +8,8 @@ export const ServerProvider = ({ children }) => {
   const [contador, setContador] = useState(0); // Variable compartida
   const [instalacion,setInstalacion] = useState({
     nombrePista: "",
-    precio: "",
+    precio: 0,
+    duracion:0,
     descripcion: "",
     imagen_instalacion: "",
     horaApertura: "09:00",

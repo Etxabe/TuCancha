@@ -10,6 +10,8 @@ const insertInstalacion = async(instalacion) => {
             Instalacion.set('descripcion', instalacion.infoExtra);
             Instalacion.set('hora_inicio', instalacion.horaApertura);
             Instalacion.set('hora_fin', instalacion.horaCierre);
+            Instalacion.set('precio', parseInt(instalacion.precio));
+            Instalacion.set('tiempo_reserva', parseInt(instalacion.duracion));
             Instalacion.set('idPropietario', 1);
             Instalacion.set('idDeporte1', 1);
             if (instalacion.imagen_instalacion) {
