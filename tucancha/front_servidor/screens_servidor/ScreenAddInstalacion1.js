@@ -49,17 +49,14 @@ export default function ScreenAddInstalacion1() {
           <MostrarTextIniciales/>
           
 
-        <Button title="Subir foto" onPress={() => AbrirGaleria(setImages)} />
+        <Button title="Subir foto" onPress={ () => AbrirGaleria(setInstalacion)} />
         
-        <ScrollView horizontal style={{ marginTop: 20 }}>
-          {images.map((uri, index) => (
-            <Image
-              key={index}
-              source={{ uri }}
-              style={{ width: 120, height: 120, marginRight: 10, borderRadius: 10 }}
-            />
-          ))}
-        </ScrollView>
+        {instalacion.imagen_instalacion ? (
+        <Image
+          source={{ uri: instalacion.imagen_instalacion }}
+          style={{ width: 120, height: 120, marginTop: 10, borderRadius: 10 }}
+        />
+      ) : null}
         
         <View style={styles.container}>
           <MostrarHorarios/>

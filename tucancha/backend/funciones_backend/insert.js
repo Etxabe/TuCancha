@@ -10,7 +10,16 @@ const insertInstalacion = async(instalacion) => {
             Instalacion.set('descripcion', instalacion.infoExtra);
             Instalacion.set('idPropietario', 1);
             Instalacion.set('idDeporte1', 1);
-            //Instalacion.set('imagen_instalacion', archivo);
+            if (instalacion.imagen_instalacion) {
+                // Convierte la imagen en un archivo
+                const response = await fetch(instalacion.imagen_instalacion);
+                const blob = await response.blob();  // Convierte el URI en un blob
+          
+                const file = new Parse.File('imagen_instalacion.jpg', blob);  // El nombre del archivo y el blob
+          
+                // Asocia la imagen al objeto Instalacion
+                Instalacion.set('imagen_instalacion', file);
+            }
 
             // Guardar la instalación
             await Instalacion.save();
