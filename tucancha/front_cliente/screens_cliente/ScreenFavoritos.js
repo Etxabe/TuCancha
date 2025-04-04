@@ -1,6 +1,6 @@
 import { createNativeStackNavigation} from '@react-navigation/stack'
 
-import { StyleSheet, View,Button,Input, Dimensions}from 'react-native';
+import { StyleSheet, View,Button,Input, Dimensions,ScrollView}from 'react-native';
 import React, { useState } from "react";
 import Resrvados from '../../backend/funciones_backend/Reservados'
 
@@ -11,7 +11,7 @@ export default function FrontViewPitch1() {
 
   return (
       <View>
-        <Resrvados />
+          <Resrvados/>
       </View>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useContext ,useState} from "react";
-import { Modal, View, Text, Button, StyleSheet, Image,TouchableOpacity  } from "react-native";
+import { Modal, View, Text, Button, StyleSheet, Image,TouchableOpacity ,ScrollView } from "react-native";
 import { ClientContext } from '../front_cliente/ClientContext';
 import { Calendar } from 'react-native-calendars';
 import { insertReserva } from "../backend/funciones_backend/InsertarReserva"; 
@@ -106,6 +106,8 @@ const MyModal = ({ visible, onClose }) => {
       transparent={true}
       onRequestClose={onClose}
     >
+      <ScrollView>
+
       <View style={styles.overlay}>
         <View style={styles.modalContainer}>
           <Text style={styles.text}>¿Cuando deseas reservar?</Text>
@@ -118,28 +120,27 @@ const MyModal = ({ visible, onClose }) => {
             }}
             monthFormat={'yyyy MM'}
         />
-
-        {dataSelected && (
-          <View style={styles.hoursContainer}>
-            {availableHours.map((hour) => (
-              <TouchableOpacity
-                key={hour}
-                onPress={() => handleHourSelect(hour)}
-                style={[
-                  styles.hourOption,
-                  selectedHour === hour && styles.selectedHourOption,
-                ]}
-              >
-                <Text>
-                <Text style={styles.hours}>{hour || "Hora no disponible"}</Text> {/* Mostrar solo el intervalo */}
-                </Text>
-                </TouchableOpacity>
-            ))}
-          </View>
-        )}
+          
+        <View style={styles.hoursContainer}>
+          {availableHours.map((hour) => (
+            <TouchableOpacity
+              key={hour}
+              onPress={() => handleHourSelect(hour)}
+              style={[
+                styles.hourOption,
+                selectedHour === hour && styles.selectedHourOption,
+              ]}
+            >
+              <Text>
+              <Text style={styles.hours}>{hour || "Hora no disponible"}</Text> {/* Mostrar solo el intervalo */}
+              </Text>
+              </TouchableOpacity>
+          ))}
+        </View>
         <Button title="Cerrar" onPress={onClose} />
         </View>
       </View>
+      </ScrollView>
 
       {confirmationVisible && (
           <Modal

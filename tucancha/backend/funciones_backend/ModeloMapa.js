@@ -1,5 +1,5 @@
-import React, { useEffect, useState,useContext } from "react";
-import {StyleSheet} from "react-native";
+import React, { useEffect, useState,useContext,useRef } from "react";
+import {StyleSheet,View,TextInput,Button} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Parse from "./Conexion";
@@ -11,6 +11,43 @@ const Mapa = () => {
       const [data, setData] = useState([]);
       const [loading, setLoading] = useState(true);
       const { ubicacion, setUbication } = useContext(ClientContext);
+
+
+      const [searchQuery, setSearchQuery] = useState("");
+      const [location, setLocation] = useState(null);
+      const mapRef = useRef(null);
+    
+      const searchLocation = async () => {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`;
+      
+        try {
+          const response = await fetch(url, {
+            headers: {
+              "User-Agent": "TuCanchaApp/1.0 (tuemail@ejemplo.com)", // Cambia esto por tu información
+            },
+          });
+          const data = await response.json();
+      
+          if (data.length > 0) {
+            const { lat, lon } = data[0];
+            const newRegion = {
+              latitude: parseFloat(lat),
+              longitude: parseFloat(lon),
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            };
+            setLocation(newRegion);
+            mapRef.current.animateToRegion(newRegion, 1000);
+          } else {
+            console.warn("No se encontraron resultados para la búsqueda.");
+          }
+        } catch (error) {
+          console.error("Error en la búsqueda:", error);
+        }
+      };
+
+
+
 
       useEffect(() => {
         const fetchData = async () => {
@@ -45,7 +82,20 @@ const Mapa = () => {
       }, []);
     
   return (
+    <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Buscar ubicación"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <Button title="Buscar" onPress={searchLocation} />
+      </View>
+
+
       <MapView
+          ref={mapRef}
           style={styles.map}
           initialRegion={{
               latitude: 42.527284634963365,  // Latitud inicia, 
@@ -78,6 +128,8 @@ const Mapa = () => {
           </Marker>
           ))}
       </MapView>
+      {location && <Marker coordinate={location} />}
+      </View>
   );
 };
 
@@ -87,7 +139,7 @@ const styles = StyleSheet.create({
   },
   map: {
     width: "100%",
-    height: "60%",
+    height: "80%",
   },
 });
 

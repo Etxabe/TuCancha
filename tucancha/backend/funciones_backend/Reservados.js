@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { StyleSheet, View, Text, FlatList, ActivityIndicator } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import Parse from "./Conexion";
-import Reserva from "../../functions/Reserva"; // Asegúrate de que la ruta sea correcta
+import Reserva from "../../functions/Reserva";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -31,13 +31,19 @@ const App = () => {
     }
   };
 
+
+  const formatFecha = (fecha) => {
+    const opciones = { day: "numeric", month: "long", year: "numeric" };
+    return new Date(fecha).toLocaleDateString("es-ES", opciones); // Formato: 6 de abril de 2025
+  };
+
   const fetchData = async () => {
     try {
-      setLoading(true); // Mostrar indicador de carga
+      setLoading(true);
       const query = new Parse.Query("Reserva");
       query.limit(100);
       const results = await query.find();
-
+  
       const formattedData = results.map((item) => ({
         id_reserva: item.id,
         id_usuario: item.get("id_cliente"),
@@ -46,11 +52,27 @@ const App = () => {
         fecha_ini: item.get("fecha_ini"),
         hora_ini: item.get("hora_ini"),
       }));
-      setData(formattedData);
+  
+      // Agrupar y ordenar los datos por fecha
+      const groupedData = Object.entries(
+        formattedData.reduce((groups, reserva) => {
+          const group = groups[reserva.fecha_ini] || [];
+          group.push(reserva);
+          groups[reserva.fecha_ini] = group;
+          return groups;
+        }, {})
+      )
+        .sort(([fechaA], [fechaB]) => new Date(fechaA) - new Date(fechaB)) // Ordenar por fecha ascendente
+        .flatMap(([fecha, reservas]) => [
+          { type: "header", fecha }, // Encabezado de la sección
+          ...reservas.map((reserva) => ({ ...reserva, type: "item" })), // Reservas de la sección
+        ]);
+  
+      setData(groupedData);
     } catch (error) {
       console.error("Error al obtener datos:", error);
     } finally {
-      setLoading(false); // Ocultar indicador de carga
+      setLoading(false);
     }
   };
 
@@ -72,24 +94,27 @@ const App = () => {
     return groups;
   }, {});
 
+  const renderItem = ({ item }) => {
+    if (item.type === "header") {
+      // Renderizar encabezado de la sección
+      return <Text style={styles.sectionHeader}>{formatFecha(item.fecha)}</Text>;
+    }
+    // Renderizar reserva
+    return (
+      <Reserva
+        reserva={item}
+        fetchInstalacion={() => infoInstalacion(item.id_instalacion)}
+      />
+    );
+  };
+
   return (
-    <View style={styles.containerinstalacion}>
-      {Object.keys(groupedData).map((fecha) => (
-        <View key={fecha}>
-          <Text style={styles.sectionHeader}>{fecha}</Text>
-          <FlatList
-            data={groupedData[fecha]}
-            keyExtractor={(item) => item.id_reserva}
-            renderItem={({ item }) => (
-              <Reserva
-                reserva={item}
-                fetchInstalacion={() => infoInstalacion(item.id_instalacion)}
-              />
-            )}
-          />
-        </View>
-      ))}
-    </View>
+    <FlatList
+      data={data}
+      keyExtractor={(item, index) => index.toString()}
+      renderItem={renderItem}
+      contentContainerStyle={styles.containerinstalacion}
+    />
   );
 };
 
