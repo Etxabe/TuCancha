@@ -7,9 +7,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import ScreenListadoInstalaciones from './screens_servidor/ScreenListadoInstalaciones';
 import ScreenPerfil from './screens_servidor/ScreenPerfil';
-import ScreenAddInstalacion2 from './screens_servidor/ScreenAddInstalacion2';
 
 import ScreenAddInstalacion1 from './screens_servidor/ScreenAddInstalacion1';
+
+import { ServerProvider } from './ServerContext';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -40,12 +41,12 @@ const Tabs = () => {
 
 export default function App() {
   return (
-    <NavigationContainer>
-       <Stack.Navigator>
-        <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-        <Stack.Screen name="ScreenAddInstalacion2" component={ScreenAddInstalacion2} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <ServerProvider>
+      <NavigationContainer>
+        <Tabs />
+      </NavigationContainer>
+    </ServerProvider>
+
   );
 }
 

@@ -3,7 +3,6 @@ import {
   View,
   Button,
   Text,
-  TextInput,
   Dimensions,
   KeyboardAvoidingView,
   ScrollView,
@@ -13,85 +12,69 @@ import {
   Image,
 } from 'react-native';
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
-import * as ImagePicker from 'expo-image-picker';
+import { useState ,useContext} from 'react';
+
+import Checkbox from 'expo-checkbox';
+import MostrarTextIniciales from './funciones_servidor/funcionVistaAddInstalacion2Atributos.js'
+import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
+import {MostrarDuracionYPrecio} from './funciones_servidor/funcionScreenAddInstalacionDuracionYPrecio'
+import {MostrarHorarios} from './funciones_servidor/funcionScreenAddInstalacionHorarios'
+import insertInstalacion from '../../backend/funciones_backend/insert.js'
+import Mapa from '../../functions/Mapa.js'
+import { ServerContext } from '../../front_servidor/ServerContext.js';
 
 const { width, height } = Dimensions.get('window');
 
 export default function ScreenAddInstalacion1() {
-  const navigation = useNavigation();
 
-  const [images, setImages] = useState([]);
-  const [imageUri, setImageUri] = useState(null);  // Para mostrar la URI de la image
-  const openGallery = async () => {
-    // Pedir permisos
-    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (permissionResult.granted === false) {
-      Alert.alert('Permiso denegado', 'Necesitamos acceso a tu galería para continuar');
-      return;
-    }
+  const { instalacion, setInstalacion } = useContext(ServerContext);
+  const [isSelected, setSelection] = useState(false);
 
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images, // Solo imágenes
-      quality: 1, // Calidad de la imagen
-      allowsMultipleSelection: true,
-    });
   
-    if (!result.canceled) {
-      setImages(result.assets.map(asset => asset.uri));
-    }
-  };
-  
-
-
-    
-
   return (
+    
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // mejor soporte multiplataforma
     >
+      
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={styles.container}
           keyboardShouldPersistTaps="handled"
         >
-          <Text style={styles.title}>Información general:</Text>
+          
+        <MostrarTextIniciales/>
+        <Text style={styles.title}>Holas</Text>
+        <View style={{ width: width * 0.8, height: height * 0.8 }}>
+          <Mapa/>
+        </View>
+        <Button title="Subir foto" onPress={ () => AbrirGaleria(setInstalacion)} />
+        
+        {instalacion.imagen_instalacion ? (
+        <Image
+          source={{ uri: instalacion.imagen_instalacion }}
+          style={{ width: 120, height: 120, marginTop: 10, borderRadius: 10 }}
+        />
+      ) : null}
+        
+        <View style={styles.container}>
+          <MostrarHorarios/>
 
-          <Text style={styles.label}>Nombre de pista:</Text>
-          <TextInput style={styles.input} placeholder="Nombre de pista" />
-
-          <Text style={styles.label}>Localidad:</Text>
-          <TextInput style={styles.input} placeholder="Pueblo, Ciudad..." />
-
-          <Text style={styles.label}>Calle:</Text>
-          <TextInput style={styles.input} placeholder="Calle" />
-
-          <Text style={styles.label}>Descripción:</Text>
-          <TextInput
-            style={[styles.input, { height: 80 }]} 
-            placeholder="Información adicional"
-            multiline
-          />
-
-          <Button title='Subir foto'onPress={openGallery}/>
-          <ScrollView horizontal style={{ marginTop: 20 }}>
-        {images.map((uri, index) => (
-          <Image
-            key={index}
-            source={{ uri }}
-            style={{ width: 120, height: 120, marginRight: 10, borderRadius: 10 }}
-          />
-        ))}
-      </ScrollView>
-
-          <View style={{ marginTop: 20 }}>
-            <Button
-              title="Siguiente"
-              onPress={() => navigation.navigate('ScreenAddInstalacion2')}
+          <View style={styles.checkboxContainer}>
+            <Text style={styles.checkboxLabel}>Abrir en festivos(Domingos incluidos)</Text>
+            <Checkbox
+              value={isSelected}
+              onValueChange={setSelection}
+              style={styles.checkbox}
             />
+
           </View>
+          
+          <MostrarDuracionYPrecio/>
+          
+          <Button title="Añadir"  onPress={() => insertInstalacion(instalacion)}/>
+        </View>
         </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
@@ -128,5 +111,19 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 10,
     marginBottom: 10,
+  },
+  checkboxContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 15,
+  },
+  checkboxLabel: {
+    fontSize: 16,
+    marginRight: 10,
+    color: '#333',
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
   },
 });

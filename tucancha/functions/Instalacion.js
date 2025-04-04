@@ -6,13 +6,12 @@ const imagen = require('../assets/fronton-tafalla.png')
 const { width, height } = Dimensions.get("window"); // Obtiene el tamaño de la pantalla
 
 const Instalacion = () => {
-
   const { ubicacion, setUbicacion } = useContext(ClientContext);
 
   return ubicacion.nombre === "" ? null :(
     <View style={styles.containerinstalacion}>
         <View style={styles.container}>
-            <Image source={imagen} style={styles.imagen}></Image>
+            <Image source={{uri: ubicacion.imagen_instalacion}} style={styles.imagen}></Image>
             <Text style={styles.text}>
                 {ubicacion.nombre}
             </Text> 

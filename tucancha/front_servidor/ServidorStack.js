@@ -7,7 +7,7 @@ import ScreenModificarInstalacion from './screens_servidor/ScreenModificarInstal
 
 import { NavigationContainer } from '@react-navigation/native';
 
-
+import { ServerProvider } from './ServerContext';
 
 
 const { width, height } = Dimensions.get("window");
@@ -17,11 +17,14 @@ const Stack = createNativeStackNavigator();
 
 const ServidorFront = () => {
     return (
+        <ServerProvider>
             <Stack.Navigator>
                 <Stack.Screen name="1" component={ScreenListadoInstalaciones} />
                 <Stack.Screen name="2" component={ScreenPerfil} />
                 <Stack.Screen name="3" component={ScreenModificarInstalacion} />
             </Stack.Navigator>
+        </ServerProvider>
+
     );
 };
 
