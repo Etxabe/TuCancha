@@ -1,26 +1,12 @@
 import { StyleSheet, View,Button,Input, Dimensions, Image, Text, TouchableOpacity}from 'react-native';
 import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Feather'; // Importamos el ícono
-import { obtenerClima } from '../../backend/funciones_backend/llamadaApi.js'; 
 
 const { width, height } = Dimensions.get("window");
 
 
 export default function FrontViewPitch1() {
 
-  obtenerClima('2025-04-12', '17:00:00', '43.91722', '-2.895555')
-  .then((data) => {
-    if (data.error) {
-      console.error('Error al obtener el clima:', data.error);
-    } else {
-      console.log('Temperatura mínima:', data.minTemperature, '°C');
-      console.log('Temperatura actual:', data.temperature, '°C');
-      console.log('Temperatura máxima:', data.maxTemperature, '°C');
-      console.log('Velocidad del viento:', data.windSpeed, 'km/h');
-      console.log('Icono del clima:', data.icon);
-    }
-  })
-  .catch((error) => console.error('Error inesperado:', error));
 
   return (
       <View style={styles.container}>
