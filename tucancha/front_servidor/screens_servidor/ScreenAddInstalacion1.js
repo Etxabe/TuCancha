@@ -45,7 +45,7 @@ export default function ScreenAddInstalacion1() {
         >
           
         <MostrarTextIniciales/>
-        <Text style={styles.title}>Holas</Text>
+        <Text style={styles.title}>Localizacion</Text>
         <View style={{ width: width * 0.8, height: height * 0.8 }}>
           <Mapa/>
         </View>
