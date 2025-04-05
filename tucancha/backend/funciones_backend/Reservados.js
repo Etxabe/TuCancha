@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { StyleSheet, View, Text, FlatList, ActivityIndicator } from "react-native";
+import { StyleSheet, View, Text, FlatList, ActivityIndicator
+  
+ } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import Parse from "./Conexion";
 import Reserva from "../../functions/Reserva";
@@ -76,7 +78,6 @@ const App = () => {
     }
   };
 
-  // Actualizar los datos cada vez que el screen se abre
   useFocusEffect(
     useCallback(() => {
       fetchData();
@@ -104,6 +105,7 @@ const App = () => {
       <Reserva
         reserva={item}
         fetchInstalacion={() => infoInstalacion(item.id_instalacion)}
+        onReservaAnulada={() => fetchData()}
       />
     );
   };

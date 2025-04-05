@@ -119,6 +119,8 @@ const Mapa = () => {
                 hora_inicio: item.hora_inicio,
                 hora_fin: item.hora_fin,
                 duracion: item.duracion,
+                latitude: item.latitude,
+                longitude: item.longitude,
                 id_instalacion: item.id_instalacion})}
           >
           <Ionicons

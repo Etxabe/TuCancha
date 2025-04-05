@@ -3,6 +3,7 @@ import { Modal, View, Text, Button, StyleSheet, Image,TouchableOpacity ,ScrollVi
 import { ClientContext } from '../front_cliente/ClientContext';
 import { Calendar } from 'react-native-calendars';
 import { insertReserva } from "../backend/funciones_backend/InsertarReserva"; 
+import ElTiempo from "../backend/funciones_backend/ElTiempo";
 
 
 const MyModal = ({ visible, onClose }) => {
@@ -39,9 +40,10 @@ const MyModal = ({ visible, onClose }) => {
       hora_ini: hour,
       tiempo_reserva: ubicacion.duracion + "",
     };
-    console.log("Reserva111:", newReserva);
-    insertReserva(newReserva);
-    setConfirmationVisible(true); // Mostrar el modal de confirmación
+
+    setReserva(newReserva); 
+    
+     // Mostrar el modal de confirmación
   };
 
   const handleDateSelect = (day) => {
@@ -56,7 +58,7 @@ const MyModal = ({ visible, onClose }) => {
       ...prevReserva,
       fecha: new Date(day.dateString), // Guardar como objeto Date
     }));
-  
+    console.log("Reserva actualizada:", reserva.fecha); // Verifica que la reserva se haya actualizado correctamente
     hasBeenSelectedData(true); // Indicar que se ha seleccionado una fecha
   };
 
@@ -108,10 +110,13 @@ const MyModal = ({ visible, onClose }) => {
     >
       <ScrollView>
 
-      <View style={styles.overlay}>
+      <View style={[styles.overlay,selectedHour && { marginBottom: 63 },]}>
         <View style={styles.modalContainer}>
-          <Text style={styles.text}>¿Cuando deseas reservar?</Text>
-          <Text style={styles.text}>{ubicacion.nombre}</Text>
+          <View style={styles.tituloResreva}>
+            <Text style={styles.textHeader}>¿Cuando deseas reservar?</Text>
+            <Text style={styles.text}>{ubicacion.nombre}</Text>
+          </View>
+          
 
         <Calendar
             onDayPress={handleDateSelect}
@@ -137,45 +142,87 @@ const MyModal = ({ visible, onClose }) => {
               </TouchableOpacity>
           ))}
         </View>
-        <Button title="Cerrar" onPress={onClose} />
         </View>
       </View>
       </ScrollView>
+      <View style={
+            selectedHour
+              ? styles.buttonsContainerHourSelected // Aplica este estilo si hay una hora seleccionada
+              : styles.buttonsContainer // Aplica este estilo por defecto
+          }>
+          <TouchableOpacity title="Cerrar" 
+            onPress={onClose} 
+            style={styles.closeButton}>
+            <Text style={styles.textButton} >Cerrar</Text>
+            </TouchableOpacity>
+          <TouchableOpacity title="Reservar" 
+            onPress={() => {
+              insertReserva(reserva);
+              setSelectedHour(null);
+              hasBeenSelectedData(false);
+
+              setConfirmationVisible(true);
+            }} 
+            style={styles.bookButton}>
+            <Text style={styles.textButton} >Reservar</Text>
+          </TouchableOpacity>
+        </View>
 
       {confirmationVisible && (
-          <Modal
-            visible={confirmationVisible}
-            animationType="fade"
-            transparent={true}
-            onRequestClose={() => setConfirmationVisible(false)}
-          >
-            <View style={styles.overlay}>
-              <View style={styles.confirmationContainer}>
+        <Modal
+          visible={confirmationVisible}
+          animationType="fade"
+          transparent={true}
+          onRequestClose={() => setConfirmationVisible(false)}
+        >
+          <View style={styles.confirmationOverlay}>
+            <View style={styles.confirmationContainer}>
                 <Text style={styles.confirmationTitle}>¡Reserva Confirmada!</Text>
                 <Text style={styles.confirmationText}>
-                  Has reservado para el <Text style={styles.highlight}>{selectedDate}</Text> a las{" "}
-                  <Text style={styles.highlight}>{selectedHour}</Text> en{" "}
-                  <Text style={styles.highlight}>{ubicacion.nombre}</Text>.
+                  Has reservado para el <Text style={styles.confirmationHighlight}>{selectedDate}</Text> a las{" "}
+                  <Text style={styles.confirmationHighlight}>{selectedHour}</Text> en{" "}
+                  <Text style={styles.confirmationHighlight}>{ubicacion.nombre}</Text>.
                 </Text>
-                <TouchableOpacity
-                  style={styles.confirmationButton}
-                  onPress={() => {
-                    setConfirmationVisible(false);
-                    onClose();
-                  }}
-                >
-                  <Text style={styles.confirmationButtonText}>Aceptar</Text>
-                </TouchableOpacity>
+                <View style={styles.confirmationWeatherContainer}>
+                  <ElTiempo />
+                </View>
               </View>
-            </View>
-          </Modal>
-        )}
+              <TouchableOpacity
+                style={styles.confirmationButton}
+                onPress={() => {
+                  setConfirmationVisible(false);
+                  onClose();
+                }}
+              >
+                <Text style={styles.confirmationButtonText}>Aceptar</Text>
+              </TouchableOpacity>
+          </View>
+        </Modal>
+      )}
 
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
+  tituloResreva: {
+    flexDirection: "column", 
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 40,
+    backgroundColor: "rgb(255, 255, 255)",
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#2ecc71",
+  },
+  textHeader: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "#000000",
+  },
+
   overlay: {
     flex: 1,
     justifyContent: "center",
@@ -230,7 +277,7 @@ const styles = StyleSheet.create({
   },
   hourOption: {
     width: "48%",
-    padding: 10,
+    padding: 12.5,
     marginBottom: 10,
     backgroundColor: "rgb(255, 255, 255)",
     borderRadius: 5,
@@ -242,6 +289,66 @@ const styles = StyleSheet.create({
   hours: {
     color: "black",
     fontWeight: "bold",
+  },
+
+  confirmationOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  
+  confirmationWeatherContainer: {
+    padding: 10,
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginTop: 10,
+    borderBlockColor: "black",
+    borderWidth: 1,
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+    marginBottom: 5,
+    paddingVertical: 10,
+    backgroundColor: "rgb(255, 255, 255)",
+  },
+  buttonsContainerHourSelected: {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+    paddingVertical: 10,
+    backgroundColor: "rgb(255, 255, 255)",
+    zIndex: 10,
+    marginTop: 40,
+  },
+  bookButton: {
+    borderWidth: 1,
+    borderColor: "#2ecc71",
+    backgroundColor: "#84ffb5",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    width: "48%",
+  },
+  closeButton: {
+    borderWidth: 1,
+    borderColor: "#e74c3c",
+    backgroundColor: "rgb(255, 134, 134)",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    width: "48%",
+  },
+  textButton: {
+    color: "black",
+    fontSize: 16,
+    textAlign: "center",
   },
 });
 

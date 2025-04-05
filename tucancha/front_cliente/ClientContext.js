@@ -16,6 +16,8 @@ export const ClientProvider = ({ children }) => {
     hora_ini: "",
     hora_fin: "",
     duracion: "",
+    latitude: 0,
+    longitude: 0,
   });
   const [reserva,setReserva] = useState({
     id_cliente: "",

@@ -1,20 +1,31 @@
 import { StyleSheet, Text, View,Button,Image,Input, Dimensions, PRe}from 'react-native';
 import React, { useState,useContext,useEffect } from "react";
-import { ClientContext } from '../front_cliente/ClientContext';
+import { anularReserva } from '../backend/funciones_backend/AnularReserva.js'; // Importa la función anularReserva
 
 const { width, height } = Dimensions.get("window"); // Obtiene el tamaño de la pantalla
 
-const Reserva = ({reserva,fetchInstalacion}) => {
+const Reserva = ({reserva,fetchInstalacion,onReservaAnulada}) => {
     const [instalacion, setInstalacion] = useState(null);
-
     useEffect(() => {
       const fetchData = async () => {
         const data = await fetchInstalacion();
-        setInstalacion(data); // Guardar los datos de la instalación en el estado
+        setInstalacion(data);
       };
     fetchData();
     }, [fetchInstalacion]);
     
+    const handleAnularReserva = async () => {
+      try {
+        const response = await anularReserva(reserva.id_reserva);
+        console.log(response.message);
+        alert("Reserva anulada correctamente");
+        onReservaAnulada();
+      } catch (error) {
+        console.error("Error al anular la reserva:", error);
+        alert("Error al anular la reserva");
+      }
+    };
+
     return (
         <View style={styles.containerinstalacion}>
           <View style={styles.container}>
@@ -36,7 +47,7 @@ const Reserva = ({reserva,fetchInstalacion}) => {
             <Button
               title="Anular Reserva"
               style={styles.boton}
-              onPress={() => alert(`Reserva ${reserva.id_reserva} anulada`)}
+              onPress={handleAnularReserva}
             />
           </View>
         </View>

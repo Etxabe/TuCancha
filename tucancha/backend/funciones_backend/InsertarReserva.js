@@ -16,7 +16,6 @@ export const insertReserva = async(reserva) => {
         
 
         await Reserva.save();
-        Alert.alert('¡Éxito!', 'Instalación creada correctamente.');
 
     } catch(error) {
         Alert.alert('Error!', error.message);
