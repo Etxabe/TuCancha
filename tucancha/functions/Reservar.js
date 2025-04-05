@@ -30,11 +30,9 @@ const MyModal = ({ visible, onClose }) => {
   const handleHourSelect = (hour) => {
     setSelectedHour(hour);
 
-    const formattedDate = formatDate(reserva.fecha);
-
-
+    setSelectedDate(selectedDate);
     const newReserva = {
-      fecha_ini: formattedDate,
+      fecha_ini: selectedDate,
       id_instalacion: ubicacion.id_instalacion,
       id_cliente: "aritz",
       hora_ini: hour,
@@ -42,8 +40,7 @@ const MyModal = ({ visible, onClose }) => {
     };
 
     setReserva(newReserva); 
-    
-     // Mostrar el modal de confirmación
+    console.log("Reserva actualizada:", reserva);
   };
 
   const handleDateSelect = (day) => {
@@ -52,13 +49,6 @@ const MyModal = ({ visible, onClose }) => {
   
     // Actualizar el estado de la fecha seleccionada
     setSelectedDate(formattedDate);
-  
-    // Actualizar el estado global de reserva
-    setReserva((prevReserva) => ({
-      ...prevReserva,
-      fecha: new Date(day.dateString), // Guardar como objeto Date
-    }));
-    console.log("Reserva actualizada:", reserva.fecha); // Verifica que la reserva se haya actualizado correctamente
     hasBeenSelectedData(true); // Indicar que se ha seleccionado una fecha
   };
 
