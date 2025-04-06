@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import ScreenListadoInstalaciones from './screens_servidor/ScreenListadoInstalaciones';
 import ScreenPerfil from './screens_servidor/ScreenPerfil';
 
@@ -42,9 +41,7 @@ const Tabs = () => {
 export default function App() {
   return (
     <ServerProvider>
-      <NavigationContainer>
-        <Tabs />
-      </NavigationContainer>
+      <Tabs />
     </ServerProvider>
 
   );
