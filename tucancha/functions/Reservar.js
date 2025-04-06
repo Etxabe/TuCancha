@@ -42,7 +42,7 @@ const MyModal = ({ visible, onClose }) => {
     };
 
     fetchHorasOcupadas();
-  }, [selectedDate]); // Ejecuta el efecto cuando cambia la fecha seleccionada
+  }, [visible,selectedDate]); // Ejecuta el efecto cuando cambia la fecha seleccionada
 
 
   const handleHourSelect = (hour) => {
@@ -136,6 +136,7 @@ const MyModal = ({ visible, onClose }) => {
           {availableHours.map((hour) => (
             horasOcupadas.includes(hour) ? (
               <Text
+                key={hour}
                 style={[
                   styles.reservado,
                   styles.textAlignContent = "center",
