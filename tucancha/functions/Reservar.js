@@ -1,9 +1,10 @@
-import React, { useContext ,useState} from "react";
+import React, { useContext ,useState,useEffect} from "react";
 import { Modal, View, Text, Button, StyleSheet, Image,TouchableOpacity ,ScrollView } from "react-native";
 import { ClientContext } from '../front_cliente/ClientContext';
 import { Calendar } from 'react-native-calendars';
 import { insertReserva } from "../backend/funciones_backend/InsertarReserva"; 
 import ElTiempo from "../backend/funciones_backend/ElTiempo";
+import { consultarHorario } from "../backend/funciones_backend/HorarioDisponible";
 
 
 const MyModal = ({ visible, onClose }) => {
@@ -13,6 +14,7 @@ const MyModal = ({ visible, onClose }) => {
   const [selectedHour, setSelectedHour] = useState(null);
   const [dataSelected, hasBeenSelectedData] = useState(false);
   const [confirmationVisible, setConfirmationVisible] = useState(false); // Estado para el modal de confirmación
+
 
   const formatDate = (date) => {
     if (!(date instanceof Date)) {
@@ -26,6 +28,22 @@ const MyModal = ({ visible, onClose }) => {
   const [selectedDate, setSelectedDate] = useState(
     reserva.fecha ? formatDate(reserva.fecha) : formatDate(new Date())
   );
+  const [horasOcupadas, setHorasOcupadas] = useState([]); 
+
+  useEffect(() => {
+    const fetchHorasOcupadas = async () => {
+      try {
+        const horas = await consultarHorario(ubicacion.id_instalacion, selectedDate);
+        setHorasOcupadas(horas); // Actualiza el estado con las horas ocupadas
+        console.log("Horas ocupadas:", horas);
+      } catch (error) {
+        console.error("Error al consultar las horas ocupadas:", error);
+      }
+    };
+
+    fetchHorasOcupadas();
+  }, [selectedDate]); // Ejecuta el efecto cuando cambia la fecha seleccionada
+
 
   const handleHourSelect = (hour) => {
     setSelectedHour(hour);
@@ -46,8 +64,6 @@ const MyModal = ({ visible, onClose }) => {
   const handleDateSelect = (day) => {
     console.log("Fecha seleccionada:", day.dateString); // Verifica el valor recibido
     const formattedDate = formatDate(day.dateString); // Formatear la fecha seleccionada
-  
-    // Actualizar el estado de la fecha seleccionada
     setSelectedDate(formattedDate);
     hasBeenSelectedData(true); // Indicar que se ha seleccionado una fecha
   };
@@ -118,18 +134,27 @@ const MyModal = ({ visible, onClose }) => {
           
         <View style={styles.hoursContainer}>
           {availableHours.map((hour) => (
-            <TouchableOpacity
-              key={hour}
-              onPress={() => handleHourSelect(hour)}
-              style={[
-                styles.hourOption,
-                selectedHour === hour && styles.selectedHourOption,
-              ]}
-            >
-              <Text>
-              <Text style={styles.hours}>{hour || "Hora no disponible"}</Text> {/* Mostrar solo el intervalo */}
+            horasOcupadas.includes(hour) ? (
+              <Text
+                style={[
+                  styles.reservado,
+                  styles.textAlignContent = "center",
+                ]}
+              >
+                {hour}
               </Text>
+            ) : (
+              <TouchableOpacity
+                key={hour}
+                onPress={() => handleHourSelect(hour)}
+                style={[
+                  styles.hourOption,
+                  selectedHour === hour && styles.selectedHourOption,
+                ]}
+              >
+                <Text style={styles.hours}>{hour || "Hora no disponible"}</Text>
               </TouchableOpacity>
+            )
           ))}
         </View>
         </View>
@@ -272,6 +297,16 @@ const styles = StyleSheet.create({
     backgroundColor: "rgb(255, 255, 255)",
     borderRadius: 5,
     alignItems: "center",
+  },
+  reservado: {
+    width: "48%",
+    padding: 12.5,
+    marginBottom: 10,
+    backgroundColor: "rgb(182, 176, 176)",
+    borderRadius: 5,
+    borderWidth: 1,
+    alignItems: "center",
+    textAlign: "center",
   },
   selectedHourOption: {
     backgroundColor: "#2ecc71",
