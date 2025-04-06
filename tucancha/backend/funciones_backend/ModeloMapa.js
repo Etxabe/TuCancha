@@ -1,16 +1,53 @@
-import React, { useEffect, useState,useContext } from "react";
-import {StyleSheet} from "react-native";
+import React, { useEffect, useState,useContext,useRef } from "react";
+import {StyleSheet,View,TextInput,Button} from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Parse from "./Conexion";
 import { ClientContext } from "../../front_cliente/ClientContext";
 
 
-const Mapa = ({ onSelectUbicacion }) => {
+const Mapa = () => {
     
       const [data, setData] = useState([]);
       const [loading, setLoading] = useState(true);
       const { ubicacion, setUbication } = useContext(ClientContext);
+
+
+      const [searchQuery, setSearchQuery] = useState("");
+      const [location, setLocation] = useState(null);
+      const mapRef = useRef(null);
+    
+      const searchLocation = async () => {
+        const url = `https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`;
+      
+        try {
+          const response = await fetch(url, {
+            headers: {
+              "User-Agent": "TuCanchaApp/1.0 (tuemail@ejemplo.com)", // Cambia esto por tu información
+            },
+          });
+          const data = await response.json();
+      
+          if (data.length > 0) {
+            const { lat, lon } = data[0];
+            const newRegion = {
+              latitude: parseFloat(lat),
+              longitude: parseFloat(lon),
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
+            };
+            setLocation(newRegion);
+            mapRef.current.animateToRegion(newRegion, 1000);
+          } else {
+            console.warn("No se encontraron resultados para la búsqueda.");
+          }
+        } catch (error) {
+          console.error("Error en la búsqueda:", error);
+        }
+      };
+
+
+
 
       useEffect(() => {
         const fetchData = async () => {
@@ -20,13 +57,16 @@ const Mapa = ({ onSelectUbicacion }) => {
             const results = await query.find();
             
             const formattedData = results.map(item => ({
-              id: item.id,
+              id_instalacion: item.id,
               descripcion: item.get("descripcion"),
               precio: item.get("precio"),
               nombre: item.get("nombre"),
               latitude: item.get("latitude"),
               longitude: item.get("longitude"),
               logo_instalacion: item.get("logo_instalacion"),
+              hora_inicio: item.get("hora_inicio"),
+              hora_fin: item.get("hora_fin"),
+              duracion: item.get("tiempo_reserva"),
               imagen_instalacion: item.get("imagen_instalacion") ? item.get("imagen_instalacion").url() : null
             }));
             setData(formattedData);
@@ -42,7 +82,20 @@ const Mapa = ({ onSelectUbicacion }) => {
       }, []);
     
   return (
+    <View style={styles.container}>
+      <View style={styles.searchContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Buscar ubicación"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+        />
+        <Button title="Buscar" onPress={searchLocation} />
+      </View>
+
+
       <MapView
+          ref={mapRef}
           style={styles.map}
           initialRegion={{
               latitude: 42.527284634963365,  // Latitud inicia, 
@@ -54,11 +107,21 @@ const Mapa = ({ onSelectUbicacion }) => {
           
           {data.map((item) => (
           <Marker
-              key={item.id}
+              key={item.id_instalacion}
               coordinate={{ latitude: item.latitude, longitude: item.longitude }}
               title={item.nombre}
               description={item.descripcion}
-              onPress={() => setUbication({nombre: item.nombre,precio: item.precio,descripcion: item.descripcion,imagen_instalacion: item.imagen_instalacion})}
+              onPress={() => setUbication({
+                nombre: item.nombre,
+                precio: item.precio,
+                descripcion: item.descripcion,
+                imagen_instalacion: item.imagen_instalacion,
+                hora_inicio: item.hora_inicio,
+                hora_fin: item.hora_fin,
+                duracion: item.duracion,
+                latitude: item.latitude,
+                longitude: item.longitude,
+                id_instalacion: item.id_instalacion})}
           >
           <Ionicons
             name={item.logo_instalacion} // Aquí seleccionas el nombre del ícono de FontAwesome
@@ -67,6 +130,8 @@ const Mapa = ({ onSelectUbicacion }) => {
           </Marker>
           ))}
       </MapView>
+      {location && <Marker coordinate={location} />}
+      </View>
   );
 };
 
@@ -75,8 +140,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   map: {
+    flex: 1,
     width: "100%",
-    height: "60%",
+    height: "80%",
   },
 });
 

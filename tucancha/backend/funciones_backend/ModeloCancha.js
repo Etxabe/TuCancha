@@ -3,7 +3,7 @@ import {StyleSheet,Image,Button, View, Text, FlatList, ActivityIndicator } from 
 import 'react-native-get-random-values';
 import Parse from "./Conexion";
 
-const App = ($id) => {
+const App = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,8 +15,6 @@ const App = ($id) => {
         query.limit(100);
         const results = await query.find();
         
-        console.log(`ParseObjects found: ${JSON.stringify(results)}`);
-        console.log(`Total registros encontrados: ${results.length}`);
         // Mapear resultados a objetos más limpios
         const formattedData = results.map(item => ({
           id: item.id,

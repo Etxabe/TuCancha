@@ -7,7 +7,6 @@ import ScreenInicio from './screens_cliente/ScreenInicio';
 import ScreenPerfil from './screens_cliente/ScreenPerfil';
 import ScreenCercaDeMi from './screens_cliente/ScreenCercaDeMi';
 import ScreenFavoritos from './screens_cliente/ScreenFavoritos';
-import ScreenReserva from './screens_cliente/ScreenReserva';
 
 import { ClientProvider } from './ClientContext';
 
@@ -28,15 +27,9 @@ const Tabs = () => {
           )
           }}/>
         <Tab.Screen name="Favourite" component={ScreenFavoritos} options={{
-          title: "Favoritos",
+          title: "Mis Reservas",
           tabBarIcon: ({ color, size }) => (
-          <Ionicons name="star-outline" size={size} color={color} />
-          )
-          }}/>
-        <Tab.Screen name="Reserva" component={ScreenReserva} options={{
-          title: "Perfil",
-          tabBarIcon: ({ color, size }) => (
-          <Ionicons name="person-outline" size={size} color={color} />
+          <Ionicons name="clipboard-outline" size={size} color={color} />
           )
           }}/>
         <Tab.Screen name="Profile" component={ScreenPerfil} options={{

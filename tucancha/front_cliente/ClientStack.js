@@ -6,7 +6,6 @@ import ScreenInicio from './screens_cliente/ScreenInicio';
 import ScreenPerfil from './screens_cliente/ScreenPerfil';
 import ScreenCercaDeMi from './screens_cliente/ScreenCercaDeMi';
 import ScreenFavoritos from './screens_cliente/ScreenFavoritos';
-import ScreenReserva from './screens_cliente/ScreenReserva';
 
 import { ClientProvider } from './ClientContext';
 
@@ -22,13 +21,9 @@ const ClienteStack = () => {
                 <Stack.Screen name="1" component={ScreenInicio} />
                 <Stack.Screen name="2" component={ScreenCercaDeMi} />
                 <Stack.Screen name="3" component={ScreenFavoritos} />
-                <Stack.Screen name="4" component={ScreenReserva} />
-                <Stack.Screen name="5" component={ScreenPerfil} />
+                <Stack.Screen name="4" component={ScreenPerfil} />
             </Stack.Navigator>
         </ClientProvider>
-
-
-
     );
 };
 

@@ -8,18 +8,27 @@ export const ClientProvider = ({ children }) => {
   const [contador, setContador] = useState(0); // Variable compartida
   const [ubicacion,setUbication] = useState({
     nombre: "",
+    id_instalacion: "",
     precio: "",
     descripcion: "",
     imagen: "",
-    imagen_instalacion: ""
+    imagen_instalacion: "",
+    hora_ini: "",
+    hora_fin: "",
+    duracion: "",
+    latitude: 0,
+    longitude: 0,
   });
   const [reserva,setReserva] = useState({
-    nombre: "",
-    precio: "",
-    descripcion: ""
+    id_cliente: "",
+    id_instalacion: "",
+    tiempo_reserva: "",
+    fecha_ini: "",
+    hora_ini: "",
+    fecha: new Date()
   });
   return (
-    <ClientContext.Provider value={{ ubicacion,setUbication}}>
+    <ClientContext.Provider value={{ ubicacion,setUbication,reserva,setReserva}}>
       {children}
     </ClientContext.Provider>
   );
