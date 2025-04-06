@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,Button,Image,Input, Dimensions, PRe}from 'react-native';
+import { StyleSheet, Text, View,Button,Image,Input, Dimensions, Alert}from 'react-native';
 import React, { useState,useContext,useEffect } from "react";
 import { anularReserva } from '../backend/funciones_backend/AnularReserva.js'; // Importa la función anularReserva
 
@@ -15,15 +15,31 @@ const Reserva = ({reserva,fetchInstalacion,onReservaAnulada}) => {
     }, [fetchInstalacion]);
     
     const handleAnularReserva = async () => {
-      try {
-        const response = await anularReserva(reserva.id_reserva);
-        console.log(response.message);
-        alert("Reserva anulada correctamente");
-        onReservaAnulada();
-      } catch (error) {
-        console.error("Error al anular la reserva:", error);
-        alert("Error al anular la reserva");
-      }
+      Alert.alert(
+        "Confirmación", // Título del mensaje
+        "¿Estás seguro de que deseas anular esta reserva?", // Mensaje
+        [
+          {
+            text: "Cancelar", // Botón de cancelar
+            style: "cancel", // Estilo del botón
+          },
+          {
+            text: "Confirmar", // Botón de confirmar
+            onPress: async () => {
+              try {
+                const response = await anularReserva(reserva.id_reserva);
+                console.log(response.message);
+                Alert.alert("Reserva anulada", "Se ha anulado la reserva correctamente");
+                onReservaAnulada();
+              } catch (error) {
+                console.error("Error al anular la reserva:", error);
+                alert("Error al anular la reserva");
+              }
+            },
+          },
+        ],
+        { cancelable: true } // Permite cerrar el cuadro de diálogo tocando fuera de él
+      );
     };
 
     return (
