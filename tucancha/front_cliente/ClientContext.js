@@ -27,8 +27,10 @@ export const ClientProvider = ({ children }) => {
     hora_ini: "",
     fecha: new Date()
   });
+  const [idCliente,setIdCliente] = useState("usuario.id_cliente");
+
   return (
-    <ClientContext.Provider value={{ ubicacion,setUbication,reserva,setReserva}}>
+    <ClientContext.Provider value={{ ubicacion,setUbication,reserva,setReserva,idCliente,setIdCliente}}>
       {children}
     </ClientContext.Provider>
   );
