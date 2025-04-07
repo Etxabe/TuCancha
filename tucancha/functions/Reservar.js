@@ -4,7 +4,7 @@ import { ClientContext } from '../front_cliente/ClientContext';
 import { Calendar } from 'react-native-calendars';
 import { insertReserva } from "../backend/funciones_backend/InsertarReserva"; 
 import ElTiempo from "../backend/funciones_backend/ElTiempo";
-import { consultarHorario } from "../backend/funciones_backend/HorarioDisponible";
+import { consultarHorario, horasPasadas } from "../backend/funciones_backend/HorarioDisponible";
 
 
 const MyModal = ({ visible, onClose }) => {
@@ -33,8 +33,17 @@ const MyModal = ({ visible, onClose }) => {
   useEffect(() => {
     const fetchHorasOcupadas = async () => {
       try {
+
+        if (!ubicacion.hora_inicio || !ubicacion.duracion) {
+          console.error("hora_ini o duracion no están definidos en ubicacion.", ubicacion);
+          return;
+        }
         const horas = await consultarHorario(ubicacion.id_instalacion, selectedDate);
-        setHorasOcupadas(horas); // Actualiza el estado con las horas ocupadas
+        const hoy = new Date().toISOString().split("T")[0];
+        const horasPasadasHoy = selectedDate === hoy ? horasPasadas(ubicacion.hora_inicio, ubicacion.duracion) : [];
+        const todasLasHorasOcupadas = [...horas, ...horasPasadasHoy];
+        setHorasOcupadas(todasLasHorasOcupadas); // Actualiza el estado con las horas ocupadas
+        console.log("Horas ocupadas hoy:", horasOcupadas);
         console.log("Horas ocupadas:", horas);
       } catch (error) {
         console.error("Error al consultar las horas ocupadas:", error);
@@ -52,7 +61,7 @@ const MyModal = ({ visible, onClose }) => {
     const newReserva = {
       fecha_ini: selectedDate,
       id_instalacion: ubicacion.id_instalacion,
-      id_cliente: "aritz",
+      id_cliente: "usuario.id_cliente",
       hora_ini: hour,
       tiempo_reserva: ubicacion.duracion + "",
     };
@@ -130,6 +139,7 @@ const MyModal = ({ visible, onClose }) => {
             [selectedDate]: { selected: true, selectedColor: 'blue' }
             }}
             monthFormat={'yyyy MM'}
+            minDate={new Date().toISOString().split("T")[0]}
         />
           
         <View style={styles.hoursContainer}>
@@ -325,7 +335,6 @@ const styles = StyleSheet.create({
   },
   
   confirmationWeatherContainer: {
-    padding: 10,
     backgroundColor: "white",
     borderRadius: 10,
     marginTop: 10,
