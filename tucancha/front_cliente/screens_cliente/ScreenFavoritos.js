@@ -2,7 +2,7 @@ import { createNativeStackNavigation} from '@react-navigation/stack'
 
 import { StyleSheet, View,Button,Input, Dimensions,ScrollView}from 'react-native';
 import React, { useState } from "react";
-import Resrvados from '../../backend/funciones_backend/Reservados'
+import Reservados from '../../backend/funciones_backend/Reservados'
 
 const { width, height } = Dimensions.get("window");
 
@@ -11,7 +11,7 @@ export default function FrontViewPitch1() {
 
   return (
       <View>
-          <Resrvados/>
+          <Reservados/>
       </View>
   );
 }
