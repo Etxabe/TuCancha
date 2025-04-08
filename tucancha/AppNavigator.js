@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Parse from './backend/funciones_backend/Conexion';
 
-import LoginScreen from './InicioDeSesion.js';
+import LoginScreen from './InicioDeSesion';
+import RegistroScreen from './Registro';
 import ClienteNavigator from './front_cliente/ClienteFront';
 import ProveedorNavigator from './front_servidor/ServidorFront';
 
@@ -10,6 +11,7 @@ export default function AppNavigator() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);  // ¿Está logueado?
   const [userType, setUserType] = useState(null);       // "cliente" o "proveedor"
   const [credentials, setCredentials] = useState(null); // Guardar usuario y contraseña
+  const [isRegistering, setIsRegistering] = useState(false); // Nuevo estado
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -45,11 +47,16 @@ export default function AppNavigator() {
     checkAuth();
   }, [credentials]); // Ejecutar cuando cambien las credenciales
 
+  if (isRegistering) {
+    return <RegistroScreen onNavigateToLogin={() => setIsRegistering(false)} />;
+  }
+
   // Si NO está logueado → Muestro Login
   if (!isLoggedIn) {
     return (
       <LoginScreen
         onLogin={(usuario, contrasena) => setCredentials({ usuario, contrasena })}
+        onNavigateToRegister={() => setIsRegistering(true)} // Navegar al registro
       />
     );
   }
