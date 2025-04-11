@@ -1,51 +1,43 @@
-import Geolocation from "react-native-geolocation-service";
-import { Platform, PermissionsAndroid } from "react-native";
+import * as Location from "expo-location";
 
 const requestLocationPermission = async () => {
-  if (Platform.OS === "android") {
-    const granted = await PermissionsAndroid.request(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-      {
-        title: "Permiso de ubicación",
-        message: "TuCancha necesita acceder a tu ubicación para mostrarte instalaciones cercanas.",
-        buttonNeutral: "Preguntar más tarde",
-        buttonNegative: "Cancelar",
-        buttonPositive: "Aceptar",
-      }
-    );
-    return granted === PermissionsAndroid.RESULTS.GRANTED;
+  console.log("Solicitando permisos de ubicación...");
+
+  const { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== "granted") {
+    console.warn("Permiso de ubicación denegado");
+    return false;
   }
-  return true; // En iOS, los permisos se solicitan automáticamente
+
+  console.log("Permiso de ubicación otorgado");
+  return true;
 };
 
-// Obtener la ubicación del usuario
 const getUserLocation = async () => {
   const hasPermission = await requestLocationPermission();
   if (!hasPermission) {
-    console.warn("Permiso de ubicación denegado");
     return null;
   }
 
-  return new Promise((resolve, reject) => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        const location = {
-          latitude,
-          longitude,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        };
-        console.log("Ubicación del usuario:", location); // Verifica la ubicación obtenida
-        resolve(location); // Devuelve la ubicación del usuario
-      },
-      (error) => {
-        console.error("Error al obtener la ubicación del usuario:", error);
-        reject(error); // Maneja el error
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
-  });
+  try {
+    console.log("Intentando obtener la ubicación...");
+    const location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.High,
+    });
+
+    const userLocation = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+      latitudeDelta: 0.01,
+      longitudeDelta: 0.01,
+    };
+
+    console.log("Ubicación del usuario:", userLocation);
+    return userLocation;
+  } catch (error) {
+    console.error("Error al obtener la ubicación:", error);
+    return null;
+  }
 };
 
 export default getUserLocation;

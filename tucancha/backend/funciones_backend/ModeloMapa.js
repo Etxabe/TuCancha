@@ -4,6 +4,7 @@ import MapView, { Marker } from "react-native-maps";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Parse from "./Conexion";
 import { ClientContext } from "../../front_cliente/ClientContext";
+import getUserLocation from "./GeoLocation";
 import * as Location from "expo-location";
 
 const Mapa = () => {
@@ -45,46 +46,6 @@ const Mapa = () => {
     }
   };
 
-  const requestLocationPermission = async () => {
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    console.log("Estado del permiso de ubicación:", status); // Verifica el estado del permiso
-    if (status !== "granted") {
-      console.warn("Permiso de ubicación denegado");
-      alert("Por favor, otorga permisos de ubicación para usar esta funcionalidad.");
-      return false;
-    }
-    return true;
-  };
-
-  const getUserLocation = async () => {
-    const hasPermission = await requestLocationPermission();
-    if (!hasPermission) {
-      return null;
-    }
-
-    const servicesEnabled = await Location.hasServicesEnabledAsync();
-    if (!servicesEnabled) {
-      console.warn("Los servicios de ubicación están desactivados");
-      alert("Por favor, habilita los servicios de ubicación en tu dispositivo.");
-      return null;
-    }
-
-    try {
-      const location = await Location.getCurrentPositionAsync({
-        accuracy: Location.Accuracy.High, // Solicita alta precisión
-      });
-      const { latitude, longitude } = location.coords;
-      return {
-        latitude,
-        longitude,
-        latitudeDelta: 0.01,
-        longitudeDelta: 0.01,
-      };
-    } catch (error) {
-      console.error("Error al obtener la ubicación del usuario:", error);
-      return null;
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -124,7 +85,6 @@ const Mapa = () => {
         setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
@@ -150,38 +110,52 @@ const Mapa = () => {
           longitudeDelta: 0.0421,
         }}
       >
-        {data.map((item) => (
-          <Marker
-            key={item.id_instalacion}
-            coordinate={{ latitude: item.latitude, longitude: item.longitude }}
-            title={item.nombre}
-            description={item.descripcion}
-            onPress={() => {
-              setUbication({
-                nombre: item.nombre,
-                precio: item.precio,
-                descripcion: item.descripcion,
-                imagen_instalacion: item.imagen_instalacion,
-                hora_inicio: item.hora_inicio,
-                hora_fin: item.hora_fin,
-                duracion: item.duracion,
-                latitude: item.latitude,
-                longitude: item.longitude,
-                id_instalacion: item.id_instalacion,
-              }),
-              console.log(item)}
-            }
-          >
-            <Ionicons name={item.logo_instalacion} size={30} />
-          </Marker>
-        ))}
-        {miLocation && (
-          <Marker
-            coordinate={miLocation}
-            title="Tu ubicación"
-            description="Aquí estás"
-          />
-        )}
+        {data.map((item) => {
+          if (item.latitude && item.longitude) { // Verifica que las coordenadas sean válidas
+            return (
+              <Marker
+                key={item.id_instalacion}
+                coordinate={{ latitude: item.latitude, longitude: item.longitude }}
+                title={item.nombre}
+                description={item.descripcion}
+                onPress={() => {
+                  setUbication({
+                    nombre: item.nombre,
+                    precio: item.precio,
+                    descripcion: item.descripcion,
+                    imagen_instalacion: item.imagen_instalacion,
+                    hora_inicio: item.hora_inicio,
+                    hora_fin: item.hora_fin,
+                    duracion: item.duracion,
+                    latitude: item.latitude,
+                    longitude: item.longitude,
+                    id_instalacion: item.id_instalacion,
+                  });
+                  console.log(item);
+                }}
+              >
+                <Ionicons name={item.logo_instalacion} size={30} />
+              </Marker>
+            );
+          }
+          return null; // No renderiza el marcador si las coordenadas no son válidas
+        })}
+        {miLocation && miLocation.latitude && miLocation.longitude ? (
+        <Marker
+          coordinate={miLocation}
+          title="Tu ubicación"
+          description="Aquí estás"
+        />
+      ) : (
+        <Marker
+          coordinate={{
+            latitude: 42.527284634963365,
+            longitude: -1.6732398052744084,
+          }}
+          title="Ubicación por defecto"
+          description="No se pudo obtener tu ubicación"
+        />
+      )}
       </MapView>
     </View>
   );
