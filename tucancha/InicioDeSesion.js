@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert, Image, TouchableOpacity } from 'react-native';
 
-export default function InicioDeSesion({ onLogin, onNavigateToRegister }) {
+export default function InicioDeSesion({ onLogin, onNavigateToRegister, error }) {
   const [usuario, setUsuario] = useState('');
   const [contrasenia, setContrasenia] = useState('');
 
@@ -36,6 +36,7 @@ export default function InicioDeSesion({ onLogin, onNavigateToRegister }) {
           onChangeText={setContrasenia}
           secureTextEntry
         />
+        {error ?  <Text style={styles.errorLogin}>Usuario y/o contraseña erronea</Text> : (<Text></Text>)}
         <View style={styles.buttonContainer}>
           <Button title="Iniciar Sesión" onPress={handleLogin} />
         </View>
@@ -88,5 +89,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
     color: '#007BFF',
     textDecorationLine: 'underline',
+  },
+  errorLogin: {
+    color: '#F00',
+    textAlign: 'left',
   },
 });

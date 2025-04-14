@@ -12,6 +12,7 @@ export default function AppNavigator() {
   const [userType, setUserType] = useState(null);       // "cliente" o "proveedor"
   const [credentials, setCredentials] = useState(null); // Guardar usuario y contraseña
   const [isRegistering, setIsRegistering] = useState(false); // Nuevo estado
+  const [isCorrect, setIsNotCorrect] = useState(false); 
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -37,6 +38,7 @@ export default function AppNavigator() {
           // Usuario no encontrado
           console.warn("Usuario o contraseña incorrectos");
           setIsLoggedIn(false);
+          setIsNotCorrect(true);
         }
       } catch (error) {
         console.error("Error al verificar el usuario:", error);
@@ -57,6 +59,7 @@ export default function AppNavigator() {
       <LoginScreen
         onLogin={(usuario, contrasena) => setCredentials({ usuario, contrasena })}
         onNavigateToRegister={() => setIsRegistering(true)} // Navegar al registro
+        error={isCorrect}
       />
     );
   }
