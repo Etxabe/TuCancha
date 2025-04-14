@@ -1,13 +1,13 @@
 import {StyleSheet, Image, Dimensions,View, Text}from 'react-native';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ScreenInicio from './screens_cliente/ScreenInicio';
 import ScreenPerfil from './screens_cliente/ScreenPerfil';
 import ScreenCercaDeMi from './screens_cliente/ScreenCercaDeMi';
 import ScreenFavoritos from './screens_cliente/ScreenFavoritos';
 
-import { ClientProvider } from './ClientContext';
+import { ClientProvider,ClientContext } from './ClientContext';
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -41,9 +41,11 @@ const Tabs = () => {
   );
 };
 
-export default function App() {
+export default function App({id}) {
+  console.log("añañin: ",id);
+  
   return (
-    <ClientProvider>
+    <ClientProvider id={id}>
       <Tabs />
     </ClientProvider>
 

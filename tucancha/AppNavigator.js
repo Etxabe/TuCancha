@@ -13,6 +13,7 @@ export default function AppNavigator() {
   const [credentials, setCredentials] = useState(null); // Guardar usuario y contraseña
   const [isRegistering, setIsRegistering] = useState(false); // Nuevo estado
   const [isCorrect, setIsNotCorrect] = useState(false); 
+  const [id,setId] = useState("");
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -33,6 +34,7 @@ export default function AppNavigator() {
           // Usuario encontrado, actualizar estado
           setIsLoggedIn(true);
           setUserType(result.get("esProveedor") ? "proveedor" : "cliente");
+          setId(result.id);
           console.log("Usuario autenticado:", result.get("username"));
         } else {
           // Usuario no encontrado
@@ -66,7 +68,7 @@ export default function AppNavigator() {
 
   return (
     <NavigationContainer>
-      {userType === 'cliente' && <ClienteNavigator />}
+      {userType === 'cliente' && <ClienteNavigator id={id}/>}
       {userType === 'proveedor' && <ProveedorNavigator />}
     </NavigationContainer>
   );
