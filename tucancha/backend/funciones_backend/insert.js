@@ -6,7 +6,7 @@ const insertInstalacion = async(instalacion) => {
     try {
         
         let Instalacion = new Parse.Object('Instalacion');
-            Instalacion.set('nombre', 'ifas');
+            Instalacion.set('nombre', instalacion.nombrePista);
             Instalacion.set('descripcion', instalacion.infoExtra);
             Instalacion.set('hora_inicio', instalacion.horaApertura);
             Instalacion.set('hora_fin', instalacion.horaCierre);
