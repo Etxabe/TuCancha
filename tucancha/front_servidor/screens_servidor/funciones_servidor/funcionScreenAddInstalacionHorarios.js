@@ -3,119 +3,112 @@ import {
     View,
     Button,
     Text,
-    TextInput,
     Dimensions,
-    KeyboardAvoidingView,
-    ScrollView,
-    Platform,
-    TouchableWithoutFeedback,
-    Keyboard,
     TouchableOpacity,
     Modal,
     FlatList,
-    Image,
 } from 'react-native';
 import React from 'react';
-import { useState } from 'react';
+import { useState,useContext } from 'react';
+import { ServerContext } from '../../ServerContext';
 
 const { width, height } = Dimensions.get('window');
 
 export const MostrarHorarios = () => {
 
-    const [horaApertura, setHoraApertura] = useState('09:00');
-      const [horaCierre, setHoraCierre] = useState('18:00');
-    
-      const [modalAperturaVisible, setModalAperturaVisible] = useState(false);
-      const [modalCierreVisible, setModalCierreVisible] = useState(false);
-    
-      const horas = Array.from({ length: 24 }, (_, index) =>
-        `${index.toString().padStart(2, '0')}:00`
-      );
-    
-      const handleSelectHoraApertura = (hora) => {
-        setHoraApertura(hora);
-        setModalAperturaVisible(false);
-      };
-    
-      const handleSelectHoraCierre = (hora) => {
-        setHoraCierre(hora);
-        setModalCierreVisible(false);
-      };
+  const { instalacion, setInstalacion } = useContext(ServerContext);
+  
+  const [modalAperturaVisible, setModalAperturaVisible] = useState(false);
+  const [modalCierreVisible, setModalCierreVisible] = useState(false);
 
-    return (
-        <View>
-    <Text style={styles.title}>Horarios disponibles:</Text>
-        {/* Hora Apertura */}
-        <Text style={styles.label}>Hora apertura:</Text>
-        <TouchableOpacity
-            onPress={() => setModalAperturaVisible(true)}
-            style={styles.selector}
-        >
-            <Text style={styles.selectorText}>{horaApertura}</Text>
-        </TouchableOpacity>
+  const horas = Array.from({ length: 24 }, (_, index) =>
+    `${index.toString().padStart(2, '0')}:00`
+  );
 
-        <Modal
-            visible={modalAperturaVisible}
-            animationType="slide"
-            transparent={true}
-            onRequestClose={() => setModalAperturaVisible(false)}
-        >
-        <View style={styles.modalOverlay}>
-            <View style={styles.modalContainer}>
-                <Text style={styles.modalTitle}>Seleccionar hora de apertura</Text>
-                <FlatList
-                    data={horas}
-                    keyExtractor={(item) => item}
-                    renderItem={({ item }) => (
-                        <TouchableOpacity
-                        style={styles.modalItem}
-                        onPress={() => handleSelectHoraApertura(item)}
-                        >
-                        <Text style={styles.modalItemText}>{item}</Text>
-                        </TouchableOpacity>
-                    )}
-                />
-                <Button title="Cancelar" onPress={() => setModalAperturaVisible(false)} />
-            </View>
-        </View>
-        </Modal>
+  const handleSelectHoraApertura = (hora) => {
+    setInstalacion({...instalacion,horaApertura: hora});
+    setModalAperturaVisible(false);
+  };
 
-        {/* Hora Cierre */}
-        <Text style={styles.label}>Hora cierre:</Text>
-        <TouchableOpacity
-            onPress={() => setModalCierreVisible(true)}
-            style={styles.selector}
-        >
-            <Text style={styles.selectorText}>{horaCierre}</Text>
-        </TouchableOpacity>
+  const handleSelectHoraCierre = (hora) => {
+    setInstalacion({...instalacion,horaCierre: hora});
+    setModalCierreVisible(false);
+  };
 
-        <Modal
-            visible={modalCierreVisible}
-            animationType="slide"
-            transparent={true}
-            onRequestClose={() => setModalCierreVisible(false)}
-        >
-        <View style={styles.modalOverlay}>
-            <View style={styles.modalContainer}>
-                <Text style={styles.modalTitle}>Seleccionar hora de cierre</Text>
-                <FlatList
-                    data={horas}
-                    keyExtractor={(item) => item}
-                    renderItem={({ item }) => (
-                    <TouchableOpacity
-                        style={styles.modalItem}
-                        onPress={() => handleSelectHoraCierre(item)}
-                        >
-                        <Text style={styles.modalItemText}>{item}</Text>
-                    </TouchableOpacity>
-                    )}
-                />
-                <Button title="Cancelar" onPress={() => setModalCierreVisible(false)} />
-            </View>
-        </View>
-        </Modal>
-    </View>
-    )
+  return (
+      <View>
+      <Text style={styles.title}>Horarios disponibles:</Text>
+      {/* Hora Apertura */}
+      <Text style={styles.label}>Hora apertura:</Text>
+      <TouchableOpacity
+          onPress={() => setModalAperturaVisible(true)}
+          style={styles.selector}
+      >
+          <Text style={styles.selectorText}>{instalacion.horaApertura}</Text>
+      </TouchableOpacity>
+
+      <Modal
+          visible={modalAperturaVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setModalAperturaVisible(false)}
+      >
+      <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+              <Text style={styles.modalTitle}>Seleccionar hora de apertura</Text>
+              <FlatList
+                  data={horas}
+                  keyExtractor={(item) => item}
+                  renderItem={({ item }) => (
+                      <TouchableOpacity
+                      style={styles.modalItem}
+                      onPress={() => handleSelectHoraApertura(item)}
+                      >
+                      <Text style={styles.modalItemText}>{item}</Text>
+                      </TouchableOpacity>
+                  )}
+              />
+              <Button title="Cancelar" onPress={() => setModalAperturaVisible(false)} />
+          </View>
+      </View>
+      </Modal>
+
+      {/* Hora Cierre */}
+      <Text style={styles.label}>Hora cierre:</Text>
+      <TouchableOpacity
+          onPress={() => setModalCierreVisible(true)}
+          style={styles.selector}
+      >
+          <Text style={styles.selectorText}>{instalacion.horaCierre}</Text>
+      </TouchableOpacity>
+
+      <Modal
+          visible={modalCierreVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={() => setModalCierreVisible(false)}
+      >
+      <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+              <Text style={styles.modalTitle}>Seleccionar hora de cierre</Text>
+              <FlatList
+                  data={horas}
+                  keyExtractor={(item) => item}
+                  renderItem={({ item }) => (
+                  <TouchableOpacity
+                      style={styles.modalItem}
+                      onPress={() => handleSelectHoraCierre(item)}
+                      >
+                      <Text style={styles.modalItemText}>{item}</Text>
+                  </TouchableOpacity>
+                  )}
+              />
+              <Button title="Cancelar" onPress={() => setModalCierreVisible(false)} />
+          </View>
+      </View>
+      </Modal>
+  </View>
+  )
 }      
 
 const styles = StyleSheet.create({

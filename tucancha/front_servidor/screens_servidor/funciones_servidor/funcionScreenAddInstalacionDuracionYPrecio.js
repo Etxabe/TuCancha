@@ -5,24 +5,35 @@ import {
     TextInput,
     Dimensions,
   } from 'react-native';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { ServerContext } from '../../ServerContext';
 
 const { width, height } = Dimensions.get('window');
 
 export const MostrarDuracionYPrecio = () => {
 
-    const [duracion, setDuracion] = useState('');
-    const [precio, setPrecio] = useState('');
+  const { instalacion, setInstalacion } = useContext(ServerContext);
+  
+  return (
+      <View>
+          <Text style={styles.label}>Duración de reserva:</Text>
+          <TextInput style={styles.input} 
+            value={instalacion.duracion} 
+            onChangeText={(text) => setInstalacion({ ...instalacion, duracion: text })}  
+            keyboardType='numeric' 
+            placeholder="Ej: 60 minutos" 
+          />
 
-    return (
-        <View>
-            <Text style={styles.label}>Duración de reserva:</Text>
-            <TextInput style={styles.input} value={duracion} onChangeText={setDuracion} keyboardType='numeric' placeholder="Ej: 60 minutos" />
+          <Text style={styles.label}>Precio:</Text>
+          <TextInput style={styles.input} 
+            value={instalacion.precio} 
+            onChangeText={(text) => setInstalacion({ ...instalacion, precio: text })}  
+            keyboardType='numeric' 
+            placeholder="Ej: 24 €" 
+          />
 
-            <Text style={styles.label}>Precio:</Text>
-            <TextInput style={styles.input} value={precio} onChangeText={setPrecio} keyboardType='numeric' placeholder="Ej: 24 €" />
-        </View>
-    );
+      </View>
+  );
 };
   
 const styles = StyleSheet.create({

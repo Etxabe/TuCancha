@@ -2,7 +2,6 @@ import {StyleSheet, Image, Dimensions,View, Text}from 'react-native';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState } from "react";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import ScreenInicio from './screens_cliente/ScreenInicio';
 import ScreenPerfil from './screens_cliente/ScreenPerfil';
 import ScreenCercaDeMi from './screens_cliente/ScreenCercaDeMi';
@@ -45,9 +44,7 @@ const Tabs = () => {
 export default function App() {
   return (
     <ClientProvider>
-      <NavigationContainer>
-        <Tabs />
-      </NavigationContainer>
+      <Tabs />
     </ClientProvider>
 
 

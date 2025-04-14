@@ -1,8 +1,6 @@
 import { Alert } from "react-native";
 import Parse from './Conexion.js';
 import 'react-native-get-random-values';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 export const insertReserva = async(reserva) => {
     try {

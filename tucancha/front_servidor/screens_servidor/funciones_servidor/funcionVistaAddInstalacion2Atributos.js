@@ -5,30 +5,46 @@ import {
     TextInput,
     Dimensions,
   } from 'react-native';
-import { useState } from 'react';
+import { useContext } from 'react';
+import { ServerContext } from '../../ServerContext';
 
 const { width, height } = Dimensions.get('window');
 
-export const MostrarTextIniciales = ({ nombrePista, setNombrePista, ciudad,setCiudad,calle,setCalle,infoExtra,setInfoExtra}) => {
+const MostrarTextIniciales = () => {
 
+  const { instalacion, setInstalacion } = useContext(ServerContext);
   return (
     <View>
       <Text style={styles.title}>Información general:</Text>
 
       <Text style={styles.label}>Nombre de pista:</Text>
-      <TextInput style={styles.input} value={nombrePista} onChangeText={setNombrePista} placeholder="Nombre de pista" />
+      <TextInput style={styles.input} value={instalacion.nombrePista}  placeholder="Nombre de pista" id='text1' 
+      onChangeText={(text1) =>
+        setInstalacion((prevInstalacion) => ({
+          ...prevInstalacion,  // Mantén las propiedades anteriores
+          nombrePista: text1,  // Actualiza solo el campo 'nombrePista'
+        }))
+      }
+      />
 
       <Text style={styles.label}>Descripción:</Text>
       <TextInput
         style={[styles.input, { height: 80 }]} 
         multiline
-        value={infoExtra} 
-        onChangeText={setInfoExtra}
+        id='des'
+        value={instalacion.infoExtra} 
+        placeholder="breve descripcion"
+        onChangeText={(des) =>
+          setInstalacion((prevInstalacion) => ({
+            ...prevInstalacion,  // Mantén las propiedades anteriores
+            infoExtra: des,  // Actualiza solo el campo 'infoExtra'
+          }))
+        }
       />
   </View>
   );
 };
-  
+
 const styles = StyleSheet.create({
   title: {
     fontSize: 18,
@@ -54,4 +70,6 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 });
+
+export default MostrarTextIniciales;
   

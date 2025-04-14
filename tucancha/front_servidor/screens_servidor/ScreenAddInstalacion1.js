@@ -12,25 +12,22 @@ import {
   Image,
 } from 'react-native';
 import React from 'react';
-import { useState } from 'react';
+import { useState ,useContext} from 'react';
 
 import Checkbox from 'expo-checkbox';
-import {MostrarTextIniciales} from './funciones_servidor/funcionVistaAddInstalacion2Atributos.js'
+import MostrarTextIniciales from './funciones_servidor/funcionVistaAddInstalacion2Atributos.js'
 import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
 import {MostrarDuracionYPrecio} from './funciones_servidor/funcionScreenAddInstalacionDuracionYPrecio'
 import {MostrarHorarios} from './funciones_servidor/funcionScreenAddInstalacionHorarios'
-import {insertInstalacion} from '../../backend/funciones_backend/insert.js'
+import insertInstalacion from '../../backend/funciones_backend/insert.js'
 import Mapa from '../../functions/Mapa.js'
+import { ServerContext } from '../../front_servidor/ServerContext.js';
 
 const { width, height } = Dimensions.get('window');
 
 export default function ScreenAddInstalacion1() {
 
-  const [nombrePista, setNombrePista] = useState('');
-  const [infoExtra, setInfoExtra] = useState('');
-
-  const [images, setImages] = useState([]);
-
+  const { instalacion, setInstalacion } = useContext(ServerContext);
   const [isSelected, setSelection] = useState(false);
 
   
@@ -47,21 +44,19 @@ export default function ScreenAddInstalacion1() {
           keyboardShouldPersistTaps="handled"
         >
           
-          <MostrarTextIniciales nombrePista={nombrePista} setNombrePista={setNombrePista} 
-                                infoExtra={infoExtra} setInfoExtra={setInfoExtra}/>
-          
-
-        <Button title="Subir foto" onPress={() => AbrirGaleria(setImages)} />
+        <MostrarTextIniciales/>
+        <Text style={styles.title}>Ubicacion</Text>
+        <View style={{ width: width * 0.8, height: height * 0.8 }}>
+          <Mapa/>
+        </View>
+        <Button title="Subir foto" onPress={ () => AbrirGaleria(setInstalacion)} />
         
-        <ScrollView horizontal style={{ marginTop: 20 }}>
-          {images.map((uri, index) => (
-            <Image
-              key={index}
-              source={{ uri }}
-              style={{ width: 120, height: 120, marginRight: 10, borderRadius: 10 }}
-            />
-          ))}
-        </ScrollView>
+        {instalacion.imagen_instalacion ? (
+        <Image
+          source={{ uri: instalacion.imagen_instalacion }}
+          style={{ width: 120, height: 120, marginTop: 10, borderRadius: 10 }}
+        />
+      ) : null}
         
         <View style={styles.container}>
           <MostrarHorarios/>
@@ -78,7 +73,7 @@ export default function ScreenAddInstalacion1() {
           
           <MostrarDuracionYPrecio/>
           
-          <Button title="Añadir"  onPress={() => {insertInstalacion(nombrePista,infoExtra,images[0]); console.log("",images[0])}}/>
+          <Button title="Añadir"  onPress={() => insertInstalacion(instalacion)}/>
         </View>
         </ScrollView>
       </TouchableWithoutFeedback>
