@@ -1,10 +1,11 @@
 import { createNativeStackNavigation} from '@react-navigation/stack'
 
-import { StyleSheet, View,Button,Input, Dimensions, TextInput, Text}from 'react-native';
+import { ScrollView,StyleSheet, View,Button,Input, Dimensions, TextInput, Text}from 'react-native';
 import React, { useState } from "react";
 import Instalacion from '../../functions/Instalacion'
 import InstalacionStoris from '../../functions/InstalacionStoris'
-
+import NumeroReservas from '../../backend/funciones_backend/NumeroReservas'
+import PorcentageReservas from '../../backend/funciones_backend/PorcentajeReservas'
 
 const { width, height } = Dimensions.get("window");
 
@@ -12,12 +13,14 @@ const { width, height } = Dimensions.get("window");
 export default function ScreenInicio() {
   const [local, setName] = useState("");
   return (
-      <View style={styles.container}>
+      <ScrollView style={{ padding: 20 }}>
           <TextInput type='text' style={styles.input} value={local} placeholder="Localizacion" onChangeText={setName} />
           <InstalacionStoris/>
+          <NumeroReservas />
+          <PorcentageReservas/>
           <Text style={styles.texto}>Ultima reserva</Text>
           <Instalacion style={styles.ultimainstalacion}/>
-      </View>
+      </ScrollView>
   );
 }
 

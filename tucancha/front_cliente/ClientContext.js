@@ -20,7 +20,7 @@ export const ClientProvider = ({ children }) => {
     longitude: 0,
   });
   const [reserva,setReserva] = useState({
-    id_cliente: "",
+    id_cliente: "usuario.id_cliente",
     id_instalacion: "",
     tiempo_reserva: "",
     fecha_ini: "",
