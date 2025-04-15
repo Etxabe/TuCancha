@@ -8,7 +8,7 @@ import { consultarHorario, horasPasadas } from "../backend/funciones_backend/Hor
 
 
 const MyModal = ({ visible, onClose }) => {
-  const { ubicacion, setUbicacion, reserva, setReserva } = useContext(ClientContext);
+  const { ubicacion, setUbicacion, reserva, setReserva,idCliente } = useContext(ClientContext);
 
   
   const [selectedHour, setSelectedHour] = useState(null);
@@ -61,7 +61,7 @@ const MyModal = ({ visible, onClose }) => {
     const newReserva = {
       fecha_ini: selectedDate,
       id_instalacion: ubicacion.id_instalacion,
-      id_cliente: "usuario.id_cliente",
+      id_cliente: idCliente,
       hora_ini: hour,
       tiempo_reserva: ubicacion.duracion + "",
     };

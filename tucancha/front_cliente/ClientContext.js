@@ -4,7 +4,7 @@ import React, { createContext, useState } from "react";
 export const ClientContext = createContext();
 
 // 2. Creamos el Provider que envolverá nuestra app
-export const ClientProvider = ({ children }) => {
+export const ClientProvider = ({ children,id}) => {
   const [contador, setContador] = useState(0); // Variable compartida
   const [ubicacion,setUbication] = useState({
     nombre: "",
@@ -20,17 +20,17 @@ export const ClientProvider = ({ children }) => {
     longitude: 0,
   });
   const [reserva,setReserva] = useState({
-    id_cliente: "usuario.id_cliente",
+    id_cliente: "",
     id_instalacion: "",
     tiempo_reserva: "",
     fecha_ini: "",
     hora_ini: "",
     fecha: new Date()
   });
-  const [idCliente,setIdCliente] = useState("usuario.id_cliente");
+  const [idCliente] = useState(id);
 
   return (
-    <ClientContext.Provider value={{ ubicacion,setUbication,reserva,setReserva,idCliente,setIdCliente}}>
+    <ClientContext.Provider value={{ ubicacion,setUbication,reserva,setReserva,idCliente}}>
       {children}
     </ClientContext.Provider>
   );
