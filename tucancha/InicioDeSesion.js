@@ -1,5 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, Image, TouchableOpacity } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Dimensions,
+} from 'react-native';
+
+const { height } = Dimensions.get('window');
 
 export default function InicioDeSesion({ onLogin, onNavigateToRegister, error }) {
   const [usuario, setUsuario] = useState('');
@@ -10,61 +27,69 @@ export default function InicioDeSesion({ onLogin, onNavigateToRegister, error })
       Alert.alert('Error', 'Por favor, completa todos los campos.');
       return;
     }
-
-    // Llamar a la función onLogin con los valores introducidos
     onLogin(usuario, contrasenia);
   };
 
   return (
-    <View style={styles.container}>
-      <Image
-        source={require('./assets/logo-TuCancha.png')}
-        style={styles.logo}
-      />
-      <View style={styles.formContainer}>
-        <Text style={styles.title}>Inicio de Sesión</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Usuario"
-          value={usuario}
-          onChangeText={setUsuario}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Contraseña"
-          value={contrasenia}
-          onChangeText={setContrasenia}
-          secureTextEntry
-        />
-        {error ?  <Text style={styles.errorLogin}>Usuario y/o contraseña erronea</Text> : (<Text></Text>)}
-        <View style={styles.buttonContainer}>
-          <Button title="Iniciar Sesión" onPress={handleLogin} />
-        </View>
-        <TouchableOpacity onPress={onNavigateToRegister}>
-          <Text style={styles.registerText}>¿No tienes una cuenta? Regístrate</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: '#fff' }}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView
+          contentContainerStyle={styles.container}
+          keyboardShouldPersistTaps="handled"
+        >
+          <Image
+            source={require('./assets/logo-TuCancha.png')}
+            style={styles.logo}
+          />
+          <Text style={styles.title}>Inicio de Sesión</Text>
+
+          <TextInput
+            style={styles.input}
+            placeholder="Usuario"
+            value={usuario}
+            onChangeText={setUsuario}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Contraseña"
+            value={contrasenia}
+            onChangeText={setContrasenia}
+            secureTextEntry
+          />
+
+          {error && (
+            <Text style={styles.errorLogin}>Usuario y/o contraseña incorrecta</Text>
+          )}
+
+          <View style={styles.buttonContainer}>
+            <Button title="Iniciar Sesión" onPress={handleLogin} />
+          </View>
+
+          <TouchableOpacity onPress={onNavigateToRegister}>
+            <Text style={styles.registerText}>¿No tienes una cuenta? Regístrate</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'flex-start',
+    flexGrow: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
-    backgroundColor: '#ffffff',
+    paddingHorizontal: 20,
+    backgroundColor: '#fff',
   },
+  
   logo: {
     width: 150,
     height: 150,
-    marginTop: 180,
     marginBottom: 30,
-  },
-  formContainer: {
-    width: '100%',
-    alignItems: 'center',
   },
   title: {
     fontSize: 24,
@@ -83,7 +108,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: 10,
-    width: '40%',
+    width: '60%',
   },
   registerText: {
     marginTop: 20,
@@ -93,5 +118,6 @@ const styles = StyleSheet.create({
   errorLogin: {
     color: '#F00',
     textAlign: 'left',
+    marginBottom: 10,
   },
 });

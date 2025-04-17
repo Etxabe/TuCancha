@@ -5,7 +5,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import Parse from "./Conexion";
 import { ClientContext } from "../../front_cliente/ClientContext";
 import getUserLocation from "./GeoLocation";
-import * as Location from "expo-location";
 
 const Mapa = () => {
   const [data, setData] = useState([]);
