@@ -52,7 +52,7 @@ export default function ScreenAddInstalacion1() {
           
         <MostrarTextIniciales/>
         <Text style={styles.title}>Ubicacion:</Text>
-        <View style={{ width: width * 0.7, height: height * 0.5 }}>
+        <View style={{ width: width * 0.7, height: height * 0.5, marginBottom: 50}}>
           <Mapa/>
         </View>
         <Button title="Subir foto" onPress={ () => AbrirGaleria(setInstalacion,instalacion)} />
