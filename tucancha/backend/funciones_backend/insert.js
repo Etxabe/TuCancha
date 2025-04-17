@@ -39,7 +39,18 @@ const insertInstalacion = async(instalacion,setInstalacion) => {
 
                     await Instalacion.save();
 
-                    
+                    setInstalacion({
+                        nombrePista: "",
+                        precio: 0,
+                        duracion: 0,
+                        descripcion: "",
+                        imagen_instalacion: "",
+                        horaApertura: "09:00",
+                        horaCierre: "18:00",
+                        latitud: 0,
+                        longitud: 0,
+                    });
+    
                     Alert.alert('¡Éxito!', 'Instalación creada correctamente.');
             } catch(error) {
                 Alert.alert('Error!', error.message);
