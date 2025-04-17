@@ -74,7 +74,7 @@ export default function ScreenAddInstalacion1() {
             style={styles.button}
             onPress={async () => {
               setLoading(true);
-              await insertInstalacion(instalacion);
+              await insertInstalacion(instalacion,setInstalacion);
               setLoading(false);
             }}
             >
