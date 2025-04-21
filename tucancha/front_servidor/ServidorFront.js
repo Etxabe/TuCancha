@@ -8,6 +8,7 @@ import ScreenListadoInstalaciones from './screens_servidor/ScreenListadoInstalac
 import ScreenPerfil from './screens_servidor/ScreenPerfil';
 
 import ScreenAddInstalacion1 from './screens_servidor/ScreenAddInstalacion1';
+import ScreenModificarInstalacion1 from './screens_servidor/ScreenModificarInstalacion1';
 
 import { ServerProvider } from './ServerContext';
 
@@ -41,7 +42,10 @@ const Tabs = () => {
 export default function App() {
   return (
     <ServerProvider>
-      <Tabs />
+      <Stack.Navigator>
+        <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
+        <Stack.Screen name="ScreenModificarInstalacion1" component={ScreenModificarInstalacion1} />
+      </Stack.Navigator>
     </ServerProvider>
 
   );

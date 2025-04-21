@@ -1,5 +1,3 @@
-import { createNativeStackNavigation} from '@react-navigation/stack'
-
 import { StyleSheet, View,Button,Input, Dimensions}from 'react-native';
 import React, { useState } from "react";
 

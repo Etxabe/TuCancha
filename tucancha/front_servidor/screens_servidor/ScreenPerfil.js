@@ -1,23 +1,27 @@
-import { createNativeStackNavigation} from '@react-navigation/stack'
-
-import { StyleSheet, View,Button,Input, Dimensions, Image, Text, TouchableOpacity}from 'react-native';
+import { StyleSheet, View,Dimensions, Image, Text, TouchableOpacity,}from 'react-native';
 import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Feather'; // Importamos el ícono
-
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get("window");
 
-
 export default function FrontViewPitch1() {
 
+  const navigation = useNavigation();
+
   return (
-      <View style={styles.container}>
+    <View style={styles.container}>
         <Image source={require('./../../assets/logo-TuCancha.png')} style={styles.image} />
         <Text style={styles.nombre}>Tucán Cha</Text>
         <Text style={styles.descripcion}>¡El Tucán más deportista!</Text>
         <TouchableOpacity style={styles.editButton} onPress={() => alert('Editar perfil')}>
           <Icon name="edit" size={24} color="#000" />
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ScreenModificarInstalacion1')}>
+          <Icon name="settings" size={40} color="#000" />
+        </TouchableOpacity> 
       </View>
   );
 }
@@ -57,3 +61,6 @@ const styles = StyleSheet.create({
       padding: 10,   // Área táctil más grande
     },
 });  
+/*
+    
+*/ 
