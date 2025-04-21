@@ -44,8 +44,11 @@ export default function App() {
     <ServerProvider>
       <Stack.Navigator>
         <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
-        <Stack.Screen name="ScreenModificarInstalacion1" component={ScreenModificarInstalacion1} />
-      </Stack.Navigator>
+        <Stack.Screen 
+          name="ScreenModificarInstalacion1" 
+          options={{ title: 'Modificar Instalación' }} 
+          component={ScreenModificarInstalacion1} />
+        </Stack.Navigator>
     </ServerProvider>
 
   );
