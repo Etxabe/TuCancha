@@ -1,17 +1,13 @@
-import { createNativeStackNavigation} from '@react-navigation/stack'
-
-import { StyleSheet, View,Button,Input, Dimensions, Image, Text, TouchableOpacity}from 'react-native';
+import { StyleSheet, View,Button,Input, Dimensions, Image, Text, TouchableOpacity,ActivityIndicator}from 'react-native';
 import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Feather'; // Importamos el ícono
 
-
 const { width, height } = Dimensions.get("window");
-
 
 export default function FrontViewPitch1() {
 
   return (
-      <View style={styles.container}>
+    <View style={styles.container}>
         <Image source={require('./../../assets/logo-TuCancha.png')} style={styles.image} />
         <Text style={styles.nombre}>Tucán Cha</Text>
         <Text style={styles.descripcion}>¡El Tucán más deportista!</Text>
@@ -57,3 +53,6 @@ const styles = StyleSheet.create({
       padding: 10,   // Área táctil más grande
     },
 });  
+/*
+    
+*/ 

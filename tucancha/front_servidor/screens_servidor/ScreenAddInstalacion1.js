@@ -10,11 +10,12 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
+  ActivityIndicator,
+  TouchableOpacity,
 } from 'react-native';
 import React from 'react';
 import { useState ,useContext} from 'react';
 
-import Checkbox from 'expo-checkbox';
 import MostrarTextIniciales from './funciones_servidor/funcionVistaAddInstalacion2Atributos.js'
 import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
 import {MostrarDuracionYPrecio} from './funciones_servidor/funcionScreenAddInstalacionDuracionYPrecio'
@@ -28,8 +29,8 @@ const { width, height } = Dimensions.get('window');
 export default function ScreenAddInstalacion1() {
 
   const { instalacion, setInstalacion } = useContext(ServerContext);
-  const [isSelected, setSelection] = useState(false);
-
+  //const [isSelected, setSelection] = useState(false);
+  const [loading, setLoading] = useState(false);
   
   return (
     
@@ -37,7 +38,12 @@ export default function ScreenAddInstalacion1() {
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // mejor soporte multiplataforma
     >
-      
+      {loading && (
+        <View style={styles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#fff" />
+          <Text style={{ color: '#fff', marginTop: 10}}>Subiendo instalación...</Text>
+        </View>
+      )}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={styles.container}
@@ -45,11 +51,11 @@ export default function ScreenAddInstalacion1() {
         >
           
         <MostrarTextIniciales/>
-        <Text style={styles.title}>Ubicacion</Text>
-        <View style={{ width: width * 0.8, height: height * 0.8 }}>
+        <Text style={styles.title}>Ubicacion:</Text>
+        <View style={{ width: width * 0.7, height: height * 0.5, marginBottom: 50}}>
           <Mapa/>
         </View>
-        <Button title="Subir foto" onPress={ () => AbrirGaleria(setInstalacion)} />
+        <Button title="Subir foto" onPress={ () => AbrirGaleria(setInstalacion,instalacion)} />
         
         {instalacion.imagen_instalacion ? (
         <Image
@@ -60,25 +66,27 @@ export default function ScreenAddInstalacion1() {
         
         <View style={styles.container}>
           <MostrarHorarios/>
-
-          <View style={styles.checkboxContainer}>
-            <Text style={styles.checkboxLabel}>Abrir en festivos(Domingos incluidos)</Text>
-            <Checkbox
-              value={isSelected}
-              onValueChange={setSelection}
-              style={styles.checkbox}
-            />
-
-          </View>
           
           <MostrarDuracionYPrecio/>
           
-          <Button title="Añadir"  onPress={() => insertInstalacion(instalacion)}/>
-        </View>
-        </ScrollView>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
-  );
+          <TouchableOpacity
+            title="Añadir"
+            style={styles.button}
+            onPress={async () => {
+              setLoading(true);
+              await insertInstalacion(instalacion,setInstalacion);
+              setLoading(false);
+            }}
+            >
+            <Text style={styles.buttonText}>Añadir</Text>
+            </TouchableOpacity>
+
+            </View>
+            
+            </ScrollView>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
+      );
 }
 
 const styles = StyleSheet.create({
@@ -125,5 +133,30 @@ const styles = StyleSheet.create({
   checkbox: {
     width: 20,
     height: 20,
+  },
+  loadingOverlay: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 999,
+  },
+  button: {
+    backgroundColor: '#6200ea',  // Color de fondo (puedes poner el color que desees)
+    paddingVertical: 10,          // Espacio arriba y abajo
+    paddingHorizontal: 20,       // Espacio a los lados
+    borderRadius: 5,             // Bordes redondeados
+    alignItems: 'center',        // Centrar el contenido
+    justifyContent: 'center',    // Centrar el contenido
+    marginTop: 20,               // Espacio arriba (si es necesario)
+  },
+  buttonText: {
+    color: '#fff',               // Color del texto
+    fontSize: 18,                // Tamaño de la fuente
+    fontWeight: 'bold',          // Negrita
   },
 });
