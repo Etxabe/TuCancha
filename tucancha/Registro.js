@@ -40,7 +40,6 @@ export default function Registro({ onNavigateToLogin }) {
 
     try {
       const newUser = new Parse.Object('Usuarios');
-      newUser.set('idUsuario', idUsuario); // Asignar el idUsuario incremental
       newUser.set('email', email);
       newUser.set('nombre', usuario);
       newUser.set('contrasenia', contrasenia);
