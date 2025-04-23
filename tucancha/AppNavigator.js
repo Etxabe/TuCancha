@@ -35,7 +35,7 @@ export default function AppNavigator() {
           setIsLoggedIn(true);
           setUserType(result.get("esProveedor") ? "proveedor" : "cliente");
           setId(result.id);
-          console.log("Usuario autenticado:", result.get("username"));
+          console.log("Usuario autenticado:", result.get("id"));
         } else {
           // Usuario no encontrado
           console.warn("Usuario o contraseña incorrectos");
