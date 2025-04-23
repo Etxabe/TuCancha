@@ -1,5 +1,6 @@
-import { StyleSheet, Text, View, Image, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, Dimensions, TouchableOpacity } from 'react-native';
 import React from "react";
+import Icon from 'react-native-vector-icons/Feather';
 
 const { width, height } = Dimensions.get("window");
 
@@ -7,12 +8,17 @@ export default function InstalacionEnLista({ nombre, precio, descripcion, imagen
   return (
     <View style={styles.containerinstalacion}>
       <View style={styles.container}>
-        <Image source={{ uri: imagen }} style={styles.imagen} />
+      <Image source={{ uri: imagen }} style={styles.imagen} />
         <View>
-          <Text style={styles.title}>{nombre}</Text>
-          <Text style={styles.price}>Precio: {precio}€</Text>
-          <Text style={styles.description}>{descripcion}</Text>
+            <Text style={styles.title}>{nombre}</Text>
+            <Text style={styles.price}>Precio: {precio}€</Text>
+            <Text style={styles.description}>
+                {descripcion.length > 30 ? descripcion.substring(0, 30) + '...' : descripcion}
+                </Text>
         </View>
+        <TouchableOpacity style={styles.editButton} onPress={() => alert('Modificar instalacion')}>
+            <Icon name="settings" size={24} color="#000" />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -21,7 +27,6 @@ export default function InstalacionEnLista({ nombre, precio, descripcion, imagen
 const styles = StyleSheet.create({
     containerinstalacion: {
         flexDirection: 'col', // Organiza los elementos en una fila
-        alignItems: 'center', // Centra verticalmente la imagen y el texto
         padding: 10,
         borderWidth: 0.2,
         },
@@ -42,7 +47,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     price: {
-        fontSize: 12,
+        fontSize: 14,
         padding: 10,
         flex: 1,
     },
@@ -50,5 +55,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         padding: 10,
         flex: 1,
+    },
+    editButton: {
+        padding: 10,
+        borderRadius: 5,
+        marginLeft: 'auto', // Empuja el botón hacia la derecha
     },
 });

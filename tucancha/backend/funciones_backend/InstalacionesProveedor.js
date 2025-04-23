@@ -80,6 +80,7 @@ export default function InstalacionesProveedor() {
         data={instalaciones}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ width: "100%" }}
       />
     </View>
   );
@@ -105,5 +106,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%',
   },
 });
