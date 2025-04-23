@@ -69,7 +69,7 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       {userType === 'cliente' && <ClienteNavigator id={id}/>}
-      {userType === 'proveedor' && <ProveedorNavigator />}
+      {userType === 'proveedor' && <ProveedorNavigator id={id}/>}
     </NavigationContainer>
   );
 }
