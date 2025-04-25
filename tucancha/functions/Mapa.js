@@ -16,15 +16,31 @@ const Mapa = () => {
   useEffect(() => {
     const fetchLocation = async () => {
       setLoading(true);
-      const loc = await getUserLocation();
-      if (loc) {
-        setUserLocation(loc);
-        setSelectedLocation({ latitude: loc.latitude, longitude: loc.longitude });
+  
+      if (instalacion.latitud !== 0 && instalacion.longitud !== 0) {
+        const customLocation = {
+          latitude: instalacion.latitud,
+          longitude: instalacion.longitud,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        };
+  
+        setSelectedLocation({ latitude: instalacion.latitud, longitude: instalacion.longitud });
         if (mapRef.current) {
-          mapRef.current.animateToRegion(loc, 1000);
+          mapRef.current.animateToRegion(customLocation, 1000);
         }
+        setLoading(false);
+      } else {
+        const loc = await getUserLocation();
+        if (loc) {
+          setUserLocation(loc);
+          setSelectedLocation({ latitude: loc.latitude, longitude: loc.longitude });
+          if (mapRef.current) {
+            mapRef.current.animateToRegion(loc, 1000);
+          }
+        }
+        setLoading(false);
       }
-      setLoading(false);
     };
   
     fetchLocation();

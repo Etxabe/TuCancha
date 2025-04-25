@@ -1,10 +1,14 @@
 import { StyleSheet, View,Button,Input, Dimensions, Image, Text, TouchableOpacity,ActivityIndicator}from 'react-native';
 import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Feather'; // Importamos el ícono
+import { useNavigation } from '@react-navigation/native';
+
 
 const { width, height } = Dimensions.get("window");
 
 export default function FrontViewPitch1() {
+
+  const navigation = useNavigation();
 
   return (
     <View style={styles.container}>
@@ -14,6 +18,11 @@ export default function FrontViewPitch1() {
         <TouchableOpacity style={styles.editButton} onPress={() => alert('Editar perfil')}>
           <Icon name="edit" size={24} color="#000" />
         </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ScreenModificarInstalacion1')}>
+          <Icon name="settings" size={40} color="#000" />
+        </TouchableOpacity> 
       </View>
   );
 }
