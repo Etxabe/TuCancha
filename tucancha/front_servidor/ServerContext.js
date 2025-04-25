@@ -4,7 +4,7 @@ import React, { createContext, useState } from "react";
 export const ServerContext = createContext();
 
 // 2. Creamos el Provider que envolverá nuestra app
-export const ServerProvider = ({ children }) => {
+export const ServerProvider = ({ children, id }) => {
   const [contador, setContador] = useState(0); // Variable compartida
   const [instalacion,setInstalacion] = useState({
     nombrePista: "",
@@ -17,8 +17,13 @@ export const ServerProvider = ({ children }) => {
     latitud: 0,
     longitud: 0,
   });
+
+  const [idProveedor] = useState(id);
+
+  console.log("ID de usuario en ServerProvider:", idProveedor); // Log para verificar el ID del usuario
+
   return (
-    <ServerContext.Provider value={{ instalacion,setInstalacion}}>
+    <ServerContext.Provider value={{ instalacion,setInstalacion, idProveedor}}>
       {children}
     </ServerContext.Provider>
   );

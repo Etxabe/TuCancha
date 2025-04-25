@@ -38,9 +38,9 @@ const Tabs = () => {
   );
 };
 
-export default function App() {
+export default function App({id}) {
   return (
-    <ServerProvider>
+    <ServerProvider id={id}>
       <Tabs />
     </ServerProvider>
 

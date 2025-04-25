@@ -35,7 +35,7 @@ export default function AppNavigator() {
           setIsLoggedIn(true);
           setUserType(result.get("esProveedor") ? "proveedor" : "cliente");
           setId(result.id);
-          console.log("Usuario autenticado:", result.get("username"));
+          console.log("Usuario autenticado:", id);
         } else {
           // Usuario no encontrado
           console.warn("Usuario o contraseña incorrectos");
@@ -69,7 +69,7 @@ export default function AppNavigator() {
   return (
     <NavigationContainer>
       {userType === 'cliente' && <ClienteNavigator id={id}/>}
-      {userType === 'proveedor' && <ProveedorNavigator />}
+      {userType === 'proveedor' && <ProveedorNavigator id={id}/>}
     </NavigationContainer>
   );
 }
