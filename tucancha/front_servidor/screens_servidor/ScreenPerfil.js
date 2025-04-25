@@ -1,6 +1,8 @@
 import { StyleSheet, View,Button,Input, Dimensions, Image, Text, TouchableOpacity,ActivityIndicator}from 'react-native';
 import React, { useState } from "react";
 import Icon from 'react-native-vector-icons/Feather'; // Importamos el ícono
+import { useNavigation } from '@react-navigation/native';
+
 
 const { width, height } = Dimensions.get("window");
 

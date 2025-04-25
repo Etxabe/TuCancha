@@ -41,7 +41,7 @@ const Tabs = () => {
 
 export default function App({id}) {
   return (
-    <ServerProvider>
+    <ServerProvider id={id}>
       <Stack.Navigator>
         <Stack.Screen name="Tabs" component={Tabs} options={{ headerShown: false }} />
         <Stack.Screen 
