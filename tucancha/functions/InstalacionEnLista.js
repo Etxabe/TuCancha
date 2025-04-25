@@ -4,16 +4,16 @@ import Icon from 'react-native-vector-icons/Feather';
 
 const { width, height } = Dimensions.get("window");
 
-export default function InstalacionEnLista({ nombre, precio, descripcion, imagen }) {
+export default function InstalacionEnLista({item}) {
   return (
     <View style={styles.containerinstalacion}>
       <View style={styles.container}>
-      <Image source={{ uri: imagen }} style={styles.imagen} />
+      <Image source={{ uri: item.imagen }} style={styles.imagen} />
         <View>
-            <Text style={styles.title}>{nombre}</Text>
-            <Text style={styles.price}>Precio: {precio}€</Text>
+            <Text style={styles.title}>{item.nombre}</Text>
+            <Text style={styles.price}>Precio: {item.precio}€</Text>
             <Text style={styles.description}>
-                {descripcion.length > 30 ? descripcion.substring(0, 30) + '...' : descripcion}
+                {item.descripcion.length > 30 ? item.descripcion.substring(0, 30) + '...' : item.descripcion}
                 </Text>
         </View>
         <TouchableOpacity style={styles.editButton} onPress={() => alert('Modificar instalacion')}>
