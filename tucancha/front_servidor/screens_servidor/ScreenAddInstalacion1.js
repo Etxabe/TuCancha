@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import React from 'react';
-import { useState ,useContext} from 'react';
+import { useState ,useContext,useEffect} from 'react';
 
 import MostrarTextIniciales from './funciones_servidor/funcionVistaAddInstalacion2Atributos.js'
 import {AbrirGaleria} from './funciones_servidor/funcionGaleria'
@@ -31,6 +31,26 @@ export default function ScreenAddInstalacion1() {
   const { instalacion, setInstalacion } = useContext(ServerContext);
   //const [isSelected, setSelection] = useState(false);
   const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    if (instalacion?.idInstalacion && instalacion.idInstalacion !== "") {
+      setInstalacion({
+        nombrePista: "",
+        precio: 0,
+        duracion: 0,
+        descripcion: "",
+        imagen_instalacion: "",
+        horaApertura: "09:00",
+        horaCierre: "18:00",
+        latitud: 0,
+        longitud: 0,
+        idPropietario: "",
+        idInstalacion: "",
+      });
+    }
+  }, []);
+  
+  
   
   return (
     

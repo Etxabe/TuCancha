@@ -23,6 +23,7 @@ export default function InstalacionEnLista({item}) {
             latitud: item.latitud,
             longitud: item.longitud,
             idPropietario: item.idPropietario,
+            idInstalacion: item.id,
           });
         
         navigation.navigate('ScreenModificarInstalacion1')

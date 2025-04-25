@@ -10,6 +10,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
+  TouchableOpacity,
+  ActivityIndicator,
 }from 'react-native';
 
 import React, { useState,useContext } from "react";
@@ -21,6 +23,8 @@ import {MostrarDuracionYPrecio} from './funciones_servidor/funcionScreenAddInsta
 import {MostrarHorarios} from './funciones_servidor/funcionScreenAddInstalacionHorarios'
 import Mapa from '../../functions/Mapa.js'
 import { ServerContext } from '../../front_servidor/ServerContext.js';
+import updateInstalacion from '../../backend/funciones_backend/updateInstalacion.js';
+import { useNavigation } from '@react-navigation/native';
 
 
 const { width, height } = Dimensions.get("window");
@@ -30,6 +34,8 @@ export default function ScreenModificarInstalacion1() {
 
   const { instalacion, setInstalacion } = useContext(ServerContext);
   const [isSelected, setSelection] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const navigation = useNavigation();
 
   
   return (
@@ -38,7 +44,12 @@ export default function ScreenModificarInstalacion1() {
       style={{ flex: 1 }}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // mejor soporte multiplataforma
     >
-      
+      {loading && (
+              <View style={styles.loadingOverlay}>
+                <ActivityIndicator size="large" color="#fff" />
+                <Text style={{ color: '#fff', marginTop: 10}}>Subiendo instalación...</Text>
+              </View>
+            )}
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={styles.container}
@@ -74,7 +85,21 @@ export default function ScreenModificarInstalacion1() {
           
           <MostrarDuracionYPrecio/>
           
-          <Button title="Añadir"  onPress={() => insertInstalacion(instalacion)}/>
+          <TouchableOpacity
+            title="Modificar"
+            style={styles.button}
+            onPress={async () => {
+              setLoading(true);
+              await updateInstalacion(instalacion,setInstalacion);
+              setLoading(false);
+              navigation.navigate('Tabs', {
+                screen: 'Inicio'
+              });
+            }}
+            >
+            <Text style={styles.buttonText}>Modificar</Text>
+          </TouchableOpacity>
+
         </View>
         </ScrollView>
       </TouchableWithoutFeedback>
@@ -126,5 +151,19 @@ const styles = StyleSheet.create({
   checkbox: {
     width: 20,
     height: 20,
+  },
+  button: {
+    backgroundColor: '#6200ea',  // Color de fondo (puedes poner el color que desees)
+    paddingVertical: 10,          // Espacio arriba y abajo
+    paddingHorizontal: 20,       // Espacio a los lados
+    borderRadius: 5,             // Bordes redondeados
+    alignItems: 'center',        // Centrar el contenido
+    justifyContent: 'center',    // Centrar el contenido
+    marginTop: 20,               // Espacio arriba (si es necesario)
+  },
+  buttonText: {
+    color: '#fff',               // Color del texto
+    fontSize: 18,                // Tamaño de la fuente
+    fontWeight: 'bold',          // Negrita
   },
 }); 
