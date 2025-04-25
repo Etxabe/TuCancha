@@ -32,12 +32,12 @@ const MostrarTextIniciales = () => {
         style={[styles.input, { height: 80 }]} 
         multiline
         id='des'
-        value={instalacion.infoExtra} 
+        value={instalacion.descripcion} 
         placeholder="breve descripcion"
         onChangeText={(des) =>
           setInstalacion((prevInstalacion) => ({
             ...prevInstalacion,  // Mantén las propiedades anteriores
-            infoExtra: des,  // Actualiza solo el campo 'infoExtra'
+            descripcion: des,  // Actualiza solo el campo 'infoExtra'
           }))
         }
       />

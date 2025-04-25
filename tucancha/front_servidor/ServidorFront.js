@@ -39,7 +39,7 @@ const Tabs = () => {
   );
 };
 
-export default function App() {
+export default function App({id}) {
   return (
     <ServerProvider>
       <Stack.Navigator>
@@ -49,6 +49,7 @@ export default function App() {
           options={{ title: 'Modificar Instalación' }} 
           component={ScreenModificarInstalacion1} />
         </Stack.Navigator>
+
     </ServerProvider>
 
   );
