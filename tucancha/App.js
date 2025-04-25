@@ -1,20 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import AppNavigator from './AppNavigator';
+import { ClientProvider } from './front_cliente/ClientContext';
+import { ServerProvider } from './front_servidor/ServerContext';
+import { AuthContext } from './AuthContext';
 
 export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userType, setUserType] = useState('');
+  const [id, setId] = useState('');
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AuthContext.Provider value={{ isLoggedIn, setIsLoggedIn, userType, setUserType, id, setId }}>
+      <ClientProvider id={id}>
+        <ServerProvider id={id}>
+          <AppNavigator />
+        </ServerProvider>
+      </ClientProvider>
+    </AuthContext.Provider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
