@@ -1,14 +1,34 @@
 import { createNativeStackNavigation} from '@react-navigation/stack'
 
-import { StyleSheet, View,Button,Input, Dimensions, Image, Text, TouchableOpacity}from 'react-native';
-import React, { useState } from "react";
+import { AuthContext } from '../../AuthContext';
+import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity, Alert}from 'react-native';
+import React, { useState, useContext } from "react";
 import Icon from 'react-native-vector-icons/Feather'; // Importamos el ícono
 
 
 const { width, height } = Dimensions.get("window");
 
-
 export default function FrontViewPitch1() {
+  const { setIsLoggedIn } = useContext(AuthContext);
+
+  const handleLogout = () => {
+      Alert.alert(
+        "Cerrar sesión", // Título del Alert
+        "¿Seguro que quieres cerrar sesión?", // Mensaje
+        [
+          {
+            text: "Cancelar", // Botón de cancelar
+            onPress: () => console.log("Cancelar cerrado"), // Acción al cancelar
+            style: "cancel", // Estilo del botón de cancelar
+          },
+          {
+            text: "Confirmar", // Botón de confirmar
+            onPress: () => setIsLoggedIn(false), // Acción al confirmar (cerramos sesión)
+          },
+        ],
+        { cancelable: false } // No se puede cerrar tocando fuera del alert
+      );
+    };
 
   return (
       <View style={styles.container}>
@@ -17,6 +37,9 @@ export default function FrontViewPitch1() {
         <Text style={styles.descripcion}>¡El Tucán más deportista!</Text>
         <TouchableOpacity style={styles.editButton} onPress={() => alert('Editar perfil')}>
           <Icon name="edit" size={24} color="#000" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Text style={styles.logoutText}>Cerrar sesión</Text>
         </TouchableOpacity>
       </View>
   );
@@ -55,5 +78,16 @@ const styles = StyleSheet.create({
     editButton: {
       marginTop: 10, // Espacio debajo del nombre
       padding: 10,   // Área táctil más grande
+    },
+    logoutButton: {
+      marginTop: 30,
+      padding: 12,
+      backgroundColor: '#e74c3c',
+      borderRadius: 8,
+    },
+    logoutText: {
+      color: '#fff',
+      fontWeight: 'bold',
+      fontSize: 16,
     },
 });  
