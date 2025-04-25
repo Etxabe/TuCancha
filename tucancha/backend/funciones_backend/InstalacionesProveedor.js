@@ -21,10 +21,10 @@ export default function InstalacionesProveedor() {
 
         const instalacionesData = results.map((instalacion) => ({
           id: instalacion.id,
-          nombre: instalacion.get('nombre'),
+          nombrePista: instalacion.get('nombre'),
           precio: instalacion.get('precio'),
           descripcion: instalacion.get('descripcion'),
-          imagen: instalacion.get('imagen_instalacion') ? instalacion.get('imagen_instalacion').url() : null,
+          imagen_instalacion: instalacion.get('imagen_instalacion') ? instalacion.get('imagen_instalacion').url() : null,
           duracion: instalacion.get('tiempo_reserva'),
           horaApertura: instalacion.get('hora_inicio'),
           horaCierre: instalacion.get('hora_fin'),

@@ -17,6 +17,7 @@ export const ServerProvider = ({ children, id }) => {
     latitud: 0,
     longitud: 0,
     idPropietario: "",
+    idInstalacion:"",
   });
 
   const [idProveedor] = useState(id);

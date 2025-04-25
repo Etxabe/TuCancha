@@ -18,7 +18,7 @@ export const MostrarDuracionYPrecio = () => {
       <View>
           <Text style={styles.label}>Duración de reserva:</Text>
           <TextInput style={styles.input} 
-            value={instalacion.duracion} 
+            value={String(instalacion.duracion)}
             onChangeText={(text) => setInstalacion({ ...instalacion, duracion: text })}  
             keyboardType='numeric' 
             placeholder="Ej: 60 minutos" 
@@ -26,7 +26,7 @@ export const MostrarDuracionYPrecio = () => {
 
           <Text style={styles.label}>Precio:</Text>
           <TextInput style={styles.input} 
-            value={instalacion.precio} 
+            value={String(instalacion.precio)} 
             onChangeText={(text) => setInstalacion({ ...instalacion, precio: text })}  
             keyboardType='numeric' 
             placeholder="Ej: 24 €" 
