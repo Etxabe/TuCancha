@@ -15,7 +15,6 @@ export default function ScreenInicio() {
   return (
       <ScrollView style={{ padding: 20 }}>
           <TextInput type='text' style={styles.input} value={local} placeholder="Localizacion" onChangeText={setName} />
-          <InstalacionStoris/>
           <NumeroReservas />
           <PorcentageReservas/>
           <Text style={styles.texto}>Ultima reserva</Text>

@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Parse from './backend/funciones_backend/Conexion';
 
+import { obtenerInfoPerfil } from './backend/funciones_backend/InfoPerfil';
 import LoginScreen from './InicioDeSesion';
 import RegistroScreen from './Registro';
 import ClienteNavigator from './front_cliente/ClienteFront';
@@ -32,6 +33,7 @@ export default function AppNavigator() {
           setIsLoggedIn(true);
           setUserType(result.get("esProveedor") ? "proveedor" : "cliente");
           setId(result.id);
+          
           console.log("Usuario autenticado:", result.get("username"));
         } else {
           console.warn("Usuario o contraseña incorrectos");
