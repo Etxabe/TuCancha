@@ -4,6 +4,8 @@ import { AuthContext } from '../../AuthContext';
 import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity, Alert}from 'react-native';
 import React, { useState, useContext } from "react";
 import Icon from 'react-native-vector-icons/Feather'; // Importamos el ícono
+import { useNavigation } from '@react-navigation/native';
+
 
 
 const { width, height } = Dimensions.get("window");
@@ -30,6 +32,8 @@ export default function FrontViewPitch1() {
     );
   };
 
+  const navigation = useNavigation();
+
   return (
       <View style={styles.container}>
         <Image source={require('./../../assets/logo-TuCancha.png')} style={styles.image} />
@@ -38,6 +42,7 @@ export default function FrontViewPitch1() {
         <TouchableOpacity style={styles.editButton} onPress={() => alert('Editar perfil')}>
           <Icon name="edit" size={24} color="#000" />
         </TouchableOpacity>
+
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
           <Text style={styles.logoutText}>Cerrar sesión</Text>
         </TouchableOpacity>
