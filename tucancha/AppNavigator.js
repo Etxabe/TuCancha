@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import Parse from './backend/funciones_backend/Conexion';
 
@@ -6,38 +6,34 @@ import LoginScreen from './InicioDeSesion';
 import RegistroScreen from './Registro';
 import ClienteNavigator from './front_cliente/ClienteFront';
 import ProveedorNavigator from './front_servidor/ServidorFront';
+import { AuthContext } from './AuthContext';
 
 export default function AppNavigator() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);  // ¿Está logueado?
-  const [userType, setUserType] = useState(null);       // "cliente" o "proveedor"
-  const [credentials, setCredentials] = useState(null); // Guardar usuario y contraseña
-  const [isRegistering, setIsRegistering] = useState(false); // Nuevo estado
-  const [isCorrect, setIsNotCorrect] = useState(false); 
-  const [id,setId] = useState("");
+  const {isLoggedIn, setIsLoggedIn, userType, setUserType, id, setId} = useContext(AuthContext);
+
+  const [credentials, setCredentials] = useState(null);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [isCorrect, setIsNotCorrect] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
-      if (!credentials) return; // Esperar hasta que se reciban las credenciales
+      if (!credentials) return;
 
       try {
         const { usuario, contrasena } = credentials;
 
-        // Crear una consulta en la tabla "Usuario"
         const query = new Parse.Query("Usuarios");
-        query.equalTo("nombre", usuario); // Filtrar por nombre de usuario
-        query.equalTo("contrasenia", contrasena); // Filtrar por contraseña
+        query.equalTo("nombre", usuario);
+        query.equalTo("contrasenia", contrasena);
 
-        // Ejecutar la consulta
-        const result = await query.first(); // Obtener el primer resultado
+        const result = await query.first();
 
         if (result) {
-          // Usuario encontrado, actualizar estado
           setIsLoggedIn(true);
           setUserType(result.get("esProveedor") ? "proveedor" : "cliente");
           setId(result.id);
-          console.log("Usuario autenticado:", id);
+          console.log("Usuario autenticado:", result.get("username"));
         } else {
-          // Usuario no encontrado
           console.warn("Usuario o contraseña incorrectos");
           setIsLoggedIn(false);
           setIsNotCorrect(true);
@@ -49,18 +45,17 @@ export default function AppNavigator() {
     };
 
     checkAuth();
-  }, [credentials]); // Ejecutar cuando cambien las credenciales
+  }, [credentials]);
 
   if (isRegistering) {
     return <RegistroScreen onNavigateToLogin={() => setIsRegistering(false)} />;
   }
 
-  // Si NO está logueado → Muestro Login
   if (!isLoggedIn) {
     return (
       <LoginScreen
         onLogin={(usuario, contrasena) => setCredentials({ usuario, contrasena })}
-        onNavigateToRegister={() => setIsRegistering(true)} // Navegar al registro
+        onNavigateToRegister={() => setIsRegistering(true)}
         error={isCorrect}
       />
     );
@@ -68,8 +63,8 @@ export default function AppNavigator() {
 
   return (
     <NavigationContainer>
-      {userType === 'cliente' && <ClienteNavigator id={id}/>}
-      {userType === 'proveedor' && <ProveedorNavigator id={id}/>}
+      {userType === 'cliente' && <ClienteNavigator id={id} />}
+      {userType === 'proveedor' && <ProveedorNavigator id={id} />}
     </NavigationContainer>
   );
 }
