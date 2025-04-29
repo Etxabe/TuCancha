@@ -42,7 +42,6 @@ const Tabs = () => {
 };
 
 export default function App({id}) {
-  console.log("añañin: ",id);
   
   return (
     <ClientProvider id={id}>

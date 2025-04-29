@@ -20,7 +20,6 @@ export default function FrontViewPitch1() {
       [
         {
           text: "Cancelar", // Botón de cancelar
-          onPress: () => console.log("Cancelar cerrado"), // Acción al cancelar
           style: "cancel", // Estilo del botón de cancelar
         },
         {

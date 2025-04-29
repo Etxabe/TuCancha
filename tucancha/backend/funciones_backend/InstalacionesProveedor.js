@@ -17,7 +17,6 @@ export default function InstalacionesProveedor() {
         query.equalTo('idPropietario', idProveedor); // Filtrar por el ID del proveedor
         const results = await query.find();
 
-        console.log("ID de usuario en InsPro:", idProveedor); // Log para verificar el ID del usuario
 
         const instalacionesData = results.map((instalacion) => ({
           id: instalacion.id,
@@ -34,7 +33,6 @@ export default function InstalacionesProveedor() {
         }));
         
 
-        console.log('Instalaciones obtenidas:', instalacionesData); // Log para verificar los datos
         setInstalaciones(instalacionesData);
       } catch (error) {
         console.error('Error al obtener las instalaciones:', error);

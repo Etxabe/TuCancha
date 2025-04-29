@@ -50,7 +50,6 @@ const ReservasPorInstalacion = () => {
         // Filtramos los elementos nulos o inválidos
         const validData = data.filter((item) => item !== null);
 
-        console.log("Datos para el PieChart:", validData); // Asegúrate de que los datos son correctos
         setConteo(validData);
 
       } catch (error) {

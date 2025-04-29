@@ -55,7 +55,6 @@ export const horasPasadas = (hora_ini, intervalo) => {
       current = next; // Avanza al siguiente intervalo
     }
 
-    console.log("Intervalos de horas pasadas generados:", horasPasadas); // Muestra los intervalos generados
     return horasPasadas; // Devuelve los intervalos de horas pasadas
   } catch (error) {
     console.error("Error al calcular las horas pasadas:", error);
