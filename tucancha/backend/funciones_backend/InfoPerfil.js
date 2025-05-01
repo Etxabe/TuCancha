@@ -13,7 +13,7 @@ export const obtenerInfoPerfil = async (id) => {
       nombre: user.get("nombre") || "",
       descripcion: user.get("descripcion") || "",
       email: user.get("email") || "",
-      imagen_perfil: user.get("imagen_perfil") || "",
+      imagen_perfil: user.get("imagen_perfil")?.url?.() || null,
     };
   } catch (error) {
     console.error("Error al obtener la info del perfil:", error);

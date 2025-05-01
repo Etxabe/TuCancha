@@ -1,5 +1,5 @@
 import { createNativeStackNavigation} from '@react-navigation/stack'
-
+import { useIsFocused } from '@react-navigation/native';
 import { AuthContext } from '../../AuthContext';
 import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity, Alert} from 'react-native';
 import React, { useState, useContext, useEffect } from "react";
@@ -11,18 +11,21 @@ const { width, height } = Dimensions.get("window");
 
 export default function FrontViewPitch1() {
   const { id, setIsLoggedIn } = useContext(AuthContext);
+  const [nombre, setNombre] = useState('');
+  const [descripcion, setDescripcion] = useState('');
   const [perfil, setPerfil] = useState(null);
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const cargarPerfil = async () => {
       const datos = await obtenerInfoPerfil(id);
       if (datos) setPerfil(datos);
     };
-    cargarPerfil();
-  }, []);
-
-  
+    if (isFocused && id) {
+      cargarPerfil();
+    }
+  }, [isFocused, id]);
 
   const handleLogout = () => {
     Alert.alert(
