@@ -6,6 +6,7 @@ import ScreenInicio from './screens_cliente/ScreenInicio';
 import ScreenPerfil from './screens_cliente/ScreenPerfil';
 import ScreenCercaDeMi from './screens_cliente/ScreenCercaDeMi';
 import ScreenFavoritos from './screens_cliente/ScreenFavoritos';
+import ScreenEditarPerfil from './screens_cliente/ScreenEditarPerfil';
 
 import { ClientProvider } from './ClientContext';
 
@@ -22,6 +23,7 @@ const ClienteStack = () => {
                 <Stack.Screen name="2" component={ScreenCercaDeMi} />
                 <Stack.Screen name="3" component={ScreenFavoritos} />
                 <Stack.Screen name="4" component={ScreenPerfil} />
+                <Stack.Screen name="EditarPerfil" component={ScreenEditarPerfil} />
             </Stack.Navigator>
         </ClientProvider>
     );

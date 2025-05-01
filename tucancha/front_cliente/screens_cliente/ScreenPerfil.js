@@ -5,13 +5,14 @@ import { StyleSheet, View, Dimensions, Image, Text, TouchableOpacity, Alert} fro
 import React, { useState, useContext, useEffect } from "react";
 import { obtenerInfoPerfil } from '../../backend/funciones_backend/InfoPerfil';
 import Icon from 'react-native-vector-icons/Feather'; // Importamos el ícono
-
+import { useNavigation } from '@react-navigation/native';
 
 const { width, height } = Dimensions.get("window");
 
 export default function FrontViewPitch1() {
   const { id, setIsLoggedIn } = useContext(AuthContext);
   const [perfil, setPerfil] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     const cargarPerfil = async () => {
@@ -51,7 +52,10 @@ export default function FrontViewPitch1() {
             :require('./../../assets/logo-TuCancha.png')} style={styles.image} />
         <Text style={styles.nombre}>{perfil.nombre}</Text>
         <Text style={styles.descripcion}>{perfil.descripcion ? perfil.descripcion : '¡Añade una descripción!'}</Text>
-        <TouchableOpacity style={styles.editButton} onPress={() => alert('Editar perfil')}>
+        <TouchableOpacity
+          style={styles.editButton}
+          onPress={() => navigation.navigate('EditarPerfil')}
+        >
           <Icon name="edit" size={24} color="#000" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
