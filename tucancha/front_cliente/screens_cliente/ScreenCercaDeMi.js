@@ -14,7 +14,7 @@ export default function ScreenCercaDeMi() {
     <View style={styles.container}>
         <Mapa style={styles.mapa} />
         <Instalacion />
-        <Comentarios />
+        
     </View>
   );
   };

@@ -1,4 +1,4 @@
-import { StyleSheet, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions,TouchableOpacity,Alert } from 'react-native';
 import React, { useState, useEffect, useContext } from "react";
 import { ClientContext } from '../front_cliente/ClientContext';
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -10,6 +10,10 @@ const Comentarios = () => {
   const { ubicacion } = useContext(ClientContext);
   const maxStars = 5;
   const [rating, setRating] = useState(0); // Estado para guardar la puntuación
+
+  const handlePress = () => {
+    Alert.alert("Valoración", `La valoración media es de ${rating} estrellas.`);
+  };
 
   // Carga la puntuación al montar el componente
   useEffect(() => {
@@ -28,7 +32,7 @@ const Comentarios = () => {
   }, [ubicacion]);
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <TouchableOpacity onPress={handlePress} style={{ flexDirection: 'row' }}>
       {[...Array(maxStars)].map((_, index) => (
         <Ionicons
           key={index}
@@ -38,7 +42,7 @@ const Comentarios = () => {
           style={{ marginRight: 4 }}
         />
       ))}
-    </View>
+    </TouchableOpacity>
   );
 };
 

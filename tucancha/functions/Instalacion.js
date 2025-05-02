@@ -2,6 +2,7 @@ import { StyleSheet, Text, View,Button,Image,Input, Dimensions, PRe}from 'react-
 import React, { useState,useContext } from "react";
 import { ClientContext } from '../front_cliente/ClientContext';
 import MyModal from "./Reservar"
+import Comentarios  from '../functions/Comentarios';
 
 const { width, height } = Dimensions.get("window"); // Obtiene el tamaño de la pantalla
 
@@ -27,6 +28,7 @@ const Instalacion = () => {
             <Image source={{uri: ubicacion.imagen_instalacion}} style={styles.imagen}></Image>
             <Text>{ubicacion.nombre}</Text>
         </View>
+    
         <View style={styles.infoApertura}>
             <Text style={styles.text}>
                 Abierto de:
@@ -34,15 +36,17 @@ const Instalacion = () => {
             <Text style={styles.text}>
                 {ubicacion.hora_inicio} - {ubicacion.hora_fin}
             </Text>
-        </View>
-        <View style={styles.reserva}>
             <Text style={styles.text}>Precio: {ubicacion.precio}€/h</Text>
-            <Button title="Reservar" onPress={openModal} style={styles.boton}/>
+            <Comentarios />
+        </View>
 
-            {/* Aquí pasamos las props al modal */}
+        <View style={styles.reserva}>
+            <Button title="Reservar" onPress={openModal} style={styles.boton}/>
             <MyModal visible={isModalVisible} onClose={closeModal} />
         </View>
+        
     </View> 
+    
   );
 };
 
