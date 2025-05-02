@@ -4,6 +4,7 @@ import { ClientContext } from '../front_cliente/ClientContext';
 import MyModal from "./Reservar";
 import Comentarios from '../functions/Comentarios';
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { getComentarios } from '../backend/funciones_backend/getComentarios'; // Importamos la función
 
 const { width, height } = Dimensions.get("window");
 
@@ -12,30 +13,58 @@ const Instalacion = () => {
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [showLista, setShowLista] = useState(false); // Inicialmente la lista está oculta
+  const [comentarios, setComentarios] = useState([]); // Estado para los comentarios
+  const [comentariosMostrados, setComentariosMostrados] = useState(5); // Número de comentarios mostrados
+  const [loading, setLoading] = useState(false); // Para controlar el estado de carga
+  const [noMasComentarios, setNoMasComentarios] = useState(false); // Para verificar si ya no hay más comentarios
 
-  // Lista de comentarios con texto, rating y el nombre de quien lo escribió
-  const comentarios = [
-    { id: 1, text: "Excelente instalación, muy bien equipada. La mejor opción para pasar un buen rato.", rating: 5, author: "Carlos" },
-    { id: 2, text: "Buen lugar, pero algo caro, se podría mejorar la atención al cliente.", rating: 3, author: "Ana" },
-    { id: 3, text: "Me encanta este lugar, siempre vengo, la mejor experiencia.", rating: 4, author: "Luis" },
-    { id: 4, text: "Muy buena atención, pero un poco ruidoso en algunas áreas.", rating: 2, author: "Marta" },
-  ];
-
+  // Función para abrir el modal
   const openModal = () => {
     setModalVisible(true);
   };
 
+  // Función para cerrar el modal
   const closeModal = () => {
     setModalVisible(false);
   };
 
+  // Llamada al backend para obtener los comentarios
+  const fetchComentarios = async (cantidad) => {
+    setLoading(true); // Inicia la carga
+    const comentariosObtenidos = await getComentarios(ubicacion.id_instalacion);
+
+    // Filtra los comentarios que se pueden mostrar (limitados por 'cantidad')
+    const comentariosLimitados = comentariosObtenidos.slice(0, cantidad);
+    setComentarios(comentariosLimitados); // Actualiza los comentarios visibles
+
+    // Verifica si hay más comentarios
+    if (comentariosObtenidos.length <= cantidad) {
+      setNoMasComentarios(true); // Si no hay más comentarios, desactiva el botón
+    }
+
+    setLoading(false); // Termina la carga
+  };
+
+  // Función para manejar el clic en Comentarios (muestra/oculta la lista)
   const handleComentariosPress = () => {
     setShowLista(!showLista); // Cambia el estado de la lista (toggle)
+    if (!showLista) {
+      fetchComentarios(comentariosMostrados); // Cargamos los primeros 5 comentarios cuando se muestra la lista
+    }
+  };
+
+  // Función para manejar el clic en "Mostrar más"
+  const handleMostrarMas = () => {
+    const nuevosComentariosMostrados = comentariosMostrados + 5;
+    setComentariosMostrados(nuevosComentariosMostrados); // Incrementa la cantidad de comentarios mostrados
+    fetchComentarios(nuevosComentariosMostrados); // Obtiene más comentarios
   };
 
   // Resetear la lista cuando la instalación cambie
   useEffect(() => {
     setShowLista(false); // Cada vez que cambia la ubicación, ocultamos la lista
+    setComentariosMostrados(5); // Reseteamos la cantidad de comentarios a 5
+    setNoMasComentarios(false); // Reinicia el estado de "No más comentarios"
   }, [ubicacion]);
 
   return ubicacion.nombre === "" ? null : (
@@ -51,19 +80,18 @@ const Instalacion = () => {
           {ubicacion.hora_inicio} - {ubicacion.hora_fin}
         </Text>
         <Text style={styles.text}>Precio: {ubicacion.precio}€/h</Text>
-        <Comentarios onPressComentarios={handleComentariosPress} />
+        <Comentarios onPressComentarios={handleComentariosPress} /> {/* Llama a la función cuando se hace clic en comentarios */}
       </View>
 
+      {/* Mostrar la lista de comentarios solo si showLista es true */}
       {showLista && (
         <View style={styles.listaContainer}>
           <Text style={styles.listaHeader}>Comentarios:</Text>
           {comentarios.map((comentario) => (
             <View key={comentario.id} style={styles.comentarioContainer}>
-              <Text style={styles.comentarioText} numberOfLines={2}>
-                {comentario.text}
-              </Text>
+              <Text style={styles.comentarioText}>{comentario.text}</Text>
               <Text style={styles.comentarioAuthor}>- {comentario.author}</Text>
-              <View style={styles.starsContainer}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 {[...Array(5)].map((_, index) => (
                   <Ionicons
                     key={index}
@@ -74,16 +102,27 @@ const Instalacion = () => {
                   />
                 ))}
               </View>
-              <View style={styles.separator}></View>
             </View>
           ))}
+
+          {/* Botón de "Mostrar más" */}
+          {!noMasComentarios && comentarios.length >= comentariosMostrados && (
+            <Button title="Mostrar más" onPress={handleMostrarMas} disabled={loading} />
+          )}
+
+          {/* Mensaje si no hay más comentarios */}
+          {noMasComentarios && comentarios.length <= comentariosMostrados && (
+            <Text>No hay más comentarios.</Text>
+          )}
         </View>
       )}
 
+      {/* Reservar Modal */}
       <View style={styles.reserva}>
         <Button title="Reservar" onPress={openModal} style={styles.boton} />
         <MyModal visible={isModalVisible} onClose={closeModal} />
       </View>
+
     </ScrollView>
   );
 };
@@ -144,27 +183,18 @@ const styles = StyleSheet.create({
   },
   comentarioContainer: {
     flexDirection: 'column',
-    alignItems: 'flex-start', // Alinea el texto verticalmente
-    marginBottom: 12,
+    marginBottom: 20,
+    padding: 10,
+    borderBottomWidth: 1,
+    borderColor: '#ccc',
   },
   comentarioText: {
     fontSize: 16,
-    marginBottom: 8,
-    color: '#333', // Ajusta el color del texto
   },
   comentarioAuthor: {
     fontStyle: 'italic',
     fontSize: 14,
-    color: '#555',
-  },
-  starsContainer: {
-    flexDirection: 'row',
-    marginTop: 6,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#ccc', // Línea de separación gris
-    marginVertical: 10, // Espacio vertical para la línea
+    marginRight: 10,
   },
 });
 
