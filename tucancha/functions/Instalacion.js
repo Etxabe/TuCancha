@@ -3,8 +3,9 @@ import React, { useState, useContext, useEffect } from "react";
 import { ClientContext } from '../front_cliente/ClientContext';
 import MyModal from "./Reservar";
 import Comentarios from '../functions/Comentarios';
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-const { width, height } = Dimensions.get("window"); // Obtiene el tamaño de la pantalla
+const { width, height } = Dimensions.get("window");
 
 const Instalacion = () => {
   const { ubicacion } = useContext(ClientContext);
@@ -12,17 +13,22 @@ const Instalacion = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [showLista, setShowLista] = useState(false); // Inicialmente la lista está oculta
 
-  // Función para abrir el modal
+  // Lista de comentarios con texto, rating y el nombre de quien lo escribió
+  const comentarios = [
+    { id: 1, text: "Excelente instalación, muy bien equipada. La mejor opción para pasar un buen rato.", rating: 5, author: "Carlos" },
+    { id: 2, text: "Buen lugar, pero algo caro, se podría mejorar la atención al cliente.", rating: 3, author: "Ana" },
+    { id: 3, text: "Me encanta este lugar, siempre vengo, la mejor experiencia.", rating: 4, author: "Luis" },
+    { id: 4, text: "Muy buena atención, pero un poco ruidoso en algunas áreas.", rating: 2, author: "Marta" },
+  ];
+
   const openModal = () => {
     setModalVisible(true);
   };
 
-  // Función para cerrar el modal
   const closeModal = () => {
     setModalVisible(false);
   };
 
-  // Función para manejar el clic en Comentarios (muestra/oculta la lista)
   const handleComentariosPress = () => {
     setShowLista(!showLista); // Cambia el estado de la lista (toggle)
   };
@@ -45,25 +51,39 @@ const Instalacion = () => {
           {ubicacion.hora_inicio} - {ubicacion.hora_fin}
         </Text>
         <Text style={styles.text}>Precio: {ubicacion.precio}€/h</Text>
-        <Comentarios onPressComentarios={handleComentariosPress} /> {/* Llama a la función cuando se hace clic en comentarios */}
+        <Comentarios onPressComentarios={handleComentariosPress} />
       </View>
 
-      {/* Mostrar la lista de 1 a 100 solo si showLista es true */}
       {showLista && (
         <View style={styles.listaContainer}>
-          <Text style={styles.listaHeader}>Lista de 1 a 100:</Text>
-          {Array.from({ length: 100 }, (_, index) => (
-            <Text key={index} style={styles.listaItem}>{index + 1}</Text>
+          <Text style={styles.listaHeader}>Comentarios:</Text>
+          {comentarios.map((comentario) => (
+            <View key={comentario.id} style={styles.comentarioContainer}>
+              <Text style={styles.comentarioText} numberOfLines={2}>
+                {comentario.text}
+              </Text>
+              <Text style={styles.comentarioAuthor}>- {comentario.author}</Text>
+              <View style={styles.starsContainer}>
+                {[...Array(5)].map((_, index) => (
+                  <Ionicons
+                    key={index}
+                    name="star"
+                    size={18}
+                    color={index < comentario.rating ? 'gold' : '#ccc'}
+                    style={{ marginRight: 4 }}
+                  />
+                ))}
+              </View>
+              <View style={styles.separator}></View>
+            </View>
           ))}
         </View>
       )}
 
-      {/* Reservar Modal */}
       <View style={styles.reserva}>
         <Button title="Reservar" onPress={openModal} style={styles.boton} />
         <MyModal visible={isModalVisible} onClose={closeModal} />
       </View>
-
     </ScrollView>
   );
 };
@@ -122,9 +142,29 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 10,
   },
-  listaItem: {
+  comentarioContainer: {
+    flexDirection: 'column',
+    alignItems: 'flex-start', // Alinea el texto verticalmente
+    marginBottom: 12,
+  },
+  comentarioText: {
     fontSize: 16,
-    marginVertical: 2,
+    marginBottom: 8,
+    color: '#333', // Ajusta el color del texto
+  },
+  comentarioAuthor: {
+    fontStyle: 'italic',
+    fontSize: 14,
+    color: '#555',
+  },
+  starsContainer: {
+    flexDirection: 'row',
+    marginTop: 6,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#ccc', // Línea de separación gris
+    marginVertical: 10, // Espacio vertical para la línea
   },
 });
 
