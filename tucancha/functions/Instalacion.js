@@ -80,7 +80,7 @@ const Instalacion = () => {
           {ubicacion.hora_inicio} - {ubicacion.hora_fin}
         </Text>
         <Text style={styles.text}>Precio: {ubicacion.precio}€/h</Text>
-        <Comentarios onPressComentarios={handleComentariosPress} /> {/* Llama a la función cuando se hace clic en comentarios */}
+        <Text><Comentarios onPressComentarios={handleComentariosPress} /> </Text>
       </View>
 
       {/* Mostrar la lista de comentarios solo si showLista es true */}
