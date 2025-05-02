@@ -7,31 +7,27 @@ export const getComentarios = async (id_instalacion) => {
     const comentarios = await query.find();
 
     if (comentarios.length === 0) {
-      return []; // Si no hay comentarios, retorna un array vacío
+      return []; 
     }
 
-    // Para almacenar los comentarios con el nombre del autor
     const comentariosFormateados = [];
 
     for (let comentario of comentarios) {
-      const idCliente = comentario.get("idCliente"); // El ID del autor
+      const idCliente = comentario.get("idCliente"); 
 
-      // Ahora consulta el nombre del autor en la tabla de usuarios (o lo que corresponda)
-      const usuarioQuery = new Parse.Query("Usuarios"); // Suponiendo que la clase de usuarios se llama _User
+      const usuarioQuery = new Parse.Query("Usuarios"); 
       usuarioQuery.equalTo("objectId", idCliente);
       const usuario = await usuarioQuery.first();
 
-      // Si encontramos el autor, añadimos los comentarios con el nombre del autor
       if (usuario) {
         comentariosFormateados.push({
-          text: comentario.get("comentario"), // Suponiendo que el campo es "texto"
-          author: usuario.get("nombre"), // Suponiendo que el nombre del usuario está en "username"
-          rating: comentario.get("puntuacion"), // Suponiendo que el campo es "puntuacion"
+          text: comentario.get("comentario"), 
+          author: usuario.get("nombre"), 
+          rating: comentario.get("puntuacion"), 
         });
       }
     }
 
-    // Retorna los comentarios formateados con el nombre del autor
     return comentariosFormateados;
 
   } catch (error) {
