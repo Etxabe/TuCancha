@@ -3,7 +3,6 @@ import axios from 'axios';
 export const obtenerClima = async (fecha, hora, latitud, longitud) => {
   const apiKey = 'TQEBS5KHDJ3VMS6TWD4847UP2';//JFR8TPJ3SKD2C98JG3WEHRG8F
   const url = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitud},${longitud}/${fecha}T${hora}?key=${apiKey}&include=current`;
-  console.log(url);
   const fahrenheitToCelsius = (temp) => Math.round((temp - 32) * 5 / 9);
 
   try {

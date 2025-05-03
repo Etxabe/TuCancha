@@ -42,7 +42,6 @@ const ReservasPorMes = () => {
               conteoMesesHoras[mes] += parseInt(reserva.get("tiempo_reserva")) / 60;
             }
           } else {
-            console.log("Fecha invalida o fuera de año:", fechaRaw);
           }
         });
 

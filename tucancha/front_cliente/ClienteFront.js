@@ -6,9 +6,12 @@ import ScreenInicio from './screens_cliente/ScreenInicio';
 import ScreenPerfil from './screens_cliente/ScreenPerfil';
 import ScreenCercaDeMi from './screens_cliente/ScreenCercaDeMi';
 import ScreenFavoritos from './screens_cliente/ScreenFavoritos';
+import ScreenEditarPerfil from './screens_cliente/ScreenEditarPerfil';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ClientProvider,ClientContext } from './ClientContext';
 
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
   return (
@@ -41,15 +44,14 @@ const Tabs = () => {
   );
 };
 
-export default function App({id}) {
-  console.log("añañin: ",id);
-  
+export default function App({ id }) {
   return (
     <ClientProvider id={id}>
-      <Tabs />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="MainTabs" component={Tabs} />
+        <Stack.Screen name="EditarPerfil" component={ScreenEditarPerfil} />
+      </Stack.Navigator>
     </ClientProvider>
-
-
   );
 }
 

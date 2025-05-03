@@ -74,7 +74,7 @@ export default function Registro({ onNavigateToLogin }) {
       />
       <TextInput
         style={styles.input}
-        placeholder="Usuario"
+        placeholder="Nombre y apellidos"
         value={usuario}
         onChangeText={setUsuario}
       />

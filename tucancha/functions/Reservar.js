@@ -43,8 +43,6 @@ const MyModal = ({ visible, onClose }) => {
         const horasPasadasHoy = selectedDate === hoy ? horasPasadas(ubicacion.hora_inicio, ubicacion.duracion) : [];
         const todasLasHorasOcupadas = [...horas, ...horasPasadasHoy];
         setHorasOcupadas(todasLasHorasOcupadas); // Actualiza el estado con las horas ocupadas
-        console.log("Horas ocupadas hoy:", horasOcupadas);
-        console.log("Horas ocupadas:", horas);
       } catch (error) {
         console.error("Error al consultar las horas ocupadas:", error);
       }
@@ -67,11 +65,9 @@ const MyModal = ({ visible, onClose }) => {
     };
 
     setReserva(newReserva); 
-    console.log("Reserva actualizada:", reserva);
   };
 
   const handleDateSelect = (day) => {
-    console.log("Fecha seleccionada:", day.dateString); // Verifica el valor recibido
     const formattedDate = formatDate(day.dateString); // Formatear la fecha seleccionada
     setSelectedDate(formattedDate);
     hasBeenSelectedData(true); // Indicar que se ha seleccionado una fecha

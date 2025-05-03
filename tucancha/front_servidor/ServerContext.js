@@ -22,7 +22,6 @@ export const ServerProvider = ({ children, id }) => {
 
   const [idProveedor] = useState(id);
 
-  console.log("ID de usuario en ServerProvider:", idProveedor); // Log para verificar el ID del usuario
 
   return (
     <ServerContext.Provider value={{ instalacion,setInstalacion, idProveedor}}>

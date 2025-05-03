@@ -4,7 +4,6 @@ import { Alert } from "react-native";
 import Parse from './Conexion.js';
 
 const updateInstalacion = async (instalacion, setInstalacion) => {
-  console.log("Datos recibidos para actualizar instalación:", instalacion);
 
   if (
     instalacion.nombrePista &&

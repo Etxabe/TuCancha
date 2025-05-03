@@ -1,7 +1,6 @@
 import * as Location from "expo-location";
 
 const requestLocationPermission = async () => {
-  console.log("Solicitando permisos de ubicación...");
 
   const { status } = await Location.requestForegroundPermissionsAsync();
   if (status !== "granted") {
@@ -20,7 +19,6 @@ const getUserLocation = async () => {
   }
 
   try {
-    console.log("Intentando obtener la ubicación...");
     const location = await Location.getCurrentPositionAsync({
       accuracy: Location.Accuracy.High,
     });
@@ -32,7 +30,6 @@ const getUserLocation = async () => {
       longitudeDelta: 0.01,
     };
 
-    console.log("Ubicación del usuario:", userLocation);
     return userLocation;
   } catch (error) {
     console.error("Error al obtener la ubicación:", error);
