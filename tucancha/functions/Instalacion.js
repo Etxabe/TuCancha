@@ -1,15 +1,18 @@
-import { StyleSheet, Text, View, Button, Image, Dimensions, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, Image, Dimensions, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useState, useContext, useEffect } from "react";
 import { ClientContext } from '../front_cliente/ClientContext';
 import MyModal from "./Reservar";
 import Comentarios from '../functions/Comentarios';
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { getComentarios } from '../backend/funciones_backend/getComentarios'; // Importamos la función
+import { getComentarios } from '../backend/funciones_backend/getComentarios'; 
+import ComentarModal from './modalComentar';
+import { insertComentario } from '../backend/funciones_backend/insertComentario';
 
 const { width, height } = Dimensions.get("window");
 
 const Instalacion = () => {
   const { ubicacion } = useContext(ClientContext);
+  const {idCliente} = useContext(ClientContext);
 
   const [isModalVisible, setModalVisible] = useState(false);
   const [showLista, setShowLista] = useState(false); // Inicialmente la lista está oculta
@@ -17,47 +20,40 @@ const Instalacion = () => {
   const [comentariosMostrados, setComentariosMostrados] = useState(5); // Número de comentarios mostrados
   const [loading, setLoading] = useState(false); // Para controlar el estado de carga
   const [noMasComentarios, setNoMasComentarios] = useState(false); // Para verificar si ya no hay más comentarios
+  const [isComentarVisible, setIsComentarVisible] = useState(false);
 
-  // Función para abrir el modal
   const openModal = () => {
     setModalVisible(true);
   };
 
-  // Función para cerrar el modal
   const closeModal = () => {
     setModalVisible(false);
   };
 
-  // Llamada al backend para obtener los comentarios
   const fetchComentarios = async (cantidad) => {
     setLoading(true); // Inicia la carga
     const comentariosObtenidos = await getComentarios(ubicacion.id_instalacion);
 
-    // Filtra los comentarios que se pueden mostrar (limitados por 'cantidad')
     const comentariosLimitados = comentariosObtenidos.slice(0, cantidad);
-    setComentarios(comentariosLimitados); // Actualiza los comentarios visibles
+    setComentarios(comentariosLimitados);
 
-    // Verifica si hay más comentarios
     if (comentariosObtenidos.length <= cantidad) {
-      setNoMasComentarios(true); // Si no hay más comentarios, desactiva el botón
+      setNoMasComentarios(true);
     }
-
-    setLoading(false); // Termina la carga
+    setLoading(false);
   };
 
-  // Función para manejar el clic en Comentarios (muestra/oculta la lista)
   const handleComentariosPress = () => {
-    setShowLista(!showLista); // Cambia el estado de la lista (toggle)
+    setShowLista(!showLista); 
     if (!showLista) {
-      fetchComentarios(comentariosMostrados); // Cargamos los primeros 5 comentarios cuando se muestra la lista
+      fetchComentarios(comentariosMostrados); 
     }
   };
 
-  // Función para manejar el clic en "Mostrar más"
   const handleMostrarMas = () => {
     const nuevosComentariosMostrados = comentariosMostrados + 5;
-    setComentariosMostrados(nuevosComentariosMostrados); // Incrementa la cantidad de comentarios mostrados
-    fetchComentarios(nuevosComentariosMostrados); // Obtiene más comentarios
+    setComentariosMostrados(nuevosComentariosMostrados); 
+    fetchComentarios(nuevosComentariosMostrados); 
   };
 
   // Resetear la lista cuando la instalación cambie
@@ -66,6 +62,25 @@ const Instalacion = () => {
     setComentariosMostrados(5); // Reseteamos la cantidad de comentarios a 5
     setNoMasComentarios(false); // Reinicia el estado de "No más comentarios"
   }, [ubicacion]);
+
+  const handleOpenComentar = () => setIsComentarVisible(true);
+  const handleCloseComentar = () => setIsComentarVisible(false);
+
+  const handleComentarioSubmit = async (nuevoComentario) => {
+    const exito = await insertComentario({
+      id_instalacion: ubicacion.id_instalacion,
+      id_cliente: idCliente, 
+      text: nuevoComentario.text,
+      rating: nuevoComentario.rating,
+    });
+  
+    if (exito) {
+      console.log('Comentario guardado correctamente');
+      fetchComentarios(comentariosMostrados);
+      handleCloseComentar(); // Cierra el modal
+    }
+  };
+
 
   return ubicacion.nombre === "" ? null : (
     <ScrollView style={styles.containerinstalacion}>
@@ -86,7 +101,16 @@ const Instalacion = () => {
       {/* Mostrar la lista de comentarios solo si showLista es true */}
       {showLista && (
         <View style={styles.listaContainer}>
-          <Text style={styles.listaHeader}>Comentarios:</Text>
+          <Text style={styles.listaHeader}>Comentarios:</Text>/{/*viene de por aqui el error de los key*/ }
+
+          <TouchableOpacity
+            title="Comentar"
+            style={styles.button}
+            onPress={handleOpenComentar}
+            >
+            <Text style={styles.buttonText}>Comentar</Text>
+          </TouchableOpacity>
+
           {comentarios.map((comentario) => (
             <View key={comentario.id} style={styles.comentarioContainer}>
               <Text style={styles.comentarioText}>{comentario.text}</Text>
@@ -105,12 +129,9 @@ const Instalacion = () => {
             </View>
           ))}
 
-          {/* Botón de "Mostrar más" */}
           {!noMasComentarios && comentarios.length >= comentariosMostrados && (
             <Button title="Mostrar más" onPress={handleMostrarMas} disabled={loading} />
           )}
-
-          {/* Mensaje si no hay más comentarios */}
           {noMasComentarios && comentarios.length <= comentariosMostrados && (
             <Text>No hay más comentarios.</Text>
           )}
@@ -122,6 +143,15 @@ const Instalacion = () => {
         <Button title="Reservar" onPress={openModal} style={styles.boton} />
         <MyModal visible={isModalVisible} onClose={closeModal} />
       </View>
+
+      {/*MOdal comentarios*/}
+      <ComentarModal
+        visible={isComentarVisible}
+        onClose={handleCloseComentar}
+        onSubmit={handleComentarioSubmit}
+      />
+      
+
 
     </ScrollView>
   );
@@ -195,6 +225,20 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: 14,
     marginRight: 10,
+  },
+  button: {
+    backgroundColor: '#6200ea',  // Color de fondo (puedes poner el color que desees)
+    paddingVertical: 10,          // Espacio arriba y abajo
+    paddingHorizontal: 20,       // Espacio a los lados
+    borderRadius: 5,             // Bordes redondeados
+    alignItems: 'center',        // Centrar el contenido
+    justifyContent: 'center',    // Centrar el contenido
+    marginTop: 20,               // Espacio arriba (si es necesario)
+  },
+  buttonText: {
+    color: '#fff',               // Color del texto
+    fontSize: 18,                // Tamaño de la fuente
+    fontWeight: 'bold',          // Negrita
   },
 });
 

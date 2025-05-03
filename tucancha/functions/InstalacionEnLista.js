@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
 import { ServerContext } from '../front_servidor/ServerContext';
 import ComentariosProveedorModal from '../functions/comentariosProveedorModal';
-import { getComentarios } from '../backend/funciones_backend/getComentariosProveedor'; 
+import { getComentarios } from '../backend/funciones_backend/getComentarios'; 
 
 const { width, height } = Dimensions.get("window");
 
