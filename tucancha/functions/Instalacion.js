@@ -95,7 +95,7 @@ const Instalacion = () => {
           {ubicacion.hora_inicio} - {ubicacion.hora_fin}
         </Text>
         <Text style={styles.text}>Precio: {ubicacion.precio}€/h</Text>
-        <Text><Comentarios onPressComentarios={handleComentariosPress} /> </Text>
+        <Comentarios onPressComentarios={handleComentariosPress} />
       </View>
 
       {/* Mostrar la lista de comentarios solo si showLista es true */}
@@ -151,8 +151,6 @@ const Instalacion = () => {
         onSubmit={handleComentarioSubmit}
       />
       
-
-
     </ScrollView>
   );
 };
@@ -227,18 +225,18 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   button: {
-    backgroundColor: '#6200ea',  // Color de fondo (puedes poner el color que desees)
-    paddingVertical: 10,          // Espacio arriba y abajo
-    paddingHorizontal: 20,       // Espacio a los lados
-    borderRadius: 5,             // Bordes redondeados
-    alignItems: 'center',        // Centrar el contenido
-    justifyContent: 'center',    // Centrar el contenido
-    marginTop: 20,               // Espacio arriba (si es necesario)
+    backgroundColor: '#6200ea',  
+    paddingVertical: 10,    
+    paddingHorizontal: 20,     
+    borderRadius: 5,            
+    alignItems: 'center',       
+    justifyContent: 'center', 
+    marginTop: 20,               
   },
   buttonText: {
-    color: '#fff',               // Color del texto
-    fontSize: 18,                // Tamaño de la fuente
-    fontWeight: 'bold',          // Negrita
+    color: '#fff',           
+    fontSize: 18,               
+    fontWeight: 'bold',         
   },
 });
 
