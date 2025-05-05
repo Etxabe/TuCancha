@@ -61,7 +61,6 @@ export default function Registro({ onNavigateToLogin }) {
 
       {/* Logo */}
       <Image
-        source={require('./assets/logo-TuCancha.png')}
         style={styles.logo}
       />
 

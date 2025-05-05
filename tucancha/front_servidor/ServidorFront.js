@@ -6,7 +6,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ScreenListadoInstalaciones from './screens_servidor/ScreenListadoInstalaciones';
 import ScreenPerfil from './screens_servidor/ScreenPerfil';
+<<<<<<< HEAD
 import ScreenEstadisticas from './screens_servidor/ScreenEstadisticas';
+=======
+import ScreenStats from './screens_servidor/ScreenStats';
+>>>>>>> a3fd084d9e9e6f9b4d1bf20abd04354f010541f8
 import ScreenAddInstalacion1 from './screens_servidor/ScreenAddInstalacion1';
 import ScreenModificarInstalacion1 from './screens_servidor/ScreenModificarInstalacion1';
 
@@ -29,10 +33,17 @@ const Tabs = () => {
         <Ionicons name="add-circle-outline" size={size} color={color} />
         )
         }}/>
+<<<<<<< HEAD
       <Tab.Screen name="Stats" component={ScreenEstadisticas} options={{
         title: "Stats",
         tabBarIcon: ({ color, size }) => (
         <Ionicons name="add-circle-outline" size={size} color={color} />
+=======
+        <Tab.Screen name="Stats" component={ScreenStats} options={{
+        title: "Stats",
+        tabBarIcon: ({ color, size }) => (
+        <Ionicons name="graph-outline" size={size} color={color} />
+>>>>>>> a3fd084d9e9e6f9b4d1bf20abd04354f010541f8
         )
         }}/>
       <Tab.Screen name="Profile" component={ScreenPerfil} options={{
