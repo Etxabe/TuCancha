@@ -5,7 +5,6 @@ import Mapa from '../../backend/funciones_backend/ModeloMapa';
 const { width, height } = Dimensions.get("window");
 import { ClientContext } from "../ClientContext";
 
-
 export default function ScreenCercaDeMi() {
   const [local, setName] = useState();
   const { ubicacion, setUbicacion } = useContext(ClientContext);
@@ -14,6 +13,7 @@ export default function ScreenCercaDeMi() {
     <View style={styles.container}>
         <Mapa style={styles.mapa} />
         <Instalacion />
+        
     </View>
   );
   };
