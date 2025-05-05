@@ -41,7 +41,6 @@ export default function InicioDeSesion({ onLogin, onNavigateToRegister, error })
           keyboardShouldPersistTaps="handled"
         >
           <Image
-            source={require('./assets/logo-TuCancha.png')}
             style={styles.logo}
           />
           <Text style={styles.title}>Inicio de Sesión</Text>
