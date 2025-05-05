@@ -6,7 +6,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ScreenListadoInstalaciones from './screens_servidor/ScreenListadoInstalaciones';
 import ScreenPerfil from './screens_servidor/ScreenPerfil';
-
+import ScreenEstadisticas from './screens_servidor/ScreenEstadisticas';
 import ScreenAddInstalacion1 from './screens_servidor/ScreenAddInstalacion1';
 import ScreenModificarInstalacion1 from './screens_servidor/ScreenModificarInstalacion1';
 
@@ -25,6 +25,12 @@ const Tabs = () => {
         }}/>
       <Tab.Screen name="Add" component={ScreenAddInstalacion1} options={{
         title: "Añadir",
+        tabBarIcon: ({ color, size }) => (
+        <Ionicons name="add-circle-outline" size={size} color={color} />
+        )
+        }}/>
+      <Tab.Screen name="Stats" component={ScreenEstadisticas} options={{
+        title: "Stats",
         tabBarIcon: ({ color, size }) => (
         <Ionicons name="add-circle-outline" size={size} color={color} />
         )

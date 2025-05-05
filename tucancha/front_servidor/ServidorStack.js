@@ -4,6 +4,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import ScreenListadoInstalaciones from './screens_servidor/ScreenListadoInstalaciones';
 import ScreenPerfil from './screens_servidor/ScreenPerfil';
 import ScreenModificarInstalacion from './screens_servidor/ScreenModificarInstalacion';
+import ScreenModificarInstalacion from './screens_servidor/Screen';
+import ScreenEstadisticas from './screens_servidor/ScreenEstadisticas';
 
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -21,7 +23,8 @@ const ServidorFront = () => {
             <Stack.Navigator>
                 <Stack.Screen name="1" component={ScreenListadoInstalaciones} />
                 <Stack.Screen name="2" component={ScreenPerfil} />
-                <Stack.Screen name="3" component={ScreenModificarInstalacion} />
+                <Stack.Screen name="3" component={ScreenEstadisticas} />
+                <Stack.Screen name="4" component={ScreenModificarInstalacion} />
             </Stack.Navigator>
         </ServerProvider>
 
